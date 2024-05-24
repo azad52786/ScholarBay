@@ -1,0 +1,9 @@
+{
+    "git.ignoreLimitWarning": true,
+    "editor.fontSize": 16,
+    "editor.scrollbar.ignoreHorizontalScrollbarInContentHeight": false,
+    "editor.scrollbar.scrollByPage": false,
+    "editor.mouseWheelZoom": true,
+    "editor.tabCompletion": "on",
+    "editor.lineHeight": 1.5
+}
