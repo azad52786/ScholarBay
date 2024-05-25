@@ -1,6 +1,6 @@
 import toast from "react-hot-toast"
 import { setLoader, setToken } from "../../Store/Slices/AuthSlice"
-import { AUTH_API, SEND_MAIL } from "../Api"
+import { AUTH_API, PROFILE_API, SEND_MAIL } from "../Api"
 import Apiconnection from "../Apiconnection"
 import { setUser } from "../../Store/Slices/ProfileSlice"
 
@@ -146,4 +146,35 @@ export const sendMessage = (data) => {
             console.error(e);
         }
     }
+}
+
+
+export const updateUserProfile = (formData , token) => {
+   return async function(dispatch){
+        const toastId = toast.loading("Updateing Profile Picture...");
+        try{
+            const responce = await Apiconnection(
+                "PUT" , 
+                PROFILE_API.UPDATE_USER_PROFILE , 
+                formData , 
+                {
+                    "Content-Type" : "multipart/form-data" , 
+                    "Authorization" : `Bearer ${token}` , 
+                }
+            );
+            console.log("Profile updated responce is :" , responce);
+            // check data for errors
+            if(!responce.data.success) {
+                throw new Error(responce.data.data.message);
+            }
+            toast.dismiss(toastId);
+            dispatch(setUser(responce.data.data));
+            toast.success("Profile picture is updated successfully");
+        }catch(e){
+            toast.dismiss(toastId);
+            console.error("error occur")
+            console.log("error messase is" , e.message);
+            toast.error(e.message);
+        }
+   }
 }

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 exports.auth = (req, res, next) => {
     try{
-        // const token = req.body.token || req.cookies.token || req.headers("Authorization").replace("Bearer ", "");
+        // const token = req.headers.token || req.cookies.token || req.headers("Authorization").replace("Bearer ", "");
         // const token = JSON.parse(req.body.token)
         //  req.body.token || req.cookies.token;
         const token = req.headers.token || req.cookies.token;
@@ -19,6 +19,7 @@ exports.auth = (req, res, next) => {
     }catch(e){
         res.status(403).json({
             success: false,
+            error: e.message, 
             message: "Error occurred while verifying token"
         })
     }
@@ -36,6 +37,7 @@ exports.isStudent = (req , res , next) => {
     }catch(e){
         res.status(401).json({
             success: false,
+            error : e.message , 
             message: "erorr occurred while checking is Student"
         })
     }
