@@ -1,35 +1,50 @@
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const { cloudinaryImageUploader } = require("../utils/imageUploader");
+const bcrypt = require('bcrypt');
 
 exports.updateProfile = async(req , res) => {
     try{
-        const {contactNumber , about="" , dateOfBirth="" , gender} = req.body;
+        const {contactNumber , about="" , dateOfBirth="" , gender , password , confirmPassword} = req.body;
         const user_id = req.user.id;
-        if(!contactNumber || !gender || !user_id) {
+        if(!contactNumber || !gender || !user_id || !password || !confirmPassword) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
             })
         }
+        if(password !== password) {
+           return res.status(400).json({
+                success: false,
+                message: "Password and Confirm Password Does not Match"
+            })
+        }
         let userDetails = await User.findById(user_id);
-        const additionalDetails_id = userDetails.additionalDetails;
-        const updatedAdditionalDetails = await Profile.findByIdAndUpdate(
-            {_id : additionalDetails_id} , 
-            {
-                contactNumber : contactNumber,
-                about : about,
-                dateOfBirth : dateOfBirth,
-                gender : gender
-            } , 
-            {new : true}
-        )
-        return res.status(200).json(
-            {
-                success: true,
-                message: "Profile Updated Successfully"
-            }
-        )
+        if(await bcrypt.compare(password , userDetails.password) === true) {
+          const additionalDetails_id = userDetails.additionalDetails;
+          const updatedAdditionalDetails = await Profile.findByIdAndUpdate(
+              {_id : additionalDetails_id} , 
+              {
+                  contactNumber : contactNumber,
+                  about : about,
+                  dateOfBirth : dateOfBirth,
+                  gender : gender
+              } , 
+              {new : true}
+          )
+          return res.status(200).json(
+              {
+                  success: true,
+                  
+                  message: "Profile Updated Successfully"
+              }
+          )
+        }else{
+          return res.status(400).json({
+              success: false,
+              message: "Password Does not Match"
+          })
+        }
     }catch(e){
         res.status(500).json({
             success: false,

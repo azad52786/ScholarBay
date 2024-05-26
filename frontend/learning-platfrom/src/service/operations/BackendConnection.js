@@ -178,3 +178,31 @@ export const updateUserProfile = (formData , token) => {
         }
    }
 }
+
+export const updateUserAdditionalData = (formData , token) => {
+    return async function(dispatch){
+        const toastId = toast.loading("Uploading...");
+        try{
+            const response = await Apiconnection(
+                "PUT" , 
+                PROFILE_API.UPDATE_USER_PROFILE_ADDITIONAL_DATA ,
+                formData ,
+                {
+                    "Content-Type" : "application/json" , 
+                    "Authorization" : `Bearer ${token}` ,
+                } 
+            );
+            console.log("responce is : ");
+            console.log(response);
+            if(!response.data.success){
+                throw new Error(response.message);
+            }
+            toast.dismiss(toastId);
+            toast.success("Additional Data is successfully updated.");
+        }catch(e){
+            toast.dismiss(toastId);
+            console.log("error messase is" , e);
+            toast.error(e.response.data.message);
+        }
+    }
+}

@@ -20,7 +20,7 @@ const Sidebar = () => {
       setLogoutModal(!logoutModal);
     }
   return (
-    <div className=' relative w-[230px] h-screen bg-richblack-700 flex flex-col items-center justify-start gap-y-3'>
+    <div className=' relative w-[230px] min-h-screen bg-richblack-700 flex flex-col items-center justify-start gap-y-3'>
     {
       sidebarLinks.map((ele , index) => {
         if(ele.type && user.accountType !== ele.type) return null;

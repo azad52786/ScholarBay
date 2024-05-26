@@ -79,8 +79,7 @@ const ChangeProfilePicture = () => {
               
             </div>
           </div>
-          
-        </div>
+    </div>
   )
 }
 
