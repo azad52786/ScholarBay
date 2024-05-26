@@ -206,3 +206,18 @@ export const updateUserAdditionalData = (formData , token) => {
         }
     }
 }
+
+export const deleteUser = (navigate) => {
+    return async function (dispatch) {
+        try{
+            dispatch(logout(navigate));
+            const response = await Apiconnection("delete" , PROFILE_API.DELETE_USER);
+            if(!response.data.success){
+                throw new Error(response.data.message);
+            }
+            toast.success("User is successfully deleted");
+        }catch(e){
+            console.error(e);
+        }
+    }
+}

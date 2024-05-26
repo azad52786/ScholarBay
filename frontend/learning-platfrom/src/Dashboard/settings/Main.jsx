@@ -1,6 +1,7 @@
 import React from 'react'
 import ChangeProfilePicture from './ChangeProfilePicture'
 import ChangeProfileInformation from './ChangeProfileInformation'
+import DeleteProfileSection from './DeleteProfileSection'
 
 const Main = () => {
   return (
@@ -13,6 +14,7 @@ const Main = () => {
       {/* Profile */}
       <ChangeProfileInformation/>
       {/* <EditProfile /> */}
+      <DeleteProfileSection/>
       {/* Password */}
       {/* <UpdatePassword /> */}
       {/* Delete Account */}
