@@ -20,6 +20,7 @@ import DashBoard from './pages/DashBoard';
 import MyProfile from './Dashboard/MyProfile';
 import ProtectedRoute from './component/core/Auth/ProtectedRoute';
 import Main from './Dashboard/settings/Main';
+import Enrolled_Main from './Dashboard/Enrolled_Cources/Enrolled_Main';
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
           {
             path : '/dashboard/default/setting' , 
             element : <ProtectedRoute><Main/></ProtectedRoute> ,
+          } , 
+          {
+            path : '/dashboard/default/enrolled-courses' , 
+            element : <ProtectedRoute><Enrolled_Main/></ProtectedRoute> ,
           }
         ]
       }
@@ -81,12 +86,12 @@ const router = createBrowserRouter([
 ])
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router = {router} />
       <Toaster />
    </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,6 +1,6 @@
 import toast from "react-hot-toast"
 import { setLoader, setToken } from "../../Store/Slices/AuthSlice"
-import { AUTH_API, PROFILE_API, SEND_MAIL } from "../Api"
+import { AUTH_API, COURSE_API, PROFILE_API, SEND_MAIL } from "../Api"
 import Apiconnection from "../Apiconnection"
 import { setUser } from "../../Store/Slices/ProfileSlice"
 
@@ -88,7 +88,6 @@ export const signUp = (otp , signUpData ,  navigate) => {
     }
 }
 
-// dispatch(login(formData ,  navigate)); 
 
 export const login = (formData , navigate) => {
     return async(dispatch) => {
@@ -219,5 +218,26 @@ export const deleteUser = (navigate) => {
         }catch(e){
             console.error(e);
         }
+    }
+}
+
+
+export const getUserAllCources = async (token) => {
+    try{
+        const response = await Apiconnection(
+            "GET" , 
+            COURSE_API.GET_ALL_USER_ENROLLED_COURSE , 
+            null , 
+            {
+                "Authorization": `Bearer  + ${token}`
+            }
+        );
+        console.log(response);
+        if(!response.data.success) {
+            throw new Error("SomeThing went wrong while fetching all enroll courses");
+        }
+        return response.data;
+    }catch(e){
+        console.log(e);
     }
 }
