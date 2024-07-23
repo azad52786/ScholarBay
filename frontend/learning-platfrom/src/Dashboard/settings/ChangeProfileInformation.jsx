@@ -81,18 +81,18 @@ const ChangeProfileInformation = () => {
         <div className=' w-[50%] text-sm '>
         <label htmlFor="gender" className='font-semibold mb-3'>Gender</label>
         <div className='bg-richblack-600 h-12 rounded-md flex gap-4 items-center justify-around'>
-            <div className='flex gap-2 cursor-pointer'>
+            <div className='flex gap-2 cursor-pointer w-fit h-fit'>
                 <input 
                     type='radio' 
                     id='male' 
                     name='gender' 
                     value='Male' 
-                    className='h-5 w-5' 
+                    className='h-5 w-5 cursor-pointer' 
                     required 
                     checked = {gender === "Male"}
                     onChange={setGenderHandler}
                 />
-                <label htmlFor='male'>Male</label>
+                <label htmlFor='male' className=' cursor-pointer'>Male</label>
             </div>
             <div className='flex gap-2 cursor-pointer'>
                 <input 
@@ -101,10 +101,10 @@ const ChangeProfileInformation = () => {
                     name='gender' 
                     value='Female' 
                     checked = {gender === "Female"}
-                    className='h-5 w-5' 
+                    className='h-5 w-5 cursor-pointer' 
                     onChange={setGenderHandler}
                 />
-                <label htmlFor='female'>Female</label>
+                <label htmlFor='female' className=' cursor-pointer'>Female</label>
             </div>
             <div className='flex gap-2 cursor-pointer'>
                 <input 
@@ -113,10 +113,10 @@ const ChangeProfileInformation = () => {
                     name='gender' 
                     value='Others' 
                     checked = {gender === "Others"}
-                    className='h-5 w-5' 
+                    className='h-5 w-5 cursor-pointer' 
                     onChange={setGenderHandler}
                 />
-                <label htmlFor='others'>Others</label>
+                <label htmlFor='others' className=' cursor-pointer'>Others</label>
             </div>
         </div>
 

@@ -10,6 +10,8 @@ module.exports = {
     colors: {
       white: "#fff",
       black: "#000",
+      red : "#ff0000" , 
+      pink : "#bf1650" , 
       transparent: "#ffffff00",
       richblack: {
         5: "#F1F2FF",
@@ -129,6 +131,9 @@ module.exports = {
         maxContent: "1260px",
         maxContentTab: "650px"
       },
+      content : {
+        'warning': '⚠',
+      }
     },
   },
   plugins: [],

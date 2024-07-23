@@ -1,22 +1,25 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import Loader from './Loader';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import FileDetails from './FileDetails';
 
 const MyProfile = () => {
     const {user , loader : ProfileLoader} = useSelector((store) => store.User);
-    // console.log(user);]
+    const { pathname } = useLocation();
+    
     const navigate = useNavigate();
     const { loader : AuthLoader } = useSelector((store) => store.Auth);
     const isLoader = ProfileLoader || AuthLoader;
     return isLoader ? (
       <Loader/>
     ) : (
-      <div className=' w-full min-h-screen bg-richblack-900 flex flex-col items-center justify-center text-pure-greys-25 p-6'>
-        <div className=' w-full text-4xl font-bold text-pure-greys-200 mb-8 text-center'>My Profile</div>
-        <div className='flex justify-between w-[70%] bg-richblack-700 p-8 rounded-md items-center mb-16'>
+      <div className='  w-full bg-richblack-900 flex flex-col items-center justify-center text-pure-greys-25'>
+        <FileDetails pathname={pathname} extra = {["Profile"]}/>
+        <div className='pl-3 w-full text-4xl mt-4 font-bold text-pure-greys-200 mb-4'>My Profile</div>
+        <div className='flex justify-between w-[70%] h-fit bg-richblack-700 p-8 rounded-md items-center mb-16'>
           <div className=' flex gap-4 items-center'>
-            <img src={user.image} alt='profile'height={100} width={100} className=' rounded-full'/>
+            <img src={user.image} alt='profile'height={100} width={100} className=' h-[7rem] w-[7rem] rounded-full'/>
             <div className=' flex flex-col gap-2'>
               <div className=' text-pure-greys-25 font-bold text-xl'>{user.firstName + " " + user.lastName}</div>
               <div className=' text-pure-greys-300 text-sm'>{user.email}</div>

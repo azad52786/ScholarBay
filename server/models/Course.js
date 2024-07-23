@@ -46,16 +46,22 @@ const coursesSchema = new mongoose.Schema({
 	category: {
 		type: [String]
 	},
-	studentsEnrolled: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			// required: true,
-			ref: "User",
-		},
-	],
+	studentsEnrolled: {
+		type : [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				// required: true,
+				ref: "User",
+			},
+		]
+	},
 	instructions: {
 		type: [String],
 	},
+	benefitOfCourse : {
+		type : String , 
+		required : true , 
+	}, 
 	status: {
 		type: String,
 		enum: ["Draft", "Published"],

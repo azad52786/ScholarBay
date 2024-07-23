@@ -21,6 +21,7 @@ import MyProfile from './Dashboard/MyProfile';
 import ProtectedRoute from './component/core/Auth/ProtectedRoute';
 import Main from './Dashboard/settings/Main';
 import Enrolled_Main from './Dashboard/Enrolled_Cources/Enrolled_Main';
+import AddCourse from './Dashboard/AddCourse/index.js';
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
           {
             path : '/dashboard/default/enrolled-courses' , 
             element : <ProtectedRoute><Enrolled_Main/></ProtectedRoute> ,
+          } , 
+          {
+            path : '/dashboard/default/add-course' , 
+            element : <ProtectedRoute><AddCourse/></ProtectedRoute>
           }
         ]
       }

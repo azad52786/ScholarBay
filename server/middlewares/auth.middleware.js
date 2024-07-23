@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 exports.auth = (req, res, next) => {
     try{
-        const token = req.headers.token || req.cookies.token || req.headers("Authorization").replace("Bearer ", "");
+        console.log("hii")
+        const token = req.headers.token || req.cookies.token;
         // const token = JSON.parse(req.body.token)
         //  req.body.token || req.cookies.token;
         // const token = req.headers.token || req.cookies.token;
@@ -17,6 +18,7 @@ exports.auth = (req, res, next) => {
         // console.log(req.user);
         next();
     }catch(e){
+        console.log(e);
         res.status(403).json({
             success: false,
             error: e.message, 

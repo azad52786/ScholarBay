@@ -54,7 +54,7 @@ const ChangeProfilePicture = () => {
   return (
     <div className='flex justify-between w-[70%] bg-richblack-700 p-8 rounded-md items-center mb-16'>
           <div className=' flex gap-4 items-center'>
-            <img src={preViewSource || user.image} alt='profile' height={100} width={100} className=' rounded-full'/>
+            <img src={preViewSource || user.image} alt='profile' height={100} width={100} className=' w-[7rem] h-[7rem] rounded-full'/>
             <div className=' flex flex-col gap-2'>
               <div className=' text-pure-greys-25 font-medium text-sm'>Change your Profile Picture</div>
               <div className="flex flex-row gap-3">

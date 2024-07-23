@@ -59,7 +59,7 @@ export const sendOtp = (email , navigate) => {
             toast.success("Check Your Email For OTP")
             navigate('/verify-email')
         }catch(e){
-            console.log(e)
+            console.error(e)
             toast.error(e.response?.data?.message)
         }
         dispatch(setLoader(false))
@@ -232,11 +232,11 @@ export const getUserAllCources = async (token) => {
                 "Authorization": `Bearer  + ${token}`
             }
         );
-        console.log(response);
+        // console.log(response);
         if(!response.data.success) {
             throw new Error("SomeThing went wrong while fetching all enroll courses");
         }
-        return response.data;
+        return response.data.data;
     }catch(e){
         console.log(e);
     }
