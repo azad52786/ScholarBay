@@ -71,7 +71,7 @@ const ChangeProfilePicture = () => {
                     onClick={FileUploadbtnClick}
                   >
                   {
-                    loading? "Uploading..." : (<p> Select <FiUpload className="text-lg text-richblack-900 mb-2 ml-2 inline-block" /></p>)
+                    loading ? "Uploading..." : (<p> Select <FiUpload className="text-lg text-richblack-900 mb-2 ml-2 inline-block" /></p>)
                   }
                   
                 </button>

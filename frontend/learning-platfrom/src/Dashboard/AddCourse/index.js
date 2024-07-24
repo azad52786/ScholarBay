@@ -7,7 +7,7 @@ import StepSection from "./StepSection";
 export default function AddCourse(){
     const { step } = useSelector((store) => store.CourseData)
     return (
-        <div className="w-full h-full flex gap-5 mt-6 ">
+        <div className="w-full h-full flex  gap-5 mt-6 ">
             <div className="w-[60%]">
                 <div className=" w-full text-center text-2xl text-pure-greys-25 font-bold font-inter">Add Course</div>
                 <StepSection CourseCreationData = { CourseCreationData } step = {step}/>

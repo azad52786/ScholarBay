@@ -1,8 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+// course,
+  //   courseDescription,
+  //   whatYouWillLearn,
+  //   price,
+  //   tag,
+  //   category,
+  //   instructions,
+  //   benefitOfCourse
 const initialState = {
   step: 1,
-  courseDetails: null,
+  courseDetails: {
+    course : null , 
+    courseDescription : null,
+  //   whatYouWillLearn,
+    price : null,
+    tag : null,
+    category : null,
+    instructions : null,
+    benefitOfCourse : null
+  },
   editCourseDetails: false,
   paymentLoading: false,
 };
