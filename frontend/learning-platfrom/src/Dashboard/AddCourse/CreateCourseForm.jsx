@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ErrorMessageComponent from "./ErrorMessageComponent";
 import { FaRupeeSign } from "react-icons/fa6";
 import { COURSE_API } from "../../service/Api";
@@ -9,54 +9,66 @@ import toast from "react-hot-toast";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import ThumbnailSection from "./ThumbnailSection";
+import { createCourse } from "../../service/operations/CourseBackendConnection";
 
 const CreateCourseForm = () => {
   const { editCourseDetails, courseDetails } = useSelector(
     (store) => store.CourseData
   );
+  const { token } = useSelector((store) => store.Auth)
   const [tags, setTags] = useState([]);
   const [catagoryArray, setCatagoryArray] = useState([]);
   const [instructionsArray, setInstructionsArray] = useState([]);
-  const [instruction , setInstruction] = useState("");
-  const [currCategory , setCurrCategory] = useState("")
+  const [instruction, setInstruction] = useState("");
+  const [currCategory, setCurrCategory] = useState("");
+  const [previewFile, setPreviewFile] = useState(null);
+  const dispatch = useDispatch()
   const {
     register,
     getValues,
     setValue,
     formState: { errors },
+    reset,
     handleSubmit,
   } = useForm({
     criteriaMode: "all",
+    defaultValues: {
+      course: "",
+      courseDescription: "",
+      price: "",
+      tag: "",
+      category: "",
+      instructions: "",
+      benefitOfCourse: "",
+      thumbnailImage: ""
+    }
   });
+  let isMounted = false;
 
   async function fetchAllTags() {
     try {
       const result = await Apiconnection("get", COURSE_API.GET_ALL_TAGS);
-      setTags(result.data.tags);
-      console.log(tags);
+     if(isMounted) setTags(result.data.tags);
     } catch (e) {
-      toast.error("Error occur while fetching tags");
-      console.log(e);
+      if(isMounted) toast.error("Error occur while fetching tags");
     }
   }
 
   function addElementHandeler(name, copyarray, setArray) {
-    let newValue ;
-    if(name === "instructions") newValue = instruction;
-    else if(name === "category") newValue = currCategory;
-    console.log(newValue);
+    let newValue;
+    if (name === "instructions") newValue = instruction;
+    else if (name === "category") newValue = currCategory;
     if (!newValue || newValue.length === 0) return;
-    
-    if(name === "instructions") {
-        setInstructionsArray([...copyarray , newValue]);
-        setValue("instructions" , [...copyarray , newValue])
-        setInstruction("");
+
+    if (name === "instructions") {
+      setInstructionsArray([...copyarray, newValue]);
+      setValue("instructions", [...copyarray, newValue]);
+      setInstruction("");
     }
-    if(name === "category") {
-        setCatagoryArray([...copyarray , newValue])
-        setValue("category" , [...copyarray , newValue])
-        console.log("value Iid : " + getValues("category"))
-        setCurrCategory("")
+    if (name === "category") {
+      setCatagoryArray([...copyarray, newValue]);
+      setValue("category", [...copyarray, newValue]);
+      setCurrCategory("");
     }
   }
   function removeElementHandeler(index, copyarray, setCopyArray) {
@@ -65,29 +77,59 @@ const CreateCourseForm = () => {
     setCopyArray(newArray);
   }
   useEffect(() => {
-    register("category" , {required : "This Field is Required"})
-    register("instructions" , {required : "This Field is Required"})
-    fetchAllTags();
-  }, []);
-  // course,
-  //   courseDescription,
-  //   whatYouWillLearn,
-  //   price,
-  //   tag,
-  //   category,
-  //   instructions,
-  //   benefitOfCourse
+    isMounted = true;
+    register("category", { required: "This Field is Required" });
+    register("instructions", { required: "This Field is Required" });
 
-    const onSubmit = (data) => {
-        console.log("hii")
-            console.log(data)
-        }
+    if (editCourseDetails) {
+      // setValue("course" , courseDetails.)
+    }
+    fetchAllTags();
+    return () => {
+      isMounted = false;
+    }
+  }, []);
+  //   course,
+  //     courseDescription,
+  //     whatYouWillLearn,
+  //     price,
+  //     tag,
+  //     category,
+  //     instructions,
+  //     benefitOfCourse
+
+  const onsubmit = (data) => {
+    if (!editCourseDetails) {
+      const formData = new FormData();
+      formData.append("course", data.course);
+      formData.append("courseDescription", data.courseDescription);
+      formData.append("price", data.price);
+      formData.append("tag", data.tag);
+      formData.append("category",JSON.stringify(data.category));
+      formData.append("instructions", JSON.stringify(data.instructions));
+      formData.append("benefitOfCourse", data.benefitOfCourse);
+      formData.append("thumbnailImage", data.thumbnailImage);
+      dispatch(createCourse(formData , token));
+      reset({
+        course: "",
+        courseDescription: "",
+        price: "",
+        benefitOfCourse: "",
+        thumbnailImage: ""
+      });
+      setCatagoryArray([]);
+      setInstructionsArray([]);
+      setPreviewFile(null)
+    }else{
+      
+    }
+  };
   return (
     <div className=" h-full w-full mt-6">
       <form
+        onSubmit={handleSubmit(onsubmit)}
         className=" bg-richblack-800 w-[93%] mr-3 mx-auto h-fit rounded-md border border-pure-greys-600
             p-6 pr-12 text-pure-greys-25 font-inter"
-            onSubmit={handleSubmit(onSubmit)}
       >
         <div className=" w-full h-fit flex gap-y-1 flex-col mb-3 text-pure-greys-100 ">
           <label htmlFor="course" className="text-pure-greys-25">
@@ -169,7 +211,7 @@ const CreateCourseForm = () => {
           >
             <option disabled>Choose your Option</option>
             {tags.map((tag, index) => (
-              <option value={tag.name} key={tag.name}>
+              <option value={tag._id} key={tag.name}>
                 {tag.name}
               </option>
             ))}
@@ -195,7 +237,6 @@ const CreateCourseForm = () => {
                       catagoryArray,
                       setCatagoryArray
                     );
-                    
                   }}
                 />
               </div>
@@ -207,8 +248,7 @@ const CreateCourseForm = () => {
               className=" h-11 w-full border-b border-pure-greys-50 rounded-md pr-8 p-2 bg-richblack-600 resize-none"
               placeholder="Enter Course Category"
               value={currCategory}
-              onChange={(e)=>setCurrCategory(e.target.value)}
-              
+              onChange={(e) => setCurrCategory(e.target.value)}
             />
             <div className=" w-[30px] h-full absolute top-[25%] right-2 cursor-pointer">
               <BiSolidAddToQueue
@@ -232,6 +272,8 @@ const CreateCourseForm = () => {
           getValues={getValues}
           setValue={setValue}
           errors={errors}
+          setPreviewFile = {setPreviewFile}
+          previewFile = {previewFile}
         />
         <div className=" w-full h-fit flex gap-y-1 mb-3 flex-col text-pure-greys-100 ">
           <label htmlFor="benefitOfCourse" className="text-pure-greys-25">
@@ -262,9 +304,8 @@ const CreateCourseForm = () => {
               placeholder="Enter Course Category"
               value={instruction}
               onChange={(e) => {
-                console.log(e.target.value)
-                setInstruction(e.target.value)
-            }}
+                setInstruction(e.target.value);
+              }}
             />
             <div className=" w-[30px] h-fit absolute top-[15%] right-2 ">
               <BiSolidAddToQueue
@@ -274,9 +315,8 @@ const CreateCourseForm = () => {
                   addElementHandeler(
                     "instructions",
                     instructionsArray,
-                    setInstructionsArray 
+                    setInstructionsArray
                   );
-                  setValue("instructions" , instructionsArray)
                 }}
               />
             </div>
@@ -304,9 +344,14 @@ const CreateCourseForm = () => {
 
           <ErrorMessageComponent errors={errors} name="category" />
         </div>
-        {/* <input type="submit" className={`font-bold  text-black bg-[#FFD60A]
-    w-fit py-3 px-6 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}/> */}
-    <input type="submit" className=" cursor-pointer"/>
+
+        {!editCourseDetails && (
+          <input
+            type="submit"
+            className={`font-bold  text-black bg-[#FFD60A]
+             w-fit py-2 px-6 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
+          />
+        )}
       </form>
     </div>
   );

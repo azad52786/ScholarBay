@@ -1,6 +1,6 @@
 const express = require('express');
 const { auth, isInstructor, isAdmin, isStudent } = require('../middlewares/auth.middleware');
-const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails} = require('../controllers/Course.controller');
+const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreateCourseDetails, getCreatedCourseDetails} = require('../controllers/Course.controller');
 const { createSection, updateSection, deleteSection } = require('../controllers/section.controller');
 const { updateSubsection, deleteSubsection, createSubSection } = require('../controllers/Subsection.controller');
 const { createTag, showAllTags, tagsPageDetails } = require('../controllers/tags.controller');
@@ -16,6 +16,8 @@ router.post('/createCourse' , auth , isInstructor , createCourse);
 // http://localhost:4000/api/v1/course/createCourse
 router.post('/addSection' , auth , isInstructor , createSection);
 // http://localhost:4000/api/v1/course/addSection
+router.post('/getcreateCourseDetails' , auth , isInstructor , getCreatedCourseDetails);
+// http://localhost:4000/api/v1/course/getcreateCourseDetails
 router.post('/updateSection' , auth , isInstructor , updateSection);
 // http://localhost:4000/api/v1/course/updateSection
 // Delete a Section

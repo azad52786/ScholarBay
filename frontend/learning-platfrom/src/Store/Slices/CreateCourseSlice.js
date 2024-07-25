@@ -9,16 +9,7 @@ import { createSlice } from "@reduxjs/toolkit";
   //   benefitOfCourse
 const initialState = {
   step: 1,
-  courseDetails: {
-    course : null , 
-    courseDescription : null,
-  //   whatYouWillLearn,
-    price : null,
-    tag : null,
-    category : null,
-    instructions : null,
-    benefitOfCourse : null
-  },
+  courseDetails: null,
   editCourseDetails: false,
   paymentLoading: false,
 };

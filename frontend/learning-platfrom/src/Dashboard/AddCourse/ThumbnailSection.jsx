@@ -3,9 +3,9 @@ import ErrorMessageComponent from "./ErrorMessageComponent";
 import { FiUploadCloud } from "react-icons/fi";
 
 
-const ThumbnailSection = ({ register, setValue, getValues, name, errors }) => {
+const ThumbnailSection = ({ register, setValue, getValues, name, errors , previewFile , setPreviewFile }) => {
   const [file, setFile] = useState(null);
-  const [previewFile, setPreviewFile] = useState(null);
+  
   const fileRef = useRef(null);
   const fileUploadHandler = (e) => {
     const selectedFile = e.target.files[0];
