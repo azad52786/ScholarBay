@@ -10,6 +10,8 @@ import { BiSolidAddToQueue } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import ThumbnailSection from "./ThumbnailSection";
 import { createCourse } from "../../service/operations/CourseBackendConnection";
+import { FaArrowAltCircleRight } from "react-icons/fa";
+import { setCourseDetails, setEditCourseDetails, setStep } from "../../Store/Slices/CreateCourseSlice";
 
 const CreateCourseForm = () => {
   const { editCourseDetails, courseDetails } = useSelector(
@@ -76,19 +78,7 @@ const CreateCourseForm = () => {
     newArray.splice(index, 1);
     setCopyArray(newArray);
   }
-  useEffect(() => {
-    isMounted = true;
-    register("category", { required: "This Field is Required" });
-    register("instructions", { required: "This Field is Required" });
-
-    if (editCourseDetails) {
-      // setValue("course" , courseDetails.)
-    }
-    fetchAllTags();
-    return () => {
-      isMounted = false;
-    }
-  }, []);
+ 
   //   course,
   //     courseDescription,
   //     whatYouWillLearn,
@@ -98,6 +88,18 @@ const CreateCourseForm = () => {
   //     instructions,
   //     benefitOfCourse
 
+function resetAllData() {
+  reset({
+    course: "",
+    courseDescription: "",
+    price: "",
+    benefitOfCourse: "",
+    thumbnailImage: ""
+  });
+  setCatagoryArray([]);
+  setInstructionsArray([]);
+  setPreviewFile(null)
+}
   const onsubmit = (data) => {
     if (!editCourseDetails) {
       const formData = new FormData();
@@ -110,20 +112,49 @@ const CreateCourseForm = () => {
       formData.append("benefitOfCourse", data.benefitOfCourse);
       formData.append("thumbnailImage", data.thumbnailImage);
       dispatch(createCourse(formData , token));
-      reset({
-        course: "",
-        courseDescription: "",
-        price: "",
-        benefitOfCourse: "",
-        thumbnailImage: ""
-      });
-      setCatagoryArray([]);
-      setInstructionsArray([]);
-      setPreviewFile(null)
+      resetAllData();
     }else{
-      
+
     }
   };
+  const continueWithChangesHandeler = () => {
+    const newcourseDetails = {
+      ...courseDetails , 
+      courseName : getValues("course") , 
+      courseDescription : getValues("courseDescription"),
+        price : getValues("price"),
+        tag : getValues("tag"),
+        category : catagoryArray,
+        instructions : instructionsArray,
+        benefitOfCourse : getValues("benefitOfCourse") , 
+        thumbnail : getValues("thumbnailImage") , 
+    }
+    dispatch(setCourseDetails(newcourseDetails))
+    dispatch(setStep(2));
+  }
+  useEffect(() => {
+    isMounted = true;
+    register("category", { required: "This Field is Required" });
+    register("instructions", { required: "This Field is Required" });
+
+    if (editCourseDetails) {
+      setValue("course" , courseDetails.courseName);
+      setValue("courseDescription" , courseDetails.courseDescription);
+      setValue("price" , courseDetails.price);
+      setValue("tag" , courseDetails.tag._id);
+      setValue("category" , courseDetails.category);
+      setValue("instructions" , courseDetails.instructions);
+      setValue("benefitOfCourse" , courseDetails.benefitOfCourse);
+      setValue("thumbnailImage" , courseDetails.thumbnail);
+      setPreviewFile(courseDetails.thumbnail);
+      setCatagoryArray(courseDetails.category);
+      setInstructionsArray(courseDetails.instructions);
+    }
+    fetchAllTags();
+    return () => {
+      isMounted = false;
+    }
+  }, []);
   return (
     <div className=" h-full w-full mt-6">
       <form
@@ -132,7 +163,7 @@ const CreateCourseForm = () => {
             p-6 pr-12 text-pure-greys-25 font-inter"
       >
         <div className=" w-full h-fit flex gap-y-1 flex-col mb-3 text-pure-greys-100 ">
-          <label htmlFor="course" className="text-pure-greys-25">
+          <label htmlFor="course" className="text-pure-greys-25 w-fit">
             Course Title <sup className=" text-red">*</sup>
           </label>
           <input
@@ -149,7 +180,7 @@ const CreateCourseForm = () => {
           <ErrorMessageComponent errors={errors} name="course" />
         </div>
         <div className=" w-full h-fit flex gap-y-1 mb-3 flex-col text-pure-greys-100 ">
-          <label htmlFor="courseDescription" className="text-pure-greys-25">
+          <label htmlFor="courseDescription" className="text-pure-greys-25 w-fit">
             Course Description <sup className=" text-red mb-1">*</sup>
           </label>
           <textarea
@@ -161,12 +192,16 @@ const CreateCourseForm = () => {
                 value: true,
                 message: "This input is required.",
               },
+              minLength : {
+                value : 120 , 
+                message : "At minimum 120 words is required"
+              }
             })}
           />
           <ErrorMessageComponent errors={errors} name="courseDescription" />
         </div>
         <div className=" w-full h-fit flex gap-y-1 mb-3 flex-col relative text-pure-greys-100 ">
-          <label htmlFor="price" className="text-pure-greys-25">
+          <label htmlFor="price" className="text-pure-greys-25 w-fit">
             Price <sup className=" text-red mb-1">*</sup>
           </label>
           <div className=" relative w-full h-full">
@@ -195,7 +230,7 @@ const CreateCourseForm = () => {
           <ErrorMessageComponent errors={errors} name="price" />
         </div>
         <div className=" w-full h-fit flex gap-y-1 flex-col mb-3 ">
-          <label htmlFor="tag" className="text-pure-greys-25">
+          <label htmlFor="tag" className="text-pure-greys-25 w-fit">
             Choose your Tag <sup className=" text-red">*</sup>
           </label>
           <select
@@ -219,7 +254,7 @@ const CreateCourseForm = () => {
           <ErrorMessageComponent errors={errors} name="tag" />
         </div>
         <div className=" w-full h-fit flex gap-y-1 flex-col mb-3 text-pure-greys-100 ">
-          <label htmlFor="category" className="text-pure-greys-25">
+          <label htmlFor="category" className="text-pure-greys-25 w-fit">
             Catagorys <sup className=" text-red">*</sup>
           </label>
           <div className="flex flex-wrap gap-4">
@@ -276,7 +311,7 @@ const CreateCourseForm = () => {
           previewFile = {previewFile}
         />
         <div className=" w-full h-fit flex gap-y-1 mb-3 flex-col text-pure-greys-100 ">
-          <label htmlFor="benefitOfCourse" className="text-pure-greys-25">
+          <label htmlFor="benefitOfCourse" className="text-pure-greys-25 w-fit">
             Benefits of the course <sup className=" text-red mb-1">*</sup>
           </label>
           <textarea
@@ -293,7 +328,7 @@ const CreateCourseForm = () => {
           <ErrorMessageComponent errors={errors} name="benefitOfCourse" />
         </div>
         <div className=" w-full h-fit flex gap-y-1 flex-col mb-3 text-pure-greys-100">
-          <label htmlFor="instructions" className="text-pure-greys-25">
+          <label htmlFor="instructions" className="text-pure-greys-25 w-fit">
             Instructions <sup className=" text-red">*</sup>
           </label>
 
@@ -352,9 +387,30 @@ const CreateCourseForm = () => {
              w-fit py-2 px-6 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
           />
         )}
+        {
+          editCourseDetails && 
+          <div className=" mt-10 flex flex-col gap-y-3 items-start">
+          <div className={`font-semibold flex gap-x-2 items-center font-inter text-pure-greys-5 bg-pure-greys-400
+            w-fit py-2 px-2 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
+              onClick={() => {
+                  resetAllData();
+                  dispatch(setStep(2));
+              }}
+            >
+            Continue With Out Changes <FaArrowAltCircleRight/>
+          </div>
+          <div className={`font-semibold flex gap-x-2 items-center font-inter text-black bg-[#FFD60A]
+            w-fit py-2 px-2  rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
+              onClick={continueWithChangesHandeler}
+            >
+            Save Changes and Continue <FaArrowAltCircleRight/>
+          </div>
+          </div>
+        }
       </form>
     </div>
   );
 };
 
 export default CreateCourseForm;
+// ' : 'text-white bg-richblack-800 

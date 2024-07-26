@@ -18,7 +18,7 @@ export const PROFILE_API = {
 export const COURSE_API = {
     GET_ALL_TAGS : `${BASE_URL + '/course/showAllTags'}` , 
     GET_ALL_USER_ENROLLED_COURSE : `${BASE_URL + '/profile/getEnrolledCourses'}` , 
-    CREATE_COURSE : `${BASE_URL + '/course/createCourse'}`
+    CREATE_COURSE : `${BASE_URL + '/course/createCourse'}` , 
 }
 
 export const SEND_MAIL = {

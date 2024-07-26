@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CourseCreationData } from "../../utils/constants";
 import { courseUploadTips } from "../../utils/constants";
 import CreateCourseForm from "./CreateCourseForm";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StepSection from "./StepSection";
+import { setEditCourseDetails, setStep } from "../../Store/Slices/CreateCourseSlice";
 export default function AddCourse(){
-    const { step } = useSelector((store) => store.CourseData)
+    const { step , editCourseDetails } = useSelector((store) => store.CourseData);
+    const dispatch = useDispatch()
+    useEffect(() => {
+        return () => {
+            dispatch(setEditCourseDetails(false))
+            dispatch(setStep(1));
+        }
+    }, [])
     return (
         <div className="w-full h-full flex  gap-5 mt-6 ">
             <div className="w-[60%]">
-                <div className=" w-full text-center text-2xl text-pure-greys-25 font-bold font-inter">Add Course</div>
+                <div className=" w-full text-center text-2xl text-pure-greys-25 font-bold font-inter">
+                {!editCourseDetails ? "Add Course" : "Edit Course"}</div>
                 <StepSection CourseCreationData = { CourseCreationData } step = {step}/>
                 {step === 1 && <CreateCourseForm/>}
                 

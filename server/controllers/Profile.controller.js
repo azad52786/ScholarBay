@@ -1,3 +1,4 @@
+const Course = require("../models/Course");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const { cloudinaryImageUploader } = require("../utils/imageUploader");
@@ -60,7 +61,7 @@ exports.getUserDetails = async function(req, res) {
         const user_id = req.user.id;
         const userDetails = await User.findById(user_id)
         .populate("additionalDetails")
-		.exec();;
+		.exec();
         return res.status(200).json({
             success: true,
             message: "User Details Fetched Successfully", 
@@ -76,22 +77,75 @@ exports.getUserDetails = async function(req, res) {
 }
 
 exports.getEnrolledCourses = async (req, res) => {
+  const monthMap = new Map([
+    [0, 'January'],
+    [1, 'February'],
+    [2, 'March'],
+    [3, 'April'],
+    [4, 'May'],
+    [5, 'June'],
+    [6, 'July'],
+    [7, 'August'],
+    [8, 'September'],
+    [9, 'October'],
+    [10, 'November'],
+    [11, 'December']
+]);
     try {
       const userId = req.user.id
-      const userDetails = await User.findOne({
+      const userDetails = await User.findOne(
+      {
         _id: userId,
-      })
-        .populate("courses")
-        .exec()
+      } , 
+      {
+        courses : 1 , 
+      }
+      )
+        .populate({
+          path : "courses" , 
+          populate : {
+              path: 'tag',
+              model: 'Tag'
+          }
+        })
+        .exec();
+        // console.log(userDetails)
+        
       if (!userDetails) {
         return res.status(400).json({
           success: false,
           message: `Could not find user with id: ${userDetails}`,
         })
       }
+      const courses = [
+        ...userDetails.courses
+      ]
+      
+      
+      const myCourses = courses.map((course) => {
+        const date = new Date(course.createdAt);
+        // if(course.createdAt) console.log(date)
+          return {
+            ...course.toObject() , 
+            createdData : {
+              year: date.getFullYear(),
+              month: monthMap.get(date.getMonth()),
+              date: date.getDate(),
+              minute: date.getMinutes(),
+              hour: date.getHours()
+            }
+           
+          }
+          // course.createdTime = {
+            
+          // }
+          // console.log(course.createdTime)
+      })
+      
+      console.log(myCourses)
       return res.status(200).json({
         success: true,
-        data: userDetails.courses,
+        courses : myCourses
       })
     } catch (error) {
       return res.status(500).json({

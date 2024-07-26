@@ -1,12 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-// course,
-  //   courseDescription,
-  //   whatYouWillLearn,
-  //   price,
-  //   tag,
-  //   category,
-  //   instructions,
-  //   benefitOfCourse
 const initialState = {
   step: 1,
   courseDetails: null,
