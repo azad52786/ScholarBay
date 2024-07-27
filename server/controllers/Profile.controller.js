@@ -103,10 +103,16 @@ exports.getEnrolledCourses = async (req, res) => {
       )
         .populate({
           path : "courses" , 
-          populate : {
-              path: 'tag',
-              model: 'Tag'
-          }
+          populate : [
+            {
+                path: 'tag',
+                model: 'Tag'
+            }, 
+            {
+                path : "courseContent" , 
+                model : "Section"
+            }
+          ]
         })
         .exec();
         // console.log(userDetails)

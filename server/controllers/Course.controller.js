@@ -20,7 +20,6 @@ exports.createCourse = async (req, res) => {
     if (
       !course ||
       !courseDescription ||
-      // !whatYouWillLearn ||
       !price ||
       !tag ||
       !category || 
@@ -33,7 +32,6 @@ exports.createCourse = async (req, res) => {
         message: `Please Fill up All the Required Fields`,
       });
     }
-    console.log(typeof category)
     const instructorId = req.user.id;
     if(typeof category === "string") category = JSON.parse(category)
     if(typeof instructions === "string") instructions = JSON.parse(instructions)
@@ -96,6 +94,116 @@ exports.createCourse = async (req, res) => {
     });
   }
 };
+
+exports.updateCourseDetails = async (req , res) => {
+    try{
+      let {
+        _id , 
+        course,
+        courseDescription,
+        // whatYouWillLearn,
+        price,
+        tag,
+        category,
+        instructions,
+        benefitOfCourse
+      } = req.body;
+      const thumbnail = req.files?.thumbnailImage;
+      console.log(thumbnail);
+      if (
+        !_id ||
+        !course ||
+        !courseDescription ||
+        !price ||
+        !tag ||
+        !category || 
+        !instructions ||
+        !benefitOfCourse
+      ) {
+        return res.status(404).json({
+          success: false,
+          message: `Please Fill up All the Required Fields`,
+        });
+      }
+      const instructorId = req.user.id;
+      if(typeof category === "string") category = JSON.parse(category)
+      if(typeof instructions === "string") instructions = JSON.parse(instructions)
+      
+  
+      let cloudinaryImage;
+      if(thumbnail !== undefined){
+        cloudinaryImage = await cloudinaryImageUploader(
+        thumbnail,
+        process.env.FOLDER_NAME
+      );
+      cloudinaryImage = cloudinaryImage.secure_url;
+      }else{
+        console.log(req.body.thumbnailImage)
+        
+        if(req.body.thumbnailImage === undefined){
+          return res.json(401).status({
+            message : "Thumbnail is required" , 
+            success : false ,
+          })
+        }
+        cloudinaryImage = req.body.thumbnailImage;
+      }
+      console.log(cloudinaryImage);
+      const tagDetails = await Tag.findById(tag);
+      if (!tagDetails) {
+        return res.status(404).json({
+          success: false,
+          message: `Tag Not Found`,
+        });
+      }
+      const courseDetails = await Course.findById(_id).populate({
+        path : "courseContent" , 
+        populate : {
+          path : "subSection" , 
+          model : "SubSection"
+        }
+      });
+      if (!courseDetails) {
+        return res.status(404).json({
+          success: false,
+          message: 'Course not found',
+        });
+      }
+      if(String(courseDetails.tag) !== String(tag)){
+         await Tag.findByIdAndUpdate(courseDetails.tag , {
+          $pull :{
+            courses : courseDetails._id , 
+          }
+         })
+         await Tag.findByIdAndUpdate( tag , {
+          $push :{
+            courses : courseDetails._id , 
+          }
+         })
+      }
+    courseDetails.course = course;
+    courseDetails.courseDescription = courseDescription;
+    courseDetails.price = price;
+    courseDetails.category = category;
+    courseDetails.instructions = instructions;
+    courseDetails.benefitOfCourse = benefitOfCourse;
+    courseDetails.thumbnail = cloudinaryImage;
+    courseDetails.tag = tagDetails._id; 
+    await courseDetails.save();
+    console.log("courseDetails is : " , courseDetails.thumbnail)
+    return res.status(200).json({
+      success : true , 
+      message : "Course is Successfully Updated 😍😍", 
+      upDatedcourse : courseDetails , 
+    })
+    }catch(e){
+      return res.status(505).json({
+        success : false , 
+        error : e.message , 
+        message : "error occure while Course Details Updateing🤦‍♂️"
+      })
+    }
+}
 
 exports.showAllCourse = async function (req, res) {
   try {

@@ -3,7 +3,7 @@ const Section = require("../models/Section");
 
 exports.createSection = async function(req , res) {
     try{
-      const {sectionName , courseId} = req.body;
+      const { sectionName , courseId } = req.body;
       if(!sectionName || !courseId){
         return res.status(400).json({
             success: false,
@@ -75,15 +75,18 @@ exports.updateSection = async(req, res) => {
 
 exports.deleteSection = async(req, res) => {
     try {
-      const {sectionId} = req.params;
+      
+      const { sectionId } = req.params;
       const deletedSection = await Section.findByIdAndDelete(sectionId);
-      const updateCourse = await Course.updateMany(
-        {"courseContent" : sectionId} , 
-        {$pull : {"courseContent" : sectionId}}
+      const updateCourse = await Course.findOneAndUpdate(
+        {"courseContent" : { $in : sectionId}} , 
+        {$pull : {"courseContent" : sectionId}}  , 
+        { new: true } 
       )
       res.status(200).send({
         success: true,
-        message: "Section Deleted Successfully"
+        message: "Section Deleted Successfully" , 
+        updatedCourse : updateCourse
       })
     }catch(e){
      res.status(500).json({

@@ -39,7 +39,7 @@ const MyCourseHome = () => {
                     <div className=" w-[30%] rounded-md max-h-[170px] ">
                       <img
                         src={course?.thumbnail}
-                        className=" h-full w-full rounded-md"
+                        className=" h-full w-full rounded-md border border-pure-greys-400"
                         alt="Thumbnail"
                         loading="lazy"
                       />

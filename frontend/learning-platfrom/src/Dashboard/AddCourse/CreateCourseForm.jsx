@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import ThumbnailSection from "./ThumbnailSection";
-import { createCourse } from "../../service/operations/CourseBackendConnection";
+import { createCourse, updateCourseDetails } from "../../service/operations/CourseBackendConnection";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { setCourseDetails, setEditCourseDetails, setStep } from "../../Store/Slices/CreateCourseSlice";
 
@@ -100,38 +100,46 @@ function resetAllData() {
   setInstructionsArray([]);
   setPreviewFile(null)
 }
+  const createFormData = (data) => {
+    const formData = new FormData();
+    formData.append("course", data.course);
+    formData.append("courseDescription", data.courseDescription);
+    formData.append("price", data.price);
+    formData.append("tag", data.tag);
+    formData.append("category",JSON.stringify(data.category));
+    formData.append("instructions", JSON.stringify(data.instructions));
+    formData.append("benefitOfCourse", data.benefitOfCourse);
+    formData.append("thumbnailImage", data.thumbnailImage);
+    return formData;
+  }
   const onsubmit = (data) => {
     if (!editCourseDetails) {
-      const formData = new FormData();
-      formData.append("course", data.course);
-      formData.append("courseDescription", data.courseDescription);
-      formData.append("price", data.price);
-      formData.append("tag", data.tag);
-      formData.append("category",JSON.stringify(data.category));
-      formData.append("instructions", JSON.stringify(data.instructions));
-      formData.append("benefitOfCourse", data.benefitOfCourse);
-      formData.append("thumbnailImage", data.thumbnailImage);
+      let formData = createFormData(data);
       dispatch(createCourse(formData , token));
       resetAllData();
     }else{
-
+      console.log(data);
+      console.log(courseDetails)
+      if( data.course === courseDetails.courseName &&
+        data.courseDescription === courseDetails.courseDescription &&
+        data.price === courseDetails.price &&
+        String(data.tag) === String(courseDetails.tag._id) &&
+        JSON.stringify(data.category) === JSON.stringify(courseDetails.category) &&
+        JSON.stringify(data.instructions) === JSON.stringify(courseDetails.instructions) &&
+        data.benefitOfCourse === courseDetails.benefitOfCourse &&
+        data.thumbnailImage === courseDetails.thumbnail
+      ){
+        toast.error("Your Can not even change your data . Then what you are trying to update");
+        return;
+      }
+      
+      let formData = createFormData(data);
+      console.log(JSON.stringify(formData.get("category")))
+      formData.append("_id" , courseDetails._id)
+      dispatch(updateCourseDetails(formData , token));
     }
   };
-  const continueWithChangesHandeler = () => {
-    const newcourseDetails = {
-      ...courseDetails , 
-      courseName : getValues("course") , 
-      courseDescription : getValues("courseDescription"),
-        price : getValues("price"),
-        tag : getValues("tag"),
-        category : catagoryArray,
-        instructions : instructionsArray,
-        benefitOfCourse : getValues("benefitOfCourse") , 
-        thumbnail : getValues("thumbnailImage") , 
-    }
-    dispatch(setCourseDetails(newcourseDetails))
-    dispatch(setStep(2));
-  }
+
   useEffect(() => {
     isMounted = true;
     register("category", { required: "This Field is Required" });
@@ -399,12 +407,13 @@ function resetAllData() {
             >
             Continue With Out Changes <FaArrowAltCircleRight/>
           </div>
-          <div className={`font-semibold flex gap-x-2 items-center font-inter text-black bg-[#FFD60A]
+          <button type="submit" className={`font-semibold flex gap-x-2 items-center font-inter text-black bg-[#FFD60A]
             w-fit py-2 px-2  rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
-              onClick={continueWithChangesHandeler}
+              // onClick={continueWithChangesHandeler}
             >
-            Save Changes and Continue <FaArrowAltCircleRight/>
-          </div>
+            Save Changes and Continue
+           <FaArrowAltCircleRight/>
+          </button>
           </div>
         }
       </form>

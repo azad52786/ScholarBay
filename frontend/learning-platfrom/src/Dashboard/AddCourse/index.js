@@ -5,6 +5,7 @@ import CreateCourseForm from "./CreateCourseForm";
 import { useDispatch, useSelector } from "react-redux";
 import StepSection from "./StepSection";
 import { setEditCourseDetails, setStep } from "../../Store/Slices/CreateCourseSlice";
+import SectionHome from "../Addsections/SectionHome";
 export default function AddCourse(){
     const { step , editCourseDetails } = useSelector((store) => store.CourseData);
     const dispatch = useDispatch()
@@ -20,8 +21,8 @@ export default function AddCourse(){
                 <div className=" w-full text-center text-2xl text-pure-greys-25 font-bold font-inter">
                 {!editCourseDetails ? "Add Course" : "Edit Course"}</div>
                 <StepSection CourseCreationData = { CourseCreationData } step = {step}/>
-                {step === 1 && <CreateCourseForm/>}
-                
+                { step === 1 && <CreateCourseForm/> }
+                { step === 2 && <SectionHome/> }
             </div>
             <div className=" w-[30%] ">
                 <div className=" w-fit h-fit p-6  bg-richblack-700 rounded-md text-start border border-pure-greys-500 font-inter">
