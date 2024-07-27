@@ -59,7 +59,7 @@ export const updateCourseDetails = (formData , token ) => {
         }catch(e)  {
             toast.dismiss(toastId);
             console.log("error messase is" , e.message);
-            toast.error(e.message);
+            toast.error(e.response.data.message);
         }
         
     }
@@ -87,8 +87,8 @@ export const createSectionCall = async(data , token , dispatch) => {
         dispatch(setCourseDetails(responce.data.updatedCourse));
     }catch(e){
         toast.dismiss(toastId)
-        toast.error(e.message)
-        console.log(e.message);
+        toast.error(e.response.data.message);
+        console.log(e);
         
     }
 }
@@ -100,7 +100,10 @@ export const deleteSection = async(sectionId , token , dispatch) => {
         const responce = await Apiconnection(
             "DELETE" , 
            url , 
-           
+           null , 
+           {
+                "Authorization" : `Bearer ${token}` , 
+            }
         )
         if(!responce.data.success){
             toast.error("Sorry Something Went Wrong . please Try Again 🙇")
@@ -112,7 +115,34 @@ export const deleteSection = async(sectionId , token , dispatch) => {
         dispatch(setCourseDetails(responce.data.updatedCourse));
     }catch(e){
         toast.dismiss(toastId)
-        toast.error(e.message)
-        console.log(e.message);
+        toast.error(e.response.data.message);
+        console.log(e);
+    }
+}
+
+export const updateSection = async(formData , token , dispatch) => {
+    const toastId = toast.loading("Updateing Section....🙂")
+    try{
+        const responce = await Apiconnection(
+            "POST" , 
+           COURSE_API.UPDATE_SECTION , 
+           formData , 
+           {
+                "Content-Type" : 'application/json' , 
+                "Authorization" : `Bearer ${token}` , 
+            }
+        )
+        if(!responce.data.success){
+            toast.error("Sorry Something Went Wrong . please Try Again 🙇")
+            // console.log("Create section return success false")
+        }
+        toast.dismiss(toastId)
+        toast.success("Section is Successfully Deleted 😍");
+        console.log(responce.data)
+        return responce.data.updateSection;
+    }catch(e){
+        toast.dismiss(toastId)
+        toast.error(e.response.data.message);
+        console.log(e);
     }
 }

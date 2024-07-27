@@ -10,9 +10,16 @@ exports.createSection = async function(req , res) {
             message: "All fields are required"
         })
       }
+      const isPresent = await Section.findOne({sectionName : sectionName.trim()});
+      if(isPresent){
+        return res.status(401).json({
+          success : false  ,
+          message : "Section is Already Created 🤔"
+        })
+      }
       const section = await Section.create({
-        sectionName : sectionName
-      })
+        sectionName : sectionName.trim()
+      });
       const updatedCourse = await Course.findByIdAndUpdate(
         {_id : courseId} , 
         {
@@ -65,7 +72,7 @@ exports.updateSection = async(req, res) => {
         updateSection
       })
     }catch(e){
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
         message: "Error updating section",
         error: e.message,
@@ -82,7 +89,12 @@ exports.deleteSection = async(req, res) => {
         {"courseContent" : { $in : sectionId}} , 
         {$pull : {"courseContent" : sectionId}}  , 
         { new: true } 
-      )
+      ).populate({
+        path : "courseContent" , 
+        populate : {
+          path : "subSection"
+        }
+      });
       res.status(200).send({
         success: true,
         message: "Section Deleted Successfully" , 

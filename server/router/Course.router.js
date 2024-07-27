@@ -25,7 +25,7 @@ router.post('/updateSection' , auth , isInstructor , updateSection);
 router.delete("/deleteSection/:sectionId", auth, isInstructor, deleteSection)
 // http://localhost:4000/api/v1/course/deleteSection
 // Edit Sub Section
-router.post("/updateSubSection", auth, isInstructor, updateSubsection)
+router.put("/updateSubSection", auth, isInstructor, updateSubsection)
 // http://localhost:4000/api/v1/course/updateSubSection
 // Delete Sub Section
 router.post("/deleteSubSection", auth, isInstructor, deleteSubsection)

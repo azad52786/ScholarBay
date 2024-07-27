@@ -21,7 +21,9 @@ export const COURSE_API = {
     CREATE_COURSE : `${BASE_URL + '/course/createCourse'}` ,
     UPDATE_COURSE : `${BASE_URL + '/course/updateCourse'}` , 
     CREATE_SECTION : `${BASE_URL + '/course/addSection'}` , 
-    DELETE_SECTION : `${BASE_URL + '/course/deleteSection/'}`
+    DELETE_SECTION : `${BASE_URL + '/course/deleteSection/'}` , 
+    UPDATE_SECTION : `${BASE_URL + '/course/updateSection'}`
+    
 }
 
 export const SEND_MAIL = {

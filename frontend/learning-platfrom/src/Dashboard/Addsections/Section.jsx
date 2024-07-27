@@ -8,21 +8,21 @@ import { TbPencilCancel } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import { deleteSection } from "../../service/operations/CourseBackendConnection";
 
-const Section = ({ section, index, setCreateSection, setValue , token }) => {
+const Section = ({ section , index, setShowCreateSection, setValue , token , setEditSectionId , editSectionbtn , setEditSectionName}) => {
   const [show, setShow] = useState(false);
-  const [editSection, setEditsection] = useState(false);
-  const [editSectionId, setEditSectionId] = useState(null);
   const dispatch = useDispatch();
   const editSectionHandeler = () => {
-    setEditsection(true);
+    setEditSectionId(section._id);
+    setEditSectionName(section.sectionName)
     console.log(section);
-    setCreateSection(false);
+    setShowCreateSection(false);
     setValue("sectionName", section.sectionName);
   };
   const cancelEditSectionHandeler = () => {
-    setEditsection(false);
+    setEditSectionId(-1);
+    setEditSectionName("");
     setValue("sectionName", "");
-    setCreateSection(true)
+    setShowCreateSection(true)
   }
   const deleteSectionHandeler = (sectionId) => {
     deleteSection(sectionId , token , dispatch)
@@ -37,13 +37,13 @@ const Section = ({ section, index, setCreateSection, setValue , token }) => {
           </div>
         </div>
         <div className=" flex items-center justify-center text[#6E727F]">
-          {!editSection ? (
+          {!editSectionbtn ? (
             <MdOutlineEdit
               className=" h-6 w-10 cursor-pointer "
               onClick={editSectionHandeler}
             />
           ) : (
-            <TbPencilCancel className=" h-6 w-10 cursor-pointer " 
+            <TbPencilCancel className=" h-6 w-10 cursor-pointer text-caribbeangreen-200" 
                 onClick={cancelEditSectionHandeler}
             />
           )}
