@@ -5,10 +5,12 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import { PiCaretCircleUpBold } from "react-icons/pi";
 import { FiPlusCircle } from "react-icons/fi";
 import { TbPencilCancel } from "react-icons/tb";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteSection } from "../../service/operations/CourseBackendConnection";
+import { setIndexOfSection, setSectionId, setShowSubSectionForm, setSubSection } from "../../Store/Slices/SubSectionSlice";
 
 const Section = ({ section , index, setShowCreateSection, setValue , token , setEditSectionId , editSectionbtn , setEditSectionName}) => {
+  
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const editSectionHandeler = () => {
@@ -66,7 +68,7 @@ const Section = ({ section , index, setShowCreateSection, setValue , token , set
       {
         // itrate all the subSection Array
       }
-      <div className="flex w-[90%] items-center justify-between font-inter px-10 py-2 border-b border-richblack-500">
+      {/* <div className="flex w-[90%] items-center justify-between font-inter px-10 py-2 border-b border-richblack-500">
         <div className="flex items-center">
           <FaSortAmountDown className=" h-4 w-8 text-[#6E727F]" />
           <div className=" text-[#C5C7D4] text-[16px]">
@@ -77,10 +79,19 @@ const Section = ({ section , index, setShowCreateSection, setValue , token , set
           <MdOutlineEdit className=" h-6 w-10 cursor-pointer " />
           <MdDeleteSweep className=" h-6 w-10 cursor-pointer" />
         </div>
-      </div>
-      <button className=" px-2 py-2 my-2 text-[12px] text-yellow-100 flex w-fit items-center justify-center gap-x-3 border border-yellow-50 rounded-md">
+      </div> */}
+      <div type="text" className=" px-2 py-2 my-2 text-[12px] text-yellow-100 flex w-fit items-center justify-center gap-x-3 
+      border border-yellow-50 rounded-md cursor-pointer"
+        onClick={() => 
+        {
+          dispatch(setShowSubSectionForm(true))
+          dispatch(setIndexOfSection(index));
+          dispatch(setSectionId(section._id));
+          }
+        }
+      >
         <FiPlusCircle /> Add New SubSection
-      </button>
+      </div>
     </div>
   );
 };

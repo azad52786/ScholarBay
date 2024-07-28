@@ -78,15 +78,6 @@ const CreateCourseForm = () => {
     newArray.splice(index, 1);
     setCopyArray(newArray);
   }
- 
-  //   course,
-  //     courseDescription,
-  //     whatYouWillLearn,
-  //     price,
-  //     tag,
-  //     category,
-  //     instructions,
-  //     benefitOfCourse
 
 function resetAllData() {
   reset({
