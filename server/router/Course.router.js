@@ -25,10 +25,10 @@ router.post('/updateSection' , auth , isInstructor , updateSection);
 router.delete("/deleteSection/:sectionId", auth, isInstructor, deleteSection)
 // http://localhost:4000/api/v1/course/deleteSection
 // Edit Sub Section
-router.put("/updateSubSection", auth, isInstructor, updateSubsection)
+router.post("/updateSubSection", auth, isInstructor, updateSubsection)
 // http://localhost:4000/api/v1/course/updateSubSection
 // Delete Sub Section
-router.post("/deleteSubSection", auth, isInstructor, deleteSubsection)
+router.delete("/deleteSubSection/:subSectionId", auth, isInstructor, deleteSubsection)
 // http://localhost:4000/api/v1/course/deleteSubSection
 // Add a Sub Section to a Section
 router.post("/addSubSection", auth, isInstructor, createSubSection)

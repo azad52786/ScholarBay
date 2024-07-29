@@ -1,17 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    indexOfsubsection : -1 , 
-    indexOfsection : -1 , 
+    // indexOfsubsection : -1 , 
+    // indexOfsection : -1 , 
     sectionId : null , 
-    subsectionDetails : {
-        thumbnail : null , 
-        hours : null , 
-        minutes : null , 
-        title : null,
-        description : null , 
-    }, 
+    subsectionDetails : null , 
     showSubsectionForm : false , 
+    editSubSection : false , 
    
 }
 const SubsectionFormSlice = createSlice({
@@ -30,20 +25,18 @@ const SubsectionFormSlice = createSlice({
         setShowSubSectionForm : (state , action ) => {
             state.showSubsectionForm = action.payload;
         },  
+        setEditSubSection :(state , action ) => {
+            state.editSubSection = action.payload ;
+        } , 
         setSectionId : (state , action) => {
             state.sectionId = action.payload;
         } , 
         removeSubsection : (state , action) => {
-            state.indexOfsubsection =-1; 
-            state.indexOfsection = -1 ;
+            // state.indexOfsubsection =-1; 
+            // state.indexOfsection = -1 ;
+            state.editSubSection = false ;
             state.sectionId = null ;
-            state.subsectionDetails = {
-                thumbnail : null , 
-                hours : null , 
-                minutes : null , 
-                title : null,
-                description : null , 
-            };
+            state.subsectionDetails = null;
             state.showSubsectionForm = false ; 
         }
     }
@@ -52,4 +45,4 @@ const SubsectionFormSlice = createSlice({
 
 export default SubsectionFormSlice.reducer;
 
-export const { setSubSection , setShowSubSectionForm , setSectionId , removeSubsection , setIndexOfSubsection , setIndexOfSection } = SubsectionFormSlice.actions;
+export const { setSubSection , setShowSubSectionForm ,setEditSubSection,  setSectionId , removeSubsection , setIndexOfSubsection , setIndexOfSection } = SubsectionFormSlice.actions;

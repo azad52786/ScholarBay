@@ -111,6 +111,7 @@ const SectionHome = () => {
                 setEditSectionId={setEditSectionId}
                 editSectionbtn={editSectionId === section._id}
                 setEditSectionName={setEditSectionName}
+                editSectionName = {editSectionName}
               />
             ))}
           </div>

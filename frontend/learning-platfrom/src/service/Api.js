@@ -22,7 +22,10 @@ export const COURSE_API = {
     UPDATE_COURSE : `${BASE_URL + '/course/updateCourse'}` , 
     CREATE_SECTION : `${BASE_URL + '/course/addSection'}` , 
     DELETE_SECTION : `${BASE_URL + '/course/deleteSection/'}` , 
-    UPDATE_SECTION : `${BASE_URL + '/course/updateSection'}`
+    UPDATE_SECTION : `${BASE_URL + '/course/updateSection'}` , 
+    CREATE_SUBSECTION : `${BASE_URL + '/course/addSubSection'}` , 
+    UPDATE_SUBSECTION : `${BASE_URL + '/course/updateSubSection'}` ,
+    DELETE_SUBSECTION : `${BASE_URL + '/course/deleteSubSection'}` , 
     
 }
 

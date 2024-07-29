@@ -146,3 +146,84 @@ export const updateSection = async(formData , token , dispatch) => {
         console.log(e);
     }
 }
+
+export const createSubSection = async (data , token) => {
+    let toastId = toast.loading("SubSection is Creating....😍")
+    try{    
+        let response = await Apiconnection(
+            "post" , 
+            COURSE_API.CREATE_SUBSECTION , 
+            data , 
+            {
+                'Content-Type' : 'multipart/form-data' , 
+                'Authorization' : `Bearer ${token}`
+            }
+        );
+        if(!response.data.success){
+            toast.dismiss(toastId)
+            toast.error("Sorry Something Went Wrong . please Try Again 🙇")
+        }
+        toast.dismiss(toastId)
+        toast.success("SubSection is Successfully Created 😍");
+        console.log(response.data)
+        return response.data;
+    }catch(e){
+        toast.dismiss(toastId)
+        toast.error(e.response.data.message);
+        console.log(e);
+    }
+}
+export const updateSubSection = async (data , token) => {
+    let toastId = toast.loading("Updateing Subsection...")
+    try{    
+        let response = await Apiconnection(
+            "post" , 
+            COURSE_API.UPDATE_SUBSECTION , 
+            data , 
+            {
+                'Content-Type' : 'multipart/form-data' , 
+                'Authorization' : `Bearer ${token}`
+            }
+        );
+        if(!response.data.success){
+            toast.dismiss(toastId)
+            toast.error("Sorry Something Went Wrong . please Try Again 🙇")
+        }
+        toast.dismiss(toastId)
+        toast.success("SubSection is Successfully Updated 😍");
+        console.log(response.data)
+        return response.data;
+    }catch(e){
+        toast.dismiss(toastId)
+        toast.error(e.response.data.message);
+        console.log(e);
+    }
+}
+export const deleteSubSectionApi = async ( formData , token , subSectionId) => {
+    let toastId = toast.loading("deleteing Subsection...");
+    console.log(formData);
+    try{    
+        let response = await Apiconnection(
+            "delete" , 
+            COURSE_API.DELETE_SUBSECTION + `/${subSectionId}`, 
+            formData , 
+            {
+                'Content-Type' : 'application/json' , 
+                'Authorization' : `Bearer ${token}`
+            } 
+        );
+        // return response
+        if(!response.data.success){
+            toast.dismiss(toastId)
+            toast.error("Sorry Something Went Wrong . please Try Again 🙇")
+        }
+        toast.dismiss(toastId)
+        toast.success("SubSection is Successfully Deleted 😍");
+        console.log(response.data)
+        return response.data;
+    }catch(e){
+        toast.dismiss(toastId)
+        // toast.error(e.response.data.message);
+        console.log(e);
+    }
+}
