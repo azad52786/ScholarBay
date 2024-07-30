@@ -9,11 +9,10 @@ import {
 } from "../../service/operations/CourseBackendConnection";
 import Section from "./Section";
 import toast from "react-hot-toast";
-import { setStep, setSubSection } from "../../Store/Slices/CreateCourseSlice";
+import { setEditCourseDetails, setStep, setSubSection } from "../../Store/Slices/CreateCourseSlice";
 import { FaChevronCircleRight } from "react-icons/fa";
 import { FaChevronCircleLeft } from "react-icons/fa";
 import SubSectionForm from "./SubSectionForm";
-
 
 const SectionHome = () => {
   const [showCreateSection, setShowCreateSection] = useState(true);
@@ -111,7 +110,7 @@ const SectionHome = () => {
                 setEditSectionId={setEditSectionId}
                 editSectionbtn={editSectionId === section._id}
                 setEditSectionName={setEditSectionName}
-                editSectionName = {editSectionName}
+                editSectionName={editSectionName}
               />
             ))}
           </div>
@@ -120,7 +119,10 @@ const SectionHome = () => {
               type="button"
               className={`font-bold text-white  bg-richblack-600  flex gap-x-2 justify-center items-center
     w-fit py-3 px-6 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
-              onClick={() => dispatch(setStep(1))}
+              onClick={() => {
+                dispatch(setStep(1));
+                dispatch(setEditCourseDetails(true))
+              }}
             >
               <FaChevronCircleLeft />
               Back
@@ -136,9 +138,7 @@ const SectionHome = () => {
           </div>
         </form>
       </div>
-      {showSubsectionForm && (
-        <SubSectionForm/>
-      )}
+      {showSubsectionForm && <SubSectionForm />}
     </>
   );
 };

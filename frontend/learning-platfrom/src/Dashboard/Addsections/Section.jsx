@@ -40,9 +40,12 @@ const Section = ({
     setValue("sectionName", section.sectionName);
   };
   const cancelEditSectionHandeler = () => {
+  
     setEditSectionId(-1);
     setEditSectionName("");
     setValue("sectionName", "");
+    
+    
     setShowCreateSection(true);
   };
   const deleteSectionHandeler = (sectionId , sectionName) => {
