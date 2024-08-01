@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import StepSection from "./StepSection";
 import { setEditCourseDetails, setStep } from "../../Store/Slices/CreateCourseSlice";
 import SectionHome from "../Addsections/SectionHome";
+import PublishHome from "../PublishSection/PublishHome";
 export default function AddCourse(){
     const { step , editCourseDetails } = useSelector((store) => store.CourseData);
     const dispatch = useDispatch()
@@ -23,6 +24,7 @@ export default function AddCourse(){
                 <StepSection CourseCreationData = { CourseCreationData } step = {step}/>
                 { step === 1 && <CreateCourseForm/> }
                 { step === 2 && <SectionHome/> }
+                { step === 3 && <PublishHome/>}
             </div>
             <div className=" w-[30%] ">
                 <div className=" w-fit h-fit p-6  bg-richblack-700 rounded-md text-start border border-pure-greys-500 font-inter">

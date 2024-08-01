@@ -61,8 +61,8 @@ const coursesSchema = new mongoose.Schema({
 	}, 
 	status: {
 		type: String,
-		default : "Drafted" , 
-		enum: ["Drafted", "Published"],
+		default : "Private" , 
+		enum: ["Private", "Public"],
 	},
 } , {timestamps : true});
 

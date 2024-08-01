@@ -36,7 +36,6 @@ async function sendVerificationEmail(email, otp) {
 		throw error;
 	}
 }
-
 // Define a post-save hook to send email after the document has been saved
 OTPSchema.pre("save", async function (next) {
 	console.log("New document saved to database");
@@ -49,7 +48,6 @@ OTPSchema.pre("save", async function (next) {
 	}
 	next();
 });
-
 const OTP = mongoose.model("OTP", OTPSchema);
 
 module.exports = OTP;

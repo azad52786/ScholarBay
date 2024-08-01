@@ -21,6 +21,9 @@ const MyCourseHome = () => {
       dispatch(setCourseDetails(course));
       navigate('/dashboard/default/add-course');
   }
+  useEffect(() => {
+    dispatch(setCourseDetails(null))
+  } , [])
   console.log(courses);
   return (
     <div className="w-full h-full flex  gap-5 mt-6 ">
@@ -79,9 +82,9 @@ const MyCourseHome = () => {
                         </div>
                       </div>
                       <div className={`bg-richblack-700 rounded-3xl flex items-center py-1 px-6  justify-around w-fit
-                       gap-x-2 ${course?.status === "Drafted" ? " text-pink-200" : " text-yellow-50"}`}>
+                       gap-x-2 ${course?.status === "Private" ? " text-pink-200" : " text-yellow-50"}`}>
                         <div>
-                          {course?.status === "Drafted" ? (
+                          {course?.status === "Private" ? (
                             <FaClock />
                           ) : (
                             <IoCheckmarkCircleSharp />

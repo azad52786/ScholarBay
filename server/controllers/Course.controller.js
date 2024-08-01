@@ -317,3 +317,49 @@ exports.getAllCourseDetails = async (req, res) => {
     });
   }
 };
+exports.changeMode = async (req, res) => {
+  try {
+    const { courseId , mode } = req.body;
+    if(!courseId || !mode) {
+      return res.status(401).json({
+        success : false , 
+        message : "All Fields are Required"
+      })
+    }
+    const course = await Course.findById(courseId)
+    //   .populate({
+    //     path: "instructor",
+    //     populate: {
+    //       path: "additionalDetails",
+    //     },
+    //   })
+    //   .populate({
+    //     path: "courseContent",
+    //     populate: {
+    //       path: "subSection",
+    //     },
+    //   })
+    //   .populate("ratingAndReviews")
+    //   .populate("tag")
+    //   .exec();
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: `Course Not Found`,
+      });
+    }
+    const updatedCourse = await Course.findByIdAndUpdate(courseId , { status : mode});
+    console.log(updatedCourse)
+    return res.status(200).json({
+      success: true,
+      message: "Course Mode is successfully Updated",
+    });
+  } catch (e) {
+    return res.status(404).json({
+      success: false,
+      message: `Something Went Wrong while Change the mode of the courses`,
+      error: e.message,
+    });
+  }
+};

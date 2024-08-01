@@ -24,6 +24,11 @@ const CreateCourseSlice = createSlice({
     setSubSection : (state , action) => {
       state.courseDetails.courseContent = action.payload;
     } , 
+    resetAlltheState : (state , action ) => {
+      state.step = 1;
+      state.courseDetails = null;
+      state.editCourseDetails = false;
+    } , 
     setPaymentLoading: (state, action) => {
       state.paymentLoading = action.payload;
     },
@@ -37,4 +42,5 @@ export const {
   setSubSection , 
   setStep,
   setPaymentLoading,
+  resetAlltheState
 } = CreateCourseSlice.actions;

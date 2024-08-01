@@ -227,3 +227,32 @@ export const deleteSubSectionApi = async ( formData , token , subSectionId) => {
         console.log(e);
     }
 }
+export const modechange = async ( formData , token , navigate) => {
+    let toastId = toast.loading("Updateing Status of Course...");
+    // console.log(formData);
+    try{    
+        let response = await Apiconnection(
+            "post" , 
+            COURSE_API.UPDATE_MODE, 
+            formData , 
+            {
+                'Content-Type' : 'application/json' , 
+                'Authorization' : `Bearer ${token}`
+            } 
+        );
+        // return response
+        if(!response.data.success){
+            toast.dismiss(toastId)
+            toast.error("Sorry Something Went Wrong . please Try Again 🙇")
+        }
+        toast.dismiss(toastId)
+        toast.success(`your Course is ${formData.get('mode')}  😍`);
+        console.log(response.data)
+        navigate("/dashboard/default/my-courses")
+        // return response.data;
+    }catch(e){
+        toast.dismiss(toastId)
+        toast.error(e.response.data.message);
+        console.log(e);
+    }
+}

@@ -13,6 +13,7 @@ import { setEditCourseDetails, setStep, setSubSection } from "../../Store/Slices
 import { FaChevronCircleRight } from "react-icons/fa";
 import { FaChevronCircleLeft } from "react-icons/fa";
 import SubSectionForm from "./SubSectionForm";
+import { removeListener } from "@reduxjs/toolkit";
 
 const SectionHome = () => {
   const [showCreateSection, setShowCreateSection] = useState(true);
@@ -131,6 +132,10 @@ const SectionHome = () => {
               type="button"
               className={`font-bold  text-black bg-[#FFD60A]  flex gap-x-2 justify-center items-center
               w-fit py-3 px-6 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
+              onClick={() => {
+                dispatch(removeListener())
+                dispatch(setStep(3));
+              }}
             >
               Next
               <FaChevronCircleRight />

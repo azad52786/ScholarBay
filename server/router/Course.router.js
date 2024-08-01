@@ -1,6 +1,6 @@
 const express = require('express');
 const { auth, isInstructor, isAdmin, isStudent } = require('../middlewares/auth.middleware');
-const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails} = require('../controllers/Course.controller');
+const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode} = require('../controllers/Course.controller');
 const { createSection, updateSection, deleteSection } = require('../controllers/section.controller');
 const { updateSubsection, deleteSubsection, createSubSection } = require('../controllers/Subsection.controller');
 const { createTag, showAllTags, tagsPageDetails } = require('../controllers/tags.controller');
@@ -15,6 +15,7 @@ const router = express.Router();
 router.post('/createCourse' , auth , isInstructor , createCourse);
 // http://localhost:4000/api/v1/course/createCourse
 router.post('/updateCourse' , auth , isInstructor , updateCourseDetails)
+router.post('/changeMode' , auth , isInstructor , changeMode);
 router.post('/addSection' , auth , isInstructor , createSection);
 // http://localhost:4000/api/v1/course/addSection
 router.post('/getcreateCourseDetails' , auth , isInstructor , getCreatedCourseDetails);
