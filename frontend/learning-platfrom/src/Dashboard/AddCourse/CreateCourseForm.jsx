@@ -24,6 +24,7 @@ const CreateCourseForm = () => {
   const [instruction, setInstruction] = useState("");
   const [currCategory, setCurrCategory] = useState("");
   const [previewFile, setPreviewFile] = useState(null);
+  const tagRef = useRef("");
   const dispatch = useDispatch()
   const {
     register,
@@ -242,10 +243,18 @@ function resetAllData() {
                 message: "This input is required.",
               },
             })}
+
           >
             <option disabled>Choose your Option</option>
-            {tags.map((tag, index) => (
-              <option value={tag._id} key={tag.name}>
+            { courseDetails && 
+            tags.map((tag, index) => (
+              <option value={tag._id} key={tag.name} selected={courseDetails.tag._id}>
+                {tag.name}
+              </option>
+            ))}
+            { !courseDetails && 
+            tags.map((tag, index) => (
+              <option value={tag._id} key={tag.name} >
                 {tag.name}
               </option>
             ))}

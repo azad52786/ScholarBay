@@ -58,7 +58,7 @@ export const updateCourseDetails = (formData , token ) => {
             dispatch(setStep(2));
         }catch(e)  {
             toast.dismiss(toastId);
-            console.log("error messase is" , e.message);
+            console.log("error messase is" , e);
             toast.error(e.response.data.message);
         }
         

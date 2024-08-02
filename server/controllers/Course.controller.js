@@ -50,7 +50,6 @@ exports.createCourse = async (req, res) => {
     const newCourse = await Course.create({
       courseName: course,
       courseDescription,
-      // whatYouWillLearn,
       price,
       benefitOfCourse , 
       thumbnail: cloudinaryImage.secure_url,
@@ -95,6 +94,9 @@ exports.createCourse = async (req, res) => {
   }
 };
 
+
+
+// so much imporvement is needed in this controller i will do that later
 exports.updateCourseDetails = async (req , res) => {
     try{
       let {
@@ -190,11 +192,27 @@ exports.updateCourseDetails = async (req , res) => {
     courseDetails.thumbnail = cloudinaryImage;
     courseDetails.tag = tagDetails._id; 
     await courseDetails.save();
+    const updatedCourseDetails = await Course.findById(_id).populate({
+      path: "instructor",
+      populate: {
+        path: "additionalDetails",
+      },
+    })
+    .populate({
+      path: "courseContent",
+      populate: {
+        path: "subSection",
+      },
+    })
+    .populate("ratingAndReviews")
+    .populate("tag")
+    .exec();
+    
     console.log("courseDetails is : " , courseDetails.thumbnail)
     return res.status(200).json({
       success : true , 
       message : "Course is Successfully Updated 😍😍", 
-      upDatedcourse : courseDetails , 
+      upDatedcourse : updatedCourseDetails , 
     })
     }catch(e){
       return res.status(505).json({
