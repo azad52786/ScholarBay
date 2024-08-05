@@ -29,6 +29,7 @@ const Navbar = () => {
         try{
             const result = await Apiconnection('get' , COURSE_API.GET_ALL_TAGS );
             setTags(result.data.tags);
+            console.log(result.data.tags)
         }catch(error){
             console.error(error)
         }
@@ -52,21 +53,21 @@ const Navbar = () => {
                         >
                             <div>{element.title}</div>
                             <FaChevronDown className=' pt-1'/>
-                            <div className=' absolute h-6 w-6 rounded-md rotate-45 bg-richblack-5 left-[50%] top-[10%] translate-x-[80%] translate-y-[120%]
-                                 transform group-hover:translate-y-5 duration-700 hidden group-hover:block 
-                            '></div>
-                            <div className=' w-[300px] min-h-12 bg-richblack-5 font-inter absolute top-[50%] left-[50%] rounded-md
-                                 translate-x-[-50%] translate-y-[40%] transform group-hover:translate-y-5 duration-700 z-10 hidden
-                                 text-black group-hover:flex flex-col items-center justify-around p-3
-                            '>
-                               {
-                               tags.size > 0 ? <div>Loading....</div>:
-                                tags.map((tag , index) => (
-                                    <Link to={'/'} key={index} className=' w-full rounded-md hover:bg-richblack-200'>
-                                        <div className='py-3 flex items-center justify-center'>{tag.name}</div>
-                                    </Link>
-                                ))
-                               }
+                            <div className='absolute left-0 top-[90%] translate-x-[-26%] font-inter z-10 transition
+                              hidden group-hover:block'>
+                                <div className='  h-6 w-6 rounded-md rotate-45 bg-richblack-5 mx-auto z-0'></div>
+                                <div className=' w-[300px] min-h-12 bg-richblack-5 rounded-md mt-[-15px] 
+                                     text-black flex flex-col items-center justify-around p-3 relative z-10
+                                '>
+                                   {
+                                   tags.size > 0 ? <div>Loading....</div>:
+                                    tags.map((tag , index) => (
+                                        <Link to={'/'} key={index} className=' w-full rounded-md hover:bg-richblack-200'>
+                                            <div className='py-3 flex items-center justify-center'>{tag.name}</div>
+                                        </Link>
+                                    ))
+                                   }
+                                </div>
                             </div>
                         </div>
                         ) :

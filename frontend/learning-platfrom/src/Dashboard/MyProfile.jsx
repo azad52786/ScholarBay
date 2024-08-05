@@ -19,7 +19,10 @@ const MyProfile = () => {
         <div className='pl-3 w-full text-4xl mt-4 font-bold text-pure-greys-200 mb-4'>My Profile</div>
         <div className='flex justify-between w-[70%] h-fit bg-richblack-700 p-8 rounded-md items-center mb-16'>
           <div className=' flex gap-4 items-center'>
-            <img src={user.image} alt='profile'height={100} width={100} className=' h-[7rem] w-[7rem] rounded-full'/>
+            <div className='h-[8rem] w-[8rem] rounded-full overflow-hidden'>
+            <img src={user.image} alt='profile'height={50} width={50} className=' w-fit h-fit object-fit rounded-full'/>
+            </div>
+            
             <div className=' flex flex-col gap-2'>
               <div className=' text-pure-greys-25 font-bold text-xl'>{user.firstName + " " + user.lastName}</div>
               <div className=' text-pure-greys-300 text-sm'>{user.email}</div>
