@@ -53,8 +53,8 @@ const Navbar = () => {
                         >
                             <div>{element.title}</div>
                             <FaChevronDown className=' pt-1'/>
-                            <div className='absolute left-0 top-[90%] translate-x-[-26%] font-inter z-10 transition
-                              hidden group-hover:block'>
+                            <div className='absolute left-0 top-[90%] translate-x-[-26%] font-inter z-[-2] opacity-0 transition
+                             group-hover:opacity-100 group-hover:z-30 duration-700'>
                                 <div className='  h-6 w-6 rounded-md rotate-45 bg-richblack-5 mx-auto z-0'></div>
                                 <div className=' w-[300px] min-h-12 bg-richblack-5 rounded-md mt-[-15px] 
                                      text-black flex flex-col items-center justify-around p-3 relative z-10
@@ -62,7 +62,7 @@ const Navbar = () => {
                                    {
                                    tags.size > 0 ? <div>Loading....</div>:
                                     tags.map((tag , index) => (
-                                        <Link to={'/'} key={index} className=' w-full rounded-md hover:bg-richblack-200'>
+                                        <Link to={``} key={index} className=' w-full rounded-md hover:bg-richblack-200'>
                                             <div className='py-3 flex items-center justify-center'>{tag.name}</div>
                                         </Link>
                                     ))
