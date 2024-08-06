@@ -23,6 +23,7 @@ import Main from './Dashboard/settings/Main';
 import Enrolled_Main from './Dashboard/Enrolled_Cources/Enrolled_Main';
 import AddCourse from './Dashboard/AddCourse/index.js';
 import MyCourseHome from './Dashboard/MyCourseSection/MyCourseHome.jsx';
+import CatalogsHome from './catalogs/CatalogsHome.jsx';
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
         path : '/verify-email' , 
         element : <OpenRoute><VerifyEmail/></OpenRoute> , 
       }, 
+      {
+        path : '/catagory/:tagName' , 
+        element : <ProtectedRoute><CatalogsHome/></ProtectedRoute>
+      } , 
       {
         path : '/dashboard/default' , 
         element : <ProtectedRoute><DashBoard/></ProtectedRoute> ,

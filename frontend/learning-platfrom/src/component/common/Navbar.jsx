@@ -62,7 +62,7 @@ const Navbar = () => {
                                    {
                                    tags.size > 0 ? <div>Loading....</div>:
                                     tags.map((tag , index) => (
-                                        <Link to={``} key={index} className=' w-full rounded-md hover:bg-richblack-200'>
+                                        <Link to={`/catagory/${tag.name.split(" ").join("-").toLowerCase()}/?tagId=${tag._id}`} key={index} className=' w-full rounded-md hover:bg-richblack-200'>
                                             <div className='py-3 flex items-center justify-center'>{tag.name}</div>
                                         </Link>
                                     ))
