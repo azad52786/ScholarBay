@@ -246,15 +246,15 @@ function resetAllData() {
 
           >
             <option disabled>Choose your Option</option>
-            { courseDetails && 
+            { editCourseDetails && 
             tags.map((tag, index) => (
-              <option value={tag._id} key={tag.name} selected={courseDetails.tag._id}>
+              <option value={tag?._id} key={tag.name} selected={courseDetails.tag._id}>
                 {tag.name}
               </option>
             ))}
-            { !courseDetails && 
+            { !editCourseDetails && 
             tags.map((tag, index) => (
-              <option value={tag._id} key={tag.name} >
+              <option value={tag?._id} key={tag.name} >
                 {tag.name}
               </option>
             ))}
