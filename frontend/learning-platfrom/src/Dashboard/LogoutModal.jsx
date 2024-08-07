@@ -14,7 +14,7 @@ const LogoutModal = ({setLogoutModal , logoutModalHandler}) => {
     }
   }
   return (
-    <div className=' w-screen h-screen absolute top-0 left-0 bg-transparent backdrop-blur-[2px] z-10 flex items-center justify-center'>
+    <div className=' w-screen min-h-screen fixed top-0 left-0 bg-transparent backdrop-blur-[2px] z-10 flex items-center justify-center'>
         <div className=' bg-richblack-800 w-3/12 h-52 rounded-md border flex flex-col gap-y-4 p-4'>
             <h1 className=' font-bold text-4xl text-pure-greys-100'>Are you Sure ?</h1>
             <h1 className=' font-bold text-xl text-pure-greys-300'>You will be logged Out from your Account.</h1>
