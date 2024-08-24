@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Tag = require("../models/tags");
 
 exports.createTag = async(req , res) => {
@@ -54,19 +55,37 @@ exports.showAllTags = async function(req , res) {
 
 exports.tagsPageDetails =async function (req, res){
     try {
-        const {tagId} = req.body;
-        const currentTagCourses = await Tag.findById(tagId).populate("courses").exec();
+        const { tagId } = req.body;
+        const currentTagCourses = await Tag.findById(tagId).populate({
+            path : "courses" , 
+            match : { status : "Public" } , 
+            populate : {
+                path : "instructor" , 
+
+            }
+        }).exec();
+        console.log("consodjfsodifidsf: " , currentTagCourses.courses.length)
         if(!currentTagCourses){
             return res.status(404).json({
                 success: false,
                 message: "course not found"
             })
         }
-        const differentTagsCourses = Tag.findById(
-            {_id : {$ne : tagId}}
-        ).populate("courses").exec();
+        const differentTagsCourses = await Tag.find({_id : {$ne : tagId}}).populate("courses").exec();
         //Todo :  get top selling courses
-        
+        const allCatagorys = await Tag.find().populate({
+            path : "courses" , 
+            match : { status : "Public" } , 
+            populate : {
+                path : "instructor"
+            }
+        }).exec();
+        const allcourses = allCatagorys.flatMap((catagory) => catagory.courses);
+        const mostSellingCourses = allcourses
+        .sort((a, b) => b.studentsEnrolled.length - a.studentsEnrolled.length)
+        .slice(0, 10);
+        console.log("Top Selling Courses " , mostSellingCourses.length)
+        // console.log(allCatagorys)
         return res.status(201).json({
             success: true,
             message: "Tags fetched successfully",

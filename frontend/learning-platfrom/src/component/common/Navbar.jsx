@@ -57,14 +57,21 @@ const Navbar = () => {
                              group-hover:opacity-100 group-hover:z-30 duration-700'>
                                 <div className='  h-6 w-6 rounded-md rotate-45 bg-richblack-5 mx-auto z-0'></div>
                                 <div className=' w-[300px] min-h-12 bg-richblack-5 rounded-md mt-[-15px] 
-                                     text-black flex flex-col items-center justify-around p-3 relative z-10
+                                     text-black flex flex-col items-center justify-around p-3 relative z-10 gap-y-1
                                 '>
                                    {
                                    tags.size > 0 ? <div>Loading....</div>:
                                     tags.map((tag , index) => (
-                                        <Link to={`/catagory/${tag.name.split(" ").join("-").toLowerCase()}?tagId=${tag._id}`} key={index} className=' w-full rounded-md hover:bg-richblack-200'>
-                                            <div className='py-3 flex items-center justify-center'>{tag.name}</div>
-                                        </Link>
+                                        <NavLink to={`/catagory/${tag.name.split(" ").join("-").toLowerCase()}?tagId=${tag._id}`} 
+                                            key={index} 
+                                            // className=''>
+                                            className = {({isActive}) => isActive 
+                                                                        ? 'w-full rounded-md bg-richblack-300 py-3  flex items-center justify-center' 
+                                                                        : 'w-full rounded-md hover:bg-richblack-50  py-3  flex items-center justify-center'}>
+                                            <div>
+                                                {tag.name}
+                                            </div>
+                                        </NavLink>
                                     ))
                                    }
                                 </div>

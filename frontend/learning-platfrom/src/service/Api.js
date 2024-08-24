@@ -29,6 +29,10 @@ export const COURSE_API = {
     UPDATE_MODE : `${BASE_URL + '/course/changeMode'}`
 }
 
+export const CATAGORY_APIS = {
+    CATAGORY_PAGE_DETAILS : `${BASE_URL + '/course/getCategoryPageDetails'}`
+}
+
 export const SEND_MAIL = {
     CONTACT_US_SEND_MAIL : `${BASE_URL + '/mail/sendMailForContactUs'}`,
 }
