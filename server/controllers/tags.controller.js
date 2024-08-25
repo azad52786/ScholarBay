@@ -59,10 +59,14 @@ exports.tagsPageDetails =async function (req, res){
         const currentTagCourses = await Tag.findById(tagId).populate({
             path : "courses" , 
             match : { status : "Public" } , 
-            populate : {
-                path : "instructor" , 
-
-            }
+            populate : [
+                {
+                    path : "instructor" , 
+                },
+                {
+                    path : 'ratingAndReviews' , 
+                }
+            ]
         }).exec();
         console.log("consodjfsodifidsf: " , currentTagCourses.courses.length)
         if(!currentTagCourses){
