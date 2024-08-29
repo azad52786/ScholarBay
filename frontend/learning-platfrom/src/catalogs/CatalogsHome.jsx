@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import TagHeadingSection from './TagHeadingSection';
 import Loading from './Loading';
 import CatagoryCourseSection from './CatagoryCourseSection';
+import CatagoryDifferentSection from './CatagoryDifferentSection';
+import CatagoryTopCourseSection from './CatagoryTopCourseSection';
 
 const CatalogsHome = () => {
     const { token } = useSelector((store) => store.Auth);
@@ -24,7 +26,8 @@ const CatalogsHome = () => {
     <div className=' w-full h-full'>
       <TagHeadingSection currentCatagroyDetails = {allCourseDetails?.currentTagCourses}/>
       <CatagoryCourseSection allCourseDetails = {allCourseDetails}/>
-      {/* <CourseCard/> */}
+      <CatagoryDifferentSection diffCatagoryCourses = {allCourseDetails.differentTagsCourses}/>
+      <CatagoryTopCourseSection topSellingCourses = {allCourseDetails.mostSellingCourses} />
     </div>
   )
 }

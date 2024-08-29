@@ -5,7 +5,6 @@ import CourseCard from './CourseCard';
 import 'swiper/css';
 
 const CatagoryDifferentSection = ({diffCatagoryCourses}) => {
-    console.log(diffCatagoryCourses);
     const [diffentCourses , setDifferentCourses] = useState([]);
     useEffect(() => {
         let courseArray = [];

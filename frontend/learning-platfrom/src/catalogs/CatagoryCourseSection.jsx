@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import CourseCard from "./CourseCard";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Link } from "react-router-dom";
+import { Autoplay,FreeMode,Navigation, Pagination}  from 'swiper/modules'
+import 'swiper/css';
 
 const CatagoryCourseSection = ({ allCourseDetails }) => {
   const [isMostPopuler, setIsMostPopuler] = useState(true);
@@ -33,13 +37,34 @@ const CatagoryCourseSection = ({ allCourseDetails }) => {
           </button>
         </div>
         {/* catagory course slider */}
-        <div className=" w-full h-full">
-        
-          {allCourseDetails?.currentTagCourses?.courses.length > 0 && (
-            <CourseCard
-              courseDetails={allCourseDetails?.currentTagCourses?.courses[0]}
-            />
-          )}
+        <div className="slider-container">
+          <Swiper
+            slidesPerView={1}
+            loop={true}
+            // spaceBetween={1}
+            modules={[ Pagination, Navigation]}
+            pagination={true}
+            className="mySwiper"
+            autoplay={{
+              delay: 1000,
+              disableOnInteraction: false,
+            }}
+            navigation={true}
+            breakpoints={{ 
+              0 : { slidesPerView : 1} , 
+              700 : { slidesPerView : 2 } , 
+              1024: { slidesPerView: 3 },
+            }}
+          >
+            {allCourseDetails?.currentTagCourses?.courses.length > 0 &&
+              allCourseDetails?.currentTagCourses?.courses.map(
+                (course, index) => (
+                  <SwiperSlide key={index} className=" flex items-center justify-center">
+                    <CourseCard courseDetails={course} />
+                  </SwiperSlide>
+                )
+              )}
+          </Swiper>
         </div>
       </div>
     </div>

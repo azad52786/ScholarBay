@@ -1,20 +1,18 @@
 import React from "react";
 import StarRatings from "react-star-ratings";
 import RatingStars from "./RatingStars";
-const CourseCard = ({ courseDetails }) => {
-  console.log("Course Details is : ", courseDetails);
-
+const CourseCard = ({ courseDetails , cardHeight = 250 }) => {
+  console.log(cardHeight)
   const { thumbnail, courseName, price, instructor } = courseDetails;
   const { firstName, lastName } = instructor;
   return (
-    <div className=" w-[300px] h-fit font-inter scale-[0.95] hover:scale-[1] transition-all duration-900 border border-richblack-600 rounded-md">
+    <div className=" w-full h-fit font-inter scale-[0.95] hover:scale-[1] transition-all duration-900 rounded-md">
       <img
         src={thumbnail}
         alt="courseImage"
         loading="lazy"
-        className=" w-full h-[160px] object-cover rounded-t-md"
-      />
-      <div className=" w-full min-h-36 p-2 bg-richblack-800 rounded-b-md flex flex-col gap-2">
+        className={` w-full h-[${cardHeight}px] object-cover rounded-lg`  } />
+      <div className=" w-full min-h-36 p-2  rounded-b-md flex flex-col gap-2">
         <p className=" font-semibold text-xl text-pure-greys-50">
           {courseName}
         </p>
@@ -27,7 +25,7 @@ const CourseCard = ({ courseDetails }) => {
           <RatingStars rating_cnt={3.5}/>
           <div className=" text-lg text-pure-greys-25 ">7 Ratings</div>
         </div>
-        <p className="text-sm md:text-xl text-richblack-5">Rs. 599</p>
+        <p className="text-sm md:text-xl text-richblack-5">Rs. {price}</p>
       </div>
     </div>
   );
