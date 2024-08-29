@@ -75,7 +75,18 @@ exports.tagsPageDetails =async function (req, res){
                 message: "course not found"
             })
         }
-        const differentTagsCourses = await Tag.find({_id : {$ne : tagId}}).populate("courses").exec();
+        const differentTagsCourses = await Tag.find({_id : {$ne : tagId}}).populate({
+            path : "courses" , 
+            match : { status : 'Public'} , 
+            populate : [
+                {
+                    path : "instructor" , 
+                },
+                {
+                    path : 'ratingAndReviews' , 
+                }
+            ]
+        }).exec();
         //Todo :  get top selling courses
         const allCatagorys = await Tag.find().populate({
             path : "courses" , 
@@ -87,14 +98,15 @@ exports.tagsPageDetails =async function (req, res){
         const allcourses = allCatagorys.flatMap((catagory) => catagory.courses);
         const mostSellingCourses = allcourses
         .sort((a, b) => b.studentsEnrolled.length - a.studentsEnrolled.length)
-        .slice(0, 10);
-        console.log("Top Selling Courses " , mostSellingCourses.length)
+        .slice(0, 6);
+        // console.log("Top Selling Courses " , mostSellingCourses)
         // console.log(allCatagorys)
         return res.status(201).json({
             success: true,
             message: "Tags fetched successfully",
             currentTagCourses,
-            differentTagsCourses
+            differentTagsCourses , 
+            mostSellingCourses 
         })
     }catch(e){
         return res.status(500).json({
