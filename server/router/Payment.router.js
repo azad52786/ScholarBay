@@ -8,7 +8,7 @@ const router = express.Router();
 // ************************************************************************************************
 router.post("/capturePayment", auth, isStudent, createOrder)
 // http://localhost:4000/api/v1/payment/capturePayment
-router.post("/verifySignature", verifySignature);
+router.post("/verifySignature", auth , isStudent , verifySignature);
 // http://localhost:4000/api/v1/payment/verifySignature
 
 module.exports = router;
