@@ -6,7 +6,7 @@ const CourseCard = ({ courseDetails , cardHeight = 250 }) => {
   const { thumbnail, courseName, price, instructor } = courseDetails;
   const { firstName, lastName } = instructor;
   return (
-    <div className=" w-full h-fit font-inter scale-[0.95] hover:scale-[1] transition-all duration-900 rounded-md">
+    <div className=" w-full h-fit font-inter scale-[0.95] hover:scale-[1] shadow-3xl transition-all duration-900 rounded-md">
       <img
         src={thumbnail}
         alt="courseImage"

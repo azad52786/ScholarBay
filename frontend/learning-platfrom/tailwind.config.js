@@ -133,6 +133,9 @@ module.exports = {
       },
       content : {
         'warning': '⚠',
+      },
+      boxShadow: {
+        '3xl': '0 0 0.75rem #424854',
       }
     },
   },

@@ -37,7 +37,7 @@ const CatagoryCourseSection = ({ allCourseDetails }) => {
           </button>
         </div>
         {/* catagory course slider */}
-        <div className="slider-container">
+        <div className="slider-container p-6">
           <Swiper
             slidesPerView={1}
             loop={true}
