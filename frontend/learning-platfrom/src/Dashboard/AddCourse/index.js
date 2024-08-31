@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { CourseCreationData } from "../../utils/constants";
 import { courseUploadTips } from "../../utils/constants";
 import CreateCourseForm from "./CreateCourseForm";
@@ -9,13 +9,22 @@ import SectionHome from "../Addsections/SectionHome";
 import PublishHome from "../PublishSection/PublishHome";
 export default function AddCourse(){
     const { step , editCourseDetails } = useSelector((store) => store.CourseData);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    let formRef = useRef(null);
+    
+    useEffect(() => {
+
+        window.scrollTo({top : 0, left : 0 , behavior: "smooth"});
+        
+    } , [step])
+    
     useEffect(() => {
         return () => {
             dispatch(setEditCourseDetails(false))
             dispatch(setStep(1));
         }
     }, [])
+    
     return (
         <div className="w-full h-full flex  gap-5 mt-6 ">
             <div className="w-[60%]">
