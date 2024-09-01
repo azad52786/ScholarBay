@@ -5,6 +5,7 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const mailSender = require('../utils/mailSend');
 const { createHmac } = require('node:crypto');
+const { paymentSuccessEmail } = require('../mails/paymentSuccessEmail');
 
 exports.verifySignature = async(req , res) => {
     try{
@@ -14,7 +15,7 @@ exports.verifySignature = async(req , res) => {
         if(!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !courses || !userId ){
             return res.status(401).json({
                 success : false , 
-                message : "Payment Failed"
+                message : "Payment Verification All fields required"
             })
         }
         
@@ -22,26 +23,26 @@ exports.verifySignature = async(req , res) => {
         
         let generated_signature = createHmac("sha256" , process.env.RAZORPAY_SECRET).update(body.toString()).digest('hex');
         
-        if(generated_signature == razorpay_signature){
+        if(generated_signature === razorpay_signature){
             // payment successful lets give him/her course
             await enrollStudents(res , courses , userId);
         }
         return res.status(501).json({
             success : false , 
-            message : "Payment Failed!!!" 
+            message : "Signature not match Verification failed!!!" 
         })
     }catch(e){
         return res.status(401).json({
             success : false , 
             error : e , 
-            message : "Payment Failed!!!" 
+            message : "Verification internal error!!!" 
         })
     }
 }
 
 const enrollStudents = async(res , courses , userId) => {
     try{
-        if(courses.length <= 0 || !userId){
+        if(!courses || courses.length <= 0 || !userId){
             return res.status(401).json({
                 success : false , 
                 message : "Please Courses Data of Enroll Course or Provide Data for userId"
@@ -96,9 +97,12 @@ const enrollStudents = async(res , courses , userId) => {
 
 exports.createOrder = async (req , res) => {
     try{
+        console.log("create order called")
         const userId = req.user.id;
+        console.log(req.body)
         const { courses } = req.body;
-        if(courses.length === 0){
+        console.log("len" , courses)
+        if(!courses || courses.length === 0){
             return res.status(501).json({
                 success : false , 
                 message : "No Courses is Selected!!!" , 
@@ -116,7 +120,7 @@ exports.createOrder = async (req , res) => {
                     })
                 }
                 
-                if(courseDetails.includes(uuid)){
+                if(courseDetails.studentsEnrolled.includes(uuid)){
                     return res.status(444).json({
                         success : false , 
                         message : "User already Enrolled!!!"
@@ -124,9 +128,9 @@ exports.createOrder = async (req , res) => {
                 }
                 totalPrice += courseDetails.price;
             }catch(e){
-                return res.status("404").json({
+                return res.status("501").json({
                     success : false , 
-                    error : e , 
+                    error : e.message , 
                     message : "Error Occure while validateing the course"
                 })
             }   
@@ -138,13 +142,14 @@ exports.createOrder = async (req , res) => {
         }
         
         try{
-            let OrderDetails = instance.orders.create(options);
+            let OrderDetails = await instance.orders.create(options);
             // Order Details returned those thing return those by those value you can verify the payment status
             // {
             //     "razorpay_payment_id": "pay_29QQoUBi66xm2f",
             //     "razorpay_order_id": "order_9A33XWu170gUtm",
             //     "razorpay_signature": "9ef4dffbfd84f1318f6739a3ce19f9d85851857ae648f114332d8401e0949a3d"
             //   }
+            console.log("order" , OrderDetails)
             return res.status(201).json({
                 success : true , 
                 OrderDetails
@@ -152,15 +157,43 @@ exports.createOrder = async (req , res) => {
         }catch(e){
             return res.status(501).json({
                 success : false , 
-                error : e , 
+                error : e, 
                 message : "Error Occur while createing Order" , 
             })
         }
     }catch(e){
         return res.status(501).json({
             success : false , 
-            error : e , 
-            message : "No Courses is Selected!!!" , 
+            error : e.message , 
+            message : "internal error!!!" , 
         });
+    }
+}
+
+exports.sendPaymentSuccessEmail = async(req , res) => {
+    try{
+        const { orderId , paymentId , amount , email } = req.body;
+        const userId = req.user.id;
+        if(!userId || !orderId || !paymentId || !amount ){
+            return res.status(401).json({
+                success: false, 
+                message: "all fields are required"
+            })
+        }
+        
+        const userDetails = await User.findById(userId);
+        await mailSender(userDetails.email , "Payment Successful Mailing", paymentSuccessEmail(`${userDetails.firstName + " " + userDetails.lastName }`, amount / 100 , orderId , paymentId));
+        
+        return res.status(200).json({
+            success : true , 
+            message : "Payment successful mail send successfully"
+        })
+        
+    }catch(e){
+        res.status(501).json({
+            success : false , 
+            error : e , 
+            message : "Payment successful mail send fail" , 
+        })
     }
 }
