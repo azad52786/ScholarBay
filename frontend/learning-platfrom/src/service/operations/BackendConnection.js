@@ -17,7 +17,7 @@ export const getResetPasswordToken = (email , setSendEmail) => {
             dispatch(setSendEmail(true))
         }catch(error){
             toast.error(error.message);
-            console.log(error.message)
+            console.log(error)
         }
         dispatch(setLoader(false))
     }

@@ -28,14 +28,15 @@ const Navbar = () => {
     const fetchTagsLink = async() => {
         try{
             const result = await Apiconnection('get' , COURSE_API.GET_ALL_TAGS );
-            setTags(result.data.tags);
             console.log(result.data.tags)
+            setTags(result.data.tags);
         }catch(error){
             console.error(error)
         }
     }
     useEffect(() => {
         fetchTagsLink();
+        console.log(tags)
     } , [])
 
     const logoutHandeler = () => {
@@ -60,7 +61,7 @@ const Navbar = () => {
                                      text-black flex flex-col items-center justify-around p-3 relative z-10 gap-y-1
                                 '>
                                    {
-                                   tags.size > 0 ? <div>Loading....</div>:
+                                   tags.length <= 0 ? <div>Loading....</div>:
                                     tags.map((tag , index) => (
                                         <NavLink to={`/catagory/${tag.name.split(" ").join("-").toLowerCase()}?tagId=${tag._id}`} 
                                             key={index} 

@@ -24,6 +24,8 @@ import Enrolled_Main from './Dashboard/Enrolled_Cources/Enrolled_Main';
 import AddCourse from './Dashboard/AddCourse/index.js';
 import MyCourseHome from './Dashboard/MyCourseSection/MyCourseHome.jsx';
 import CatalogsHome from './catalogs/CatalogsHome.jsx';
+import CoursePageHome from './component/CoursePage Component/CoursePageHome.jsx';
+import CoursePage from './pages/CoursePage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -94,6 +96,10 @@ const router = createBrowserRouter([
             element : <ProtectedRoute><MyCourseHome/></ProtectedRoute>
           }
         ]
+      } , 
+      {
+        path : '/course/:courseId' , 
+        element : <ProtectedRoute><CoursePage/></ProtectedRoute>
       }
     ]
   } , 

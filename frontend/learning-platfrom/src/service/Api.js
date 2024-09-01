@@ -36,3 +36,9 @@ export const CATAGORY_APIS = {
 export const SEND_MAIL = {
     CONTACT_US_SEND_MAIL : `${BASE_URL + '/mail/sendMailForContactUs'}`,
 }
+
+export const PAYMENT_API = {
+    PAYMENT_CAPTURE : `${BASE_URL + '/payment/capturePayment'}` , 
+    SUCCESSFUL_PAYMENT_MAIL : `${BASE_URL + '/payment/sendPaymentSuccessEmail'}` , 
+    VERIFY_PAYMENT : `${BASE_URL + '/payment/verifySignature'}` , 
+}

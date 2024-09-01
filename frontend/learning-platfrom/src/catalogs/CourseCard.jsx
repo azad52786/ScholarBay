@@ -1,17 +1,21 @@
 import React from "react";
 import StarRatings from "react-star-ratings";
 import RatingStars from "./RatingStars";
+import { Link, useNavigate } from "react-router-dom";
 const CourseCard = ({ courseDetails , cardHeight = 250 }) => {
   console.log(cardHeight)
-  const { thumbnail, courseName, price, instructor } = courseDetails;
+  const navigate = useNavigate();
+  const { thumbnail, courseName, price, instructor , _id } = courseDetails;
   const { firstName, lastName } = instructor;
   return (
-    <div className=" w-full h-fit font-inter scale-[0.95] hover:scale-[1] shadow-3xl transition-all duration-900 rounded-md">
+  <Link to={`/course/${_id}`}>
+    <div className=" w-full h-fit font-inter scale-[0.95] hover:scale-[1] shadow-3xl transition-all duration-900 rounded-md"
+    >
       <img
         src={thumbnail}
         alt="courseImage"
         loading="lazy"
-        className={` w-full h-[${cardHeight}px] object-cover rounded-lg`  } />
+        className={` w-full h-[${250}px] object-cover rounded-lg`  } />
       <div className=" w-full min-h-36 p-2  rounded-b-md flex flex-col gap-2">
         <p className=" font-semibold text-xl text-pure-greys-50">
           {courseName}
@@ -27,7 +31,7 @@ const CourseCard = ({ courseDetails , cardHeight = 250 }) => {
         </div>
         <p className="text-sm md:text-xl text-richblack-5">Rs. {price}</p>
       </div>
-    </div>
+    </div></Link>
   );
 };
 

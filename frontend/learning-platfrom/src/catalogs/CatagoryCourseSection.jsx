@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
@@ -7,7 +7,13 @@ import 'swiper/css';
 
 const CatagoryCourseSection = ({ allCourseDetails }) => {
   const [isMostPopuler, setIsMostPopuler] = useState(true);
-  console.log(allCourseDetails);
+  useEffect(()=> {
+    window.scrollTo({
+      top :  0 , 
+      left : 0 , 
+      behavior : 'smooth'
+    })
+  } , [])
   return (
     <div className=" w-full h-fit font-inter">
       <div class=" mx-auto box-content w-[90%] max-w-maxContentTab px-2 py-12 lg:max-w-maxContent">
@@ -37,7 +43,7 @@ const CatagoryCourseSection = ({ allCourseDetails }) => {
           </button>
         </div>
         {/* catagory course slider */}
-        <div className="slider-container p-6">
+        <div className="slider-container">
           <Swiper
             slidesPerView={1}
             loop={true}
