@@ -23,10 +23,10 @@ export const buyCourse = async (
   userDetails,
   navigate,
   dispatch,
-  isBuyOne = false
+  isBuyOne = false , 
 ) => {
   let secret_key = process.env.REACT_APP_RAZORPAY_KEY;
-  // console.log(secret_key);
+  console.log(secret_key);
   try {
     let loadsrc = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
@@ -49,12 +49,12 @@ export const buyCourse = async (
       toast.error("Something went wrong!! 🥲🥲🥲");
       throw new Error("Error Occure While Buying Course");
     }
-    console.log(responce);
+    console.log("order id : " , responce);
     const { amount, currency, id, notes, offer_id, receipt, status } =
       responce.data?.OrderDetails;
     const { firstName, lastName, email } = userDetails;
-    const option = {
-      key: "", // authentication err 
+    const options = {
+      key: "rzp_test_vDHKDM9pUWJvyq", 
       amount: amount,
       currency: "INR",
       name: "StudyNotion",
@@ -86,9 +86,10 @@ export const buyCourse = async (
         color: "#3399cc",
       },
     };
-    var rzp1 = new window.Razorpay(option);
-    rzp1.open();
-    rzp1.on("payment.failed", function (response) {
+    console.log(options);
+    var rzp = new window.Razorpay(options);
+    rzp.open();
+    rzp.on("payment.failed", function (response) {
       toast.error("oops, payment failed");
       console.log(response.error);
       console.log(response)
