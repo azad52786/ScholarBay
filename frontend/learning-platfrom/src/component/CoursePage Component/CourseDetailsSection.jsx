@@ -5,7 +5,7 @@ import { LiaHandPointRight } from "react-icons/lia";
 import { FaShareFromSquare } from "react-icons/fa6";
 import { toast } from "react-hot-toast"
 
-const CourseDetailsSection = ({ course, alreadyEnrolled }) => {
+const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
   const {
     ratingAndReviews,
     price,
@@ -15,6 +15,7 @@ const CourseDetailsSection = ({ course, alreadyEnrolled }) => {
     courseDescription,
     thumbnail,
     category,
+    benefitOfCourse
   } = course;
   console.log(category);
   
@@ -27,12 +28,12 @@ const CourseDetailsSection = ({ course, alreadyEnrolled }) => {
     }
   }
   return (
-    <div className=" font-inter w-full h-fit grid grid-cols-1 grid-rows-4 md:grid-cols-2 lg:grid-cols-3 md:grid-rows-2 gap-2 justify-stretch content-start">
+    <div className=" font-inter w-full h-fit grid grid-cols-1 grid-rows-3 md:grid-cols-2 lg:grid-cols-3 md:grid-rows-2 gap-2 justify-stretch content-start">
       <div className=" h-fit flex gap-y-5 flex-col py-10 lg:col-span-2">
         <p className=" text-2xl md:text-4xl font-bold text-richblack-5 sm:text-[42px]">
           {courseName}
         </p>
-        <p class="text-richblack-200 md:text-xl text-justify">
+        <p class="text-richblack-200 md:text-xl w-full text-justify md:px-0">
           {courseDescription}
         </p>
         <div className=" flex items-center gap-4 ">
@@ -86,6 +87,7 @@ const CourseDetailsSection = ({ course, alreadyEnrolled }) => {
               <button
                 className=" flex items-center justify-center w-full py-3 rounded-md bg-yellow-100 text-pure-greys-800
              font-semibold text-lg border-b-[3px] border-l-[3px] border-white hover:scale-105 transition-all duration-500"
+             onClick={buyNowHandeler}
               >
                 Buy Now
               </button>
@@ -135,11 +137,9 @@ const CourseDetailsSection = ({ course, alreadyEnrolled }) => {
           </div>
         </div>
       </div>
-      <div className=" mt-16 w-full h-fit flex flex-col gap-2 items-start md:col-span-2 justify-center px-12 py-6 border border-pure-greys-300">
+      <div className=" sm:mt-[-100px] md:mt-[-250px] lg:mt-16 w-full h-fit flex flex-col gap-2 items-start md:col-span-2 justify-center px-12 py-6 border border-pure-greys-300">
       <p className="text-3xl font-semibold">What you'll learn</p>
-      <div className="mt-5">Foundation in Java Programming,
-        Real-World Application Development,
-        Versatility and Market Demand</div>
+      <div className="mt-5">{benefitOfCourse}</div>
       </div>
     </div>
   );
