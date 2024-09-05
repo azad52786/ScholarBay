@@ -54,7 +54,7 @@ export const buyCourse = async (
       responce.data?.OrderDetails;
     const { firstName, lastName, email } = userDetails;
     const options = {
-      key: "rzp_test_vDHKDM9pUWJvyq", 
+      key: secret_key, 
       amount: amount,
       currency: "INR",
       name: "StudyNotion",

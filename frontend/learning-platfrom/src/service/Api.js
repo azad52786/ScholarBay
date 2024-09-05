@@ -26,7 +26,8 @@ export const COURSE_API = {
     CREATE_SUBSECTION : `${BASE_URL + '/course/addSubSection'}` , 
     UPDATE_SUBSECTION : `${BASE_URL + '/course/updateSubSection'}` ,
     DELETE_SUBSECTION : `${BASE_URL + '/course/deleteSubSection'}` , 
-    UPDATE_MODE : `${BASE_URL + '/course/changeMode'}`
+    UPDATE_MODE : `${BASE_URL + '/course/changeMode'}` , 
+    COURSE_DETAILS : `${BASE_URL + '/course/getCourseDetails'}`,
 }
 
 export const CATAGORY_APIS = {

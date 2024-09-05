@@ -5,3 +5,23 @@ html , body{
 .homePage_bg {
   background-image: url(../src/assets/Images/bghome.svg);
 }
+
+
+.swiper-button-prev , .swiper-button-next {
+  color: yellow;
+}
+
+.sweerAnimation {
+  animation: sweept .5s forwards linear;
+}
+
+@keyframes sweept {
+  from {
+      opacity: 0;
+      padding-left: 0 ;
+  } 
+  to {
+      opacity: 1;
+      padding-left: 12px;
+  }
+}
