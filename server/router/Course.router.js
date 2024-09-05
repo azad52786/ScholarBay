@@ -1,6 +1,6 @@
 const express = require('express');
 const { auth, isInstructor, isAdmin, isStudent } = require('../middlewares/auth.middleware');
-const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode} = require('../controllers/Course.controller');
+const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails} = require('../controllers/Course.controller');
 const { createSection, updateSection, deleteSection } = require('../controllers/section.controller');
 const { updateSubsection, deleteSubsection, createSubSection } = require('../controllers/Subsection.controller');
 const { createTag, showAllTags, tagsPageDetails } = require('../controllers/tags.controller');
@@ -38,7 +38,7 @@ router.post("/addSubSection", auth, isInstructor, createSubSection)
 router.get("/getAllCourses", showAllCourse)
 // http://localhost:4000/api/v1/course/getAllCourses
 // Get Details for a Specific Courses
-router.post("/getCourseDetails", getAllCourseDetails);
+router.post("/getCourseDetails", getEntireCourseDetails);
 // http://localhost:4000/api/v1/course/getCourseDetails
 // router.post("")
 

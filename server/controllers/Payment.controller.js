@@ -143,16 +143,10 @@ exports.createOrder = async (req , res) => {
         
         try{
             let OrderDetails = await instance.orders.create(options);
-            // Order Details returned those thing return those by those value you can verify the payment status
-            // {
-            //     "razorpay_payment_id": "pay_29QQoUBi66xm2f",
-            //     "razorpay_order_id": "order_9A33XWu170gUtm",
-            //     "razorpay_signature": "9ef4dffbfd84f1318f6739a3ce19f9d85851857ae648f114332d8401e0949a3d"
-            //   }
             console.log("order" , OrderDetails)
             return res.status(201).json({
                 success : true , 
-                OrderDetails
+                OrderDetails ,
             })
         }catch(e){
             return res.status(501).json({

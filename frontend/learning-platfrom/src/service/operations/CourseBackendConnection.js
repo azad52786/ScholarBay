@@ -256,3 +256,16 @@ export const modechange = async ( formData , token , navigate) => {
         console.log(e);
     }
 }
+
+export const getEntireCourseDetails = async (courseId , userId) => {
+    try{
+        const course = await Apiconnection('post' , COURSE_API.COURSE_DETAILS, {courseId: courseId , userId: userId});
+        if(!course.data.success) {
+            throw new Error(course.data.message);
+        }
+        return course;
+    }catch(e){
+        console.log(e);
+        toast.error("Failed to get course details");
+    }
+}

@@ -296,9 +296,9 @@ exports.getCreatedCourseDetails = async(req , res) => {
   }
 }
 
-exports.getAllCourseDetails = async (req, res) => {
+exports.getEntireCourseDetails = async (req, res) => {
   try {
-    const { courseId } = req.body;
+    let { courseId , userId } = req.body;
     const course = await Course.findById(courseId)
       .populate({
         path: "instructor",
@@ -310,22 +310,28 @@ exports.getAllCourseDetails = async (req, res) => {
         path: "courseContent",
         populate: {
           path: "subSection",
+          select: "title" , 
         },
       })
       .populate("ratingAndReviews")
       .populate("tag")
       .exec();
-
+      
     if (!course) {
       return res.status(404).json({
         success: false,
         message: `Course Not Found`,
       });
     }
+    let alreadyEnrolled = false;
+    userId = new mongoose.Types.ObjectId(userId);
+    if(course.studentsEnrolled.includes(userId)) {
+      alreadyEnrolled = true;
+    }
     return res.status(200).json({
       success: true,
       message: "Course fetched successfully",
-      data: course,
+      data: {course , alreadyEnrolled},
     });
   } catch (e) {
     return res.status(404).json({
