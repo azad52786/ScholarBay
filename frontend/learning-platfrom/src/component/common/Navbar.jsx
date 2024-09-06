@@ -99,7 +99,9 @@ const Navbar = () => {
                     token &&
                     <div className='flex flex-row gap-4 text-richblack-25 relative'>
                         <MdOutlineSearch className=' h-10 w-8  cursor-pointer' />
-                        <div className=' relative  cursor-pointer'>
+                        <div className=' relative  cursor-pointer'
+                            onClick={() => navigate('/cart')}
+                        >
                             <div className=' text-sm absolute right-[-6px] text-richblack-50 rounded-full w-5 h-5 top-[-6px] text-center bg-caribbeangreen-400'>{totalItems}</div>
                             <FaCartShopping className=' h-10 w-8' />
                         </div>

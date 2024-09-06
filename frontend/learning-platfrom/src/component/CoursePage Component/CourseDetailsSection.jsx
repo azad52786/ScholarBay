@@ -4,6 +4,9 @@ import { MdLanguage } from "react-icons/md";
 import { LiaHandPointRight } from "react-icons/lia";
 import { FaShareFromSquare } from "react-icons/fa6";
 import { toast } from "react-hot-toast"
+import { useDispatch } from 'react-redux';
+import { addToCart } from "../../Store/Slices/CartSlice";
+
 
 const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
   const {
@@ -18,7 +21,7 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
     benefitOfCourse
   } = course;
   console.log(category);
-  
+  const dispatch = useDispatch();
   const copyUrl = async() => {
     try{
         await navigator.clipboard.writeText(window.location.href);
@@ -46,10 +49,10 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
             5 Student Enrolled
           </p>
         </div>
-        <p class=" text-pure-greys-25 text-lg md:text-2xl">
+        <p class=" text-pure-greys-25 text-lg md:text-2xl font-edu-sa">
           Created By {instructor?.firstName + " " + instructor?.lastName}
         </p>
-        <div className=" flex  items-center gap-10 text-pure-greys-50">
+        <div className=" flex  items-center gap-10 text-pure-greys-50 font-mono">
           <div className=" flex gap-2">
             <svg
               stroke="currentColor"
@@ -79,21 +82,22 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
             alt="thumbnail"
             className=" rounded-md h-[200px] w-full"
           />
-          <p className=" font-bold text-2xl text-pure-greys-25 self-start">
-            ₹ {price}
+          <p className=" font-bold text-2xl text-pure-greys-25 self-start font-mono">
+            ₹{price}
           </p>
           {!alreadyEnrolled && (
             <div className=" flex items-center justify-between w-full gap-7">
               <button
-                className=" flex items-center justify-center w-full py-3 rounded-md bg-yellow-100 text-pure-greys-800
+                className=" font-edu-sa flex items-center justify-center w-full py-3 rounded-md bg-yellow-100 text-pure-greys-800
              font-semibold text-lg border-b-[3px] border-l-[3px] border-white hover:scale-105 transition-all duration-500"
              onClick={buyNowHandeler}
               >
                 Buy Now
               </button>
               <button
-                className=" flex items-center justify-center w-full py-3 rounded-md bg-blue-200 text-pure-greys-800
+                className=" font-edu-sa flex items-center justify-center w-full py-3 rounded-md bg-blue-200 text-pure-greys-800
              font-semibold text-lg  border-b-[3px] border-l-[3px] border-black hover:scale-105 transition-all duration-500"
+                onClick={() => dispatch(addToCart(course))}
               >
                 Add to Cart
               </button>
@@ -102,15 +106,15 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
           {alreadyEnrolled && (
             <button
               className=" flex items-center justify-center w-full py-3 rounded-md bg-blue-200 text-pure-greys-800
-                font-semibold text-lg  border-b-[3px] border-l-[3px] border-black hover:scale-105 transition-all duration-500"
+               font-edu-sa font-semibold text-lg  border-b-[3px] border-l-[3px] border-black hover:scale-105 transition-all duration-500"
             >
               Go to Course
             </button>
           )}
-          <p className=" text-sm text-pure-greys-25 tracking-wide mt-4 text-center">
+          <p className=" text-sm text-pure-greys-25 tracking-wide mt-4 text-center font-mono">
             30-Day Money - Back Guarantee
           </p>
-          <p className=" font-bold text-xl text-pure-greys-100 w-full tracking-wide mt-4 text-start">
+          <p className=" font-edu-sa font-bold text-xl text-pure-greys-100 w-full tracking-wide mt-4 text-start">
             This Course Includes
           </p>
           <div className=" mb-2 w-full">
