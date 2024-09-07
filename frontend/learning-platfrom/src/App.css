@@ -1,6 +1,8 @@
 html , body{
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
+
 
 .homePage_bg {
   background-image: url(../src/assets/Images/bghome.svg);
@@ -25,3 +27,54 @@ html , body{
       padding-left: 12px;
   }
 }
+
+.progress{
+    animation:  0.5s linear .5s forwards mve;
+    transform-origin: left;
+}
+
+.progress::after{
+  /* content: ""; */
+  position: absolute;
+  font-size: 10px;
+  top: -25px;
+  right: -15px;
+  background-color: blueviolet;
+  padding: 2px 8px;
+  border-radius: 10%;
+  animation:  0.5s linear .5s forwards opct;
+  transform-origin: left;
+}
+
+.progress::before{
+  content: '';
+  position: absolute;
+  top: -12px;
+  right: -4px;
+  width: 8px;
+  height: 8px;
+  background: blueviolet;
+  transform: rotate(45deg);
+  animation:  0.5s linear .5s forwards opct;
+    transform-origin: left;
+}
+@keyframes opct {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes mve {
+  0%{
+    transform: scaleX(0);
+  }
+  100%{
+    transform: scaleX(1);
+  }
+}
+
+/* @keyframes duration | easing-function | delay |
+iteration-count | direction | fill-mode | play-state | name */
+/* animation: 3s ease-in 1s 2 reverse both paused slidein; */
