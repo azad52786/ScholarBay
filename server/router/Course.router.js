@@ -1,6 +1,6 @@
 const express = require('express');
 const { auth, isInstructor, isAdmin, isStudent } = require('../middlewares/auth.middleware');
-const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails} = require('../controllers/Course.controller');
+const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails, buy, getEnrolledCourse} = require('../controllers/Course.controller');
 const { createSection, updateSection, deleteSection } = require('../controllers/section.controller');
 const { updateSubsection, deleteSubsection, createSubSection } = require('../controllers/Subsection.controller');
 const { createTag, showAllTags, tagsPageDetails } = require('../controllers/tags.controller');
@@ -41,6 +41,7 @@ router.get("/getAllCourses", showAllCourse)
 router.post("/getCourseDetails", getEntireCourseDetails);
 // http://localhost:4000/api/v1/course/getCourseDetails
 // router.post("")
+router.get('/getErolledCourse' , auth , isStudent , getEnrolledCourse);
 
 
 
@@ -65,5 +66,15 @@ router.get("/getAverageRating", getAvarageRating)
 // http://localhost:4000/api/v1/course/getAverageRating
 router.get("/getReviews", getAllRatingAndReviews)
 // http://localhost:4000/api/v1/course/getReviews
+
+
+
+
+
+
+
+// route for testing purposes
+
+router.post('/buy', buy);
 
 module.exports = router;

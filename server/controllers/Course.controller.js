@@ -387,3 +387,97 @@ exports.changeMode = async (req, res) => {
     });
   }
 };
+
+
+
+exports.buy = async (req, res) => {
+  try {
+    let { courseId, userId } = req.body;
+
+    // Convert courseId to a Mongoose ObjectId
+    courseId = new mongoose.Types.ObjectId(courseId);
+    userId = new mongoose.Types.ObjectId(userId)
+    // Find the user by userId and push the courseId to the courses array
+    const updatedCourse = await Course.findByIdAndUpdate(courseId , 
+          {
+            $push : { studentsEnrolled : userId }
+          } , 
+          { new : true }
+       );
+    
+    const updatedStudent = await User.findByIdAndUpdate(
+      userId,
+      {
+        $push: { courses: courseId },
+      },
+      { new: true } // This option returns the updated document after the update
+    ).populate('courses'); // Optionally populate the courses if you need course details
+
+    return res.status(200).json({
+      success: true,
+      message: "Course purchased successfully",
+      updatedStudent,
+    });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+
+
+exports.getEnrolledCourse = async(req , res) => {
+  try{
+    const { courseId } = req.query;
+    const { id } = req.user;
+    console.log(courseId , " " , id)
+    const CourseDetails = await Course.findById(courseId).populate({
+      path: "instructor",
+      populate: {
+        path: "additionalDetails",
+      },
+    })
+    .populate({
+      path: "courseContent",
+      populate: {
+        path: "subSection",
+      },
+    })
+    .populate("ratingAndReviews")
+    .populate("tag")
+    .exec();
+    if(!CourseDetails){
+      return res.status(401).json({
+        success : false , 
+        message : "Course Not Found!!"
+      })
+    }
+    console.log(CourseDetails) 
+    const userId = new mongoose.Types.ObjectId(id)
+    if(!CourseDetails.studentsEnrolled.includes(userId)){
+      return res.status(501).json({
+        success : false , 
+        message : "You're not Enrolled Student"
+      })
+    }
+    
+    
+    return res.status(201).json({
+      success : true , 
+      message : "Course is Successfully Fetched " , 
+      data : CourseDetails, 
+    })
+    
+  }catch(e){
+    return res.status(501).json({
+      success : false , 
+      error : e , 
+      error_message : e.message , 
+      message : "Internal Server Error" 
+    })
+  }
+}
+
+
