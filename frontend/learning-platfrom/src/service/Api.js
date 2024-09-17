@@ -28,6 +28,7 @@ export const COURSE_API = {
     DELETE_SUBSECTION : `${BASE_URL + '/course/deleteSubSection'}` , 
     UPDATE_MODE : `${BASE_URL + '/course/changeMode'}` , 
     COURSE_DETAILS : `${BASE_URL + '/course/getCourseDetails'}`,
+    ENROLLED_COURSE_DETAILS : `${BASE_URL + '/course/getErolledCourse'}`
 }
 
 export const CATAGORY_APIS = {

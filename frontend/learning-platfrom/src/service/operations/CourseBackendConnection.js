@@ -269,3 +269,29 @@ export const getEntireCourseDetails = async (courseId , userId) => {
         toast.error("Failed to get course details");
     }
 }
+
+export const getEnrolledCourse = async(courseId , token) => {
+    try{
+        const responce = await Apiconnection(
+            "get",
+            COURSE_API.ENROLLED_COURSE_DETAILS,
+            null,
+            {
+              Authorization: `Bearer ${token}`,
+            },
+            {
+              courseId,
+            }
+          );
+          console.log(responce)
+          if(!responce.data.success){
+            throw new Error(responce.data.message);
+          }
+          console.log(responce);
+          return responce.data.data;
+    }catch(e){
+        console.log(e);
+        toast.error("Server Error")
+        return [];
+    }
+}
