@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { getUserAllCources } from "../../service/operations/BackendConnection";
 import CourseCard from "./CourseCard";
 import MainUi from "./MainUi";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getPathArray } from "../../utils/constants";
 import FileDetails from "../FileDetails";
 import Loading from "../../catalogs/Loading";
@@ -24,7 +24,8 @@ const Enrolled_Main = () => {
   useEffect(() => {
     getAllenrollcourses();
   }, [getAllenrollcourses]);
-
+  
+  console.log(enrolledCourses);
   return enrolledCourses.length <= 0 ? (
     <Loading />
   ) : (
@@ -40,7 +41,10 @@ const Enrolled_Main = () => {
         {
           enrolledCourses.map((course) => (
             <div key={course._id} className=" w-full h-20 border border-richblack-400 border-opacity-60">
-                <CourseCard courseDetails = {course} />
+            <Link 
+            to={`/view-course/${course?._id}/section/${course.courseContent?.[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`}
+            >
+                <CourseCard courseDetails = {course} /> </Link>
             </div>
           ))
         }
