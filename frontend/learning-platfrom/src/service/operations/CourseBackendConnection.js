@@ -283,11 +283,9 @@ export const getEnrolledCourse = async(courseId , token) => {
               courseId,
             }
           );
-          console.log(responce)
           if(!responce.data.success){
             throw new Error(responce.data.message);
           }
-          console.log(responce);
           return responce.data.data;
     }catch(e){
         console.log(e);

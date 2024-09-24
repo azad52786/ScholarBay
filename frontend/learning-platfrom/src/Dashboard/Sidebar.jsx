@@ -75,7 +75,7 @@ const Sidebar = () => {
             <div key={ele.id} className = {`${matchRoute(ele.path) ? " bg-yellow-700 border-l-4 border-l-yellow-25" : " bg-opacity-0"} flex gap-2 w-full
                 p-3 cursor-pointer text-sm font-inter text-pure-greys-200 items-center justify-center
             `}>
-             <IconComponet className=' w-[1.12rem] h-[1.12rem] sm:w-8 sm:h-8' />
+             <IconComponet className=' w-[1.12rem] h-[1.12rem] sm:w-8 sm:h-8 text-richblack-5' />
               <p className=' hidden md:block'>{ele.name}</p>
             </div>
           </NavLink>
@@ -86,7 +86,7 @@ const Sidebar = () => {
     <NavLink to={"/dashboard/default/setting"} className="w-full">
         <div key={"Setting"} className = {`${matchRoute("/dashboard/default/setting") ? " bg-yellow-700 border-l-4 border-l-yellow-25" : " bg-opacity-0"} flex gap-2 w-full
             p-3 cursor-pointer text-sm font-inter text-pure-greys-200 items-center justify-center `}>
-             <IoIosSettings className=' w-[1.12rem] h-[1.12rem] sm:w-8 sm:h-8' />
+             <IoIosSettings className=' w-[1.12rem] h-[1.12rem] sm:w-8 sm:h-8 text-richblack-5' />
               <p className='hidden md:block'>Settings</p>
         </div>
       </NavLink>

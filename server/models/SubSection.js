@@ -12,6 +12,10 @@ const SubSectionSchema = new mongoose.Schema({
 	hours : { type : String } , 
 	minutes: { type: String },
 	videoUrl: { type: String },
+	watched : {
+		type : Boolean , 
+		default : false , 
+	}
 });
 
 module.exports = mongoose.model("SubSection", SubSectionSchema);

@@ -10,6 +10,7 @@ const DashBoard = () => {
       <Sidebar/>
       {/* outlet */}
       <Outlet/>
+      
     </div>
   )
 }

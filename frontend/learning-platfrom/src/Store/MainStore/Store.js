@@ -5,6 +5,7 @@ import CartSlice from '../Slices/CartSlice';
 import SignUpSlice from '../Slices/SignUpSlice';
 import CreateCourseSlice from '../Slices/CreateCourseSlice';
 import SubsectionFormSlice from '../Slices/SubSectionSlice';
+import CourseVideoSlice from '../Slices/CourseVideoSlice';
 const store = configureStore({
     reducer : {
         Auth : AuthSlice , 
@@ -13,6 +14,7 @@ const store = configureStore({
         SignUpData : SignUpSlice , 
         CourseData : CreateCourseSlice , 
         SubSectionData : SubsectionFormSlice , 
+        CourseVideo : CourseVideoSlice , 
     }
 })
 

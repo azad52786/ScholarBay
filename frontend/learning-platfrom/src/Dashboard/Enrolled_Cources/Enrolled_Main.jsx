@@ -17,7 +17,7 @@ const Enrolled_Main = () => {
   const getAllenrollcourses = useCallback(async () => {
     const data = await getUserAllCources(token);
     console.log(data);
-    setEnrolledCourses(data);
+    if(data !== undefined) setEnrolledCourses(data);
     // console.log(enrolledCourses);
   }, [setEnrolledCourses, token]);
 
@@ -26,7 +26,7 @@ const Enrolled_Main = () => {
   }, [getAllenrollcourses]);
   
   console.log(enrolledCourses);
-  return enrolledCourses.length <= 0 ? (
+  return (enrolledCourses && enrolledCourses.length <= 0) ? (
     <Loading />
   ) : (
     <div className=" w-full h-full">
@@ -39,6 +39,7 @@ const Enrolled_Main = () => {
           <p className=" font-mono lg:font-semibold">Progress</p>
         </div>
         {
+          enrolledCourses && 
           enrolledCourses.map((course) => (
             <div key={course._id} className=" w-full h-20 border border-richblack-400 border-opacity-60">
             <Link 
