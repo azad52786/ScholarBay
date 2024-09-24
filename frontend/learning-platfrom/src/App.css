@@ -28,6 +28,21 @@ html , body{
   }
 }
 
+.VideoSliderSwept {
+   animation: vsweept .5s forwards linear;
+}
+
+@keyframes vsweept {
+  from {
+      opacity: 0;
+      padding-left: 0 ;
+  } 
+  to {
+      opacity: 1;
+      padding-left: 12px;
+  }
+}
+
 .progress{
     animation:  0.5s linear .5s forwards mve;
     transform-origin: left;
@@ -75,6 +90,26 @@ html , body{
   }
 }
 
+.videoSlider{
+  animation: slide 0.5s ease-in forwards;
+}
+
+@keyframes slide {
+  100%{
+    transform: translateX(300px);
+  }
+}
+
+.sliderOff{
+  animation: offSlide .5s linear forwards;
+}
+
+
+@keyframes offSlide {
+    100%{
+      transform: translateX(-300px);
+    }
+}
 /* @keyframes duration | easing-function | delay |
-iteration-count | direction | fill-mode | play-state | name */
+ * iteration-count | direction | fill-mode | play-state | name */
 /* animation: 3s ease-in 1s 2 reverse both paused slidein; */

@@ -27,6 +27,7 @@ import CatalogsHome from './catalogs/CatalogsHome.jsx';
 import CoursePageHome from './component/CoursePage Component/CoursePageHome.jsx';
 import CoursePage from './pages/CoursePage.jsx';
 import Cart from './pages/Cart.jsx';
+import VideoPage from './pages/VideoPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -105,6 +106,10 @@ const router = createBrowserRouter([
       {
         path : '/cart' , 
         element : <ProtectedRoute><Cart/></ProtectedRoute>
+      } , 
+      {
+        path :'/view-course/:courseId/section/:sectionId/sub-section/:subSectionId' , 
+        element : <ProtectedRoute><VideoPage/></ProtectedRoute>
       }
     ]
   } , 

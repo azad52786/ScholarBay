@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RxCross2 } from "react-icons/rx";
 import { CiEdit } from "react-icons/ci";
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import SectionSlideCard from './SectionSlideCard';
 const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}) => {
+  
+  const {completedLecture , courseSectionData } = useSelector((store) => store.CourseVideo);
+  const [showSection , setShowSection ] = useState(false);
   return (
-    <div className={`absolute videoSlider  duration-300 top-0  h-screen w-[300px] bg-richblack-800
+    <div className={`absolute videoSlider  duration-300 top-0  min-h-screen w-[300px] bg-richblack-800
         backdrop:blur-sm border-r border-b border-opacity-50 border-pure-greys-300
           ${!showVideoSlider ? "sliderOff" : "videoSlider left-[-300px]"}
         `}>
@@ -26,6 +32,17 @@ const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}
         
         {/* section slider  */}
         
+        <div className=' p-2'>
+          {
+            courseSectionData.map(section => (
+                <SectionSlideCard 
+                section={section}
+                showSection = {showSection}
+                setShowSection = {setShowSection}
+                />
+            ))
+          }
+        </div>
         
     </div>
   )
