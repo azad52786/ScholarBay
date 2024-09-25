@@ -7,7 +7,7 @@ import SectionSlideCard from './SectionSlideCard';
 const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}) => {
   
   const {completedLecture , courseSectionData } = useSelector((store) => store.CourseVideo);
-  const [showSection , setShowSection ] = useState(false);
+
   return (
     <div className={`absolute videoSlider  duration-300 top-0  min-h-screen w-[300px] bg-richblack-800
         backdrop:blur-sm border-r border-b border-opacity-50 border-pure-greys-300
@@ -37,8 +37,6 @@ const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}
             courseSectionData.map(section => (
                 <SectionSlideCard 
                 section={section}
-                showSection = {showSection}
-                setShowSection = {setShowSection}
                 />
             ))
           }

@@ -232,11 +232,11 @@ export const getUserAllCources = async (token) => {
                 "Authorization": `Bearer  + ${token}`
             }
         );
-        // console.log(response);
+        console.log(response);
         if(!response.data.success) {
             throw new Error("SomeThing went wrong while fetching all enroll courses");
         }
-        return response.data.data;
+        return response.data.courses;
     }catch(e){
         console.log(e);
     }

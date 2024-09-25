@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaChevronUp } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
@@ -6,8 +6,9 @@ import { FaChevronDown } from "react-icons/fa";
 import SubSectionCard from "./SubSectionCard";
 
 
-const SectionSlideCard = ({ section, setShowSection, showSection }) => {
+const SectionSlideCard = ({ section }) => {
 //   console.log(section);
+  const [showSection , setShowSection ] = useState(false);
   const { subSectionId } = useParams();
   const { sectionName, subSection } = section;
   console.log(showSection);
