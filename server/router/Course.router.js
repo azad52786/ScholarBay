@@ -2,7 +2,7 @@ const express = require('express');
 const { auth, isInstructor, isAdmin, isStudent } = require('../middlewares/auth.middleware');
 const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails, buy, getEnrolledCourse} = require('../controllers/Course.controller');
 const { createSection, updateSection, deleteSection } = require('../controllers/section.controller');
-const { updateSubsection, deleteSubsection, createSubSection } = require('../controllers/Subsection.controller');
+const { updateSubsection, deleteSubsection, createSubSection, markedSubSection } = require('../controllers/Subsection.controller');
 const { createTag, showAllTags, tagsPageDetails } = require('../controllers/tags.controller');
 const { createRatingAndReview, getAvarageRating, getAllRatingAndReviews } = require('../controllers/RatingAndReview.controller');
 const router = express.Router();
@@ -42,6 +42,7 @@ router.post("/getCourseDetails", getEntireCourseDetails);
 // http://localhost:4000/api/v1/course/getCourseDetails
 // router.post("")
 router.get('/getErolledCourse' , auth , isStudent , getEnrolledCourse);
+router.put('/markWatched/:subSectionId' , auth , isStudent , markedSubSection)
 
 
 

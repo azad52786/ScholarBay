@@ -29,7 +29,8 @@ export const COURSE_API = {
     UPDATE_MODE : `${BASE_URL + '/course/changeMode'}` , 
     COURSE_DETAILS : `${BASE_URL + '/course/getCourseDetails'}`,
     ENROLLED_COURSE_DETAILS : `${BASE_URL + '/course/getErolledCourse'}` , 
-    ADD_RATING : `${BASE_URL + '/course/createRating'}`
+    ADD_RATING : `${BASE_URL + '/course/createRating'}` , 
+    MARKED_SUBSECTION : `${BASE_URL + '/course/markWatched'}`
 }
 
 export const CATAGORY_APIS = {

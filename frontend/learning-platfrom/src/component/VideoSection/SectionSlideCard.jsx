@@ -11,8 +11,6 @@ const SectionSlideCard = ({ section }) => {
   const [showSection , setShowSection ] = useState(false);
   const { subSectionId } = useParams();
   const { sectionName, subSection } = section;
-  console.log(showSection);
-  console.log(subSection);
   return (
     <div key={section._id} className=" mb-2">
       <div

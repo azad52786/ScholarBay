@@ -164,3 +164,31 @@ exports.deleteSubsection = async function (req, res) {
     });
   }
 };
+
+exports.markedSubSection = async function (req , res) {
+    try{
+        const {subSectionId} = req.params;
+        if(!subSectionId) return res.status(501).json({
+          success : false , 
+          message : "Please Give All The Fields !!!"
+        })
+        let subsection = await SubSection.findByIdAndUpdate(subSectionId , {watched : true});
+        
+        if(!subSectionId) return res.status(401).json({
+          success : false , 
+          message : "SubSection Not Found!!!"
+        })
+        
+        return res.status(201).json({
+          success : true , 
+          message : "Successfully Marked" , 
+        })
+        
+    }catch(e){
+        return res.status(501).json({
+          success : false , 
+          error : e , 
+          message : "Internal Server Error "
+        })
+    }
+}

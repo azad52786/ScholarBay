@@ -463,6 +463,11 @@ exports.getEnrolledCourse = async(req , res) => {
       })
     }
     
+    // let lecture = 0;
+    // let completedLec
+    // CourseDetails.courseContent.forEach((course) => {
+    //   course.
+    // })
     
     return res.status(201).json({
       success : true , 
