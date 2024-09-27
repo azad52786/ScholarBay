@@ -8,10 +8,10 @@ const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}
   
   const {completedLecture , courseSectionData } = useSelector((store) => store.CourseVideo);
 
-  return (
-    <div className={`absolute videoSlider  duration-300 top-0  min-h-screen w-[300px] bg-richblack-800
+  return courseSectionData.length === 0 ? (<></>) : (
+    <div className={`absolute z-10 lg:relative videoSlider  duration-300 top-0  min-h-screen w-[300px] lg:w-[30%] bg-richblack-800
         backdrop:blur-sm border-r border-b border-opacity-50 border-pure-greys-300
-          ${!showVideoSlider ? "sliderOff" : "videoSlider left-[-300px]"}
+          ${!showVideoSlider ? "sliderOff" : "videoSlider left-[-300px]"} lg:left-0
         `}>
         
          {/* top section  */}
@@ -20,7 +20,7 @@ const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}
           <RxCross2 className=' lg:hidden w-10 h-10  text-richblack-400 cursor-pointer rounded-lg bg-[rgba(39, 144, 245, 0.09)] backdrop:blur-sm'
             onClick={() => {
               setShowVideoSlider(false)
-              console.log(showVideoSlider)
+              // console.log(showVideoSlider)
             }}
           />
           <button className=' flex font-edu-sa items-center gap-2

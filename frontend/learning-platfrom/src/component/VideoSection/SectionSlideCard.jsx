@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaChevronUp } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 
@@ -9,10 +9,19 @@ import SubSectionCard from "./SubSectionCard";
 const SectionSlideCard = ({ section }) => {
 //   console.log(section);
   const [showSection , setShowSection ] = useState(false);
-  const { subSectionId } = useParams();
+  const { sectionId } = useParams();
   const { sectionName, subSection } = section;
+  
+  
+  useEffect(() => {
+    if(sectionId === section._id) setShowSection(true);
+    else setShowSection(false);
+  } , [sectionId]);
+  
   return (
-    <div key={section._id} className=" mb-2">
+    <div key={section._id} className=" mb-2"
+      
+    >
       <div
         className={`w-full h-fit  bg-richblack-700 font-edu-sa  flex items-center justify-between
          py-3 text-pure-greys-200 px-4 cursor-pointer
@@ -31,7 +40,7 @@ const SectionSlideCard = ({ section }) => {
       {
         showSection &&
         subSection.map((subSec, index) => (
-            <SubSectionCard subSection={subSec} />)
+            <SubSectionCard subSection={subSec} section_id = {section._id} />)
         )
       }</div>
     </div>

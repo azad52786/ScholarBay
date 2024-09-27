@@ -1,54 +1,54 @@
-html , body{
+html,
+body {
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
-
 
 .homePage_bg {
   background-image: url(../src/assets/Images/bghome.svg);
 }
 
-
-.swiper-button-prev , .swiper-button-next {
+.swiper-button-prev,
+.swiper-button-next {
   color: yellow;
 }
 
 .sweerAnimation {
-  animation: sweept .5s forwards linear;
+  animation: sweept 0.5s forwards linear;
 }
 
 @keyframes sweept {
   from {
-      opacity: 0;
-      padding-left: 0 ;
-  } 
+    opacity: 0;
+    padding-left: 0;
+  }
   to {
-      opacity: 1;
-      padding-left: 12px;
+    opacity: 1;
+    padding-left: 12px;
   }
 }
 
 .VideoSliderSwept {
-   animation: vsweept .5s forwards linear;
+  animation: vsweept 0.5s forwards linear;
 }
 
 @keyframes vsweept {
   from {
-      opacity: 0;
-      padding-left: 0 ;
-  } 
+    opacity: 0;
+    padding-left: 0;
+  }
   to {
-      opacity: 1;
-      padding-left: 12px;
+    opacity: 1;
+    padding-left: 12px;
   }
 }
 
-.progress{
-    animation:  0.5s linear .5s forwards mve;
-    transform-origin: left;
+.progress {
+  animation: 0.5s linear 0.5s forwards mve;
+  transform-origin: left;
 }
 
-.progress::after{
+.progress::after {
   /* content: ""; */
   position: absolute;
   font-size: 10px;
@@ -57,12 +57,12 @@ html , body{
   background-color: blueviolet;
   padding: 2px 8px;
   border-radius: 10%;
-  animation:  0.5s linear .5s forwards opct;
+  animation: 0.5s linear 0.5s forwards opct;
   transform-origin: left;
 }
 
-.progress::before{
-  content: '';
+.progress::before {
+  content: "";
   position: absolute;
   top: -12px;
   right: -4px;
@@ -70,11 +70,11 @@ html , body{
   height: 8px;
   background: blueviolet;
   transform: rotate(45deg);
-  animation:  0.5s linear .5s forwards opct;
-    transform-origin: left;
+  animation: 0.5s linear 0.5s forwards opct;
+  transform-origin: left;
 }
 @keyframes opct {
-  from{
+  from {
     opacity: 0;
   }
   to {
@@ -82,33 +82,33 @@ html , body{
   }
 }
 @keyframes mve {
-  0%{
+  0% {
     transform: scaleX(0);
   }
-  100%{
+  100% {
     transform: scaleX(1);
   }
 }
 
-.videoSlider{
-  animation: slide 0.5s ease-in forwards;
+@media (max-width: 1024px) {
+  .videoSlider {
+    animation: slide 0.5s ease-in forwards;
+  }
+  .sliderOff {
+    animation: offSlide 0.5s linear forwards;
+  }
 }
 
 @keyframes slide {
-  100%{
+  100% {
     transform: translateX(300px);
   }
 }
 
-.sliderOff{
-  animation: offSlide .5s linear forwards;
-}
-
-
 @keyframes offSlide {
-    100%{
-      transform: translateX(-300px);
-    }
+  100% {
+    transform: translateX(-300px);
+  }
 }
 /* @keyframes duration | easing-function | delay |
  * iteration-count | direction | fill-mode | play-state | name */

@@ -17,11 +17,11 @@ const ReviewModal = ({ setShowReviewModal }) => {
     formState: { errors },
   } = useForm()
   function ratingChanged (newRating){
-    console.log(newRating)
+    // console.log(newRating)
     setValue("starCount" , newRating)
   }
   async function onSubmit (data) {
-    console.log(data);
+    // console.log(data);
     const formData = new FormData();
     // rating , review , courseId
     formData.append("rating" , data.starCount);
@@ -36,13 +36,13 @@ const ReviewModal = ({ setShowReviewModal }) => {
   }, [register]);
   return (
     <div
-      className=" fixed w-screen h-screen 
+      className=" fixed w-screen h-screen bg-richblack-800
         flex items-center justify-center z-50
-    bg-transparent backdrop-blur-sm bg-richblack-800 font-edu-sa bg-opacity-70"
+   backdrop-blur-sm font-edu-sa bg-opacity-70"
     >
       <div
         className="
-             w-[90%] md:w-[60%] lg:w-[50%] rounded-lg border-2 border-richblack-500 
+             w-[90%] md:w-[60%] lg:w-[50%] rounded-lg border-2 border-richblack-500 bg-richblack-800
         "
       >
         <div

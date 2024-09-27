@@ -8,6 +8,7 @@ import {
 } from "../Store/Slices/CourseVideoSlice";
 import VideoSlider from "../component/VideoSection/VideoSlider";
 import ReviewModal from "../component/VideoSection/ReviewModal";
+import VideoSection from "../component/VideoSection/VideoSection";
 
 const VideoPage = () => {
   const { courseId } = useParams();
@@ -21,16 +22,20 @@ const VideoPage = () => {
       const courseData = await getEnrolledCourse(courseId, token);
       console.log(courseData);
       dispatch(setCourseEntireData(courseData));
+      console.log("dispatch done");
       dispatch(setCourseSectionData(courseData.courseContent));
     })();
-  });
+  } , [courseId , token , dispatch]);
   return (
     <>
-      <div className=" relative min-h-screen w-full ">
+      <div className=" relative min-h-screen w-full flex">
         <VideoSlider
           setShowReviewModal={setShowReviewModal}
           setShowVideoSlider={setShowVideoSlider}
           showVideoSlider={showVideoSlider}
+        />
+        <VideoSection
+          setShowVideoSlider = {setShowVideoSlider}
         />
       </div>
       {

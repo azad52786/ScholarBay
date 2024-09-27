@@ -14,9 +14,9 @@ const MyProfile = () => {
     return isLoader ? (
       <Loader/>
     ) : (
-      <div className='  w-full bg-richblack-900 flex flex-col items-center justify-center text-pure-greys-25'>
-        <FileDetails pathname={pathname} extra = {["Profile"]}/>
-        <div className='pl-3 w-full text-4xl mt-4 font-bold text-pure-greys-200 mb-4'>My Profile</div>
+      <div className='w-full bg-richblack-900 flex flex-col items-center justify-center text-pure-greys-25'>
+        {/* <FileDetails pathname={pathname} extra = {["Profile"]}/> */}
+        <div className='pl-3 font-edu-sa flex items-center justify-center text-4xl mt-4 font-bold text-pure-greys-200 mb-8'>My Profile</div>
         <div className='flex justify-between w-[70%] h-fit bg-richblack-700 p-8 rounded-md items-center mb-16'>
           <div className=' flex gap-4 items-center'>
             <div className='h-[8rem] w-[8rem] rounded-full overflow-hidden'>
