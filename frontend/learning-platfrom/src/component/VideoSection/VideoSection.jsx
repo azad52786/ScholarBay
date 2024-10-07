@@ -133,7 +133,7 @@ const VideoSection = ({ setShowVideoSlider }) => {
                onClick={goToPreViousHandeler}
              >Previous</button>
            }
-           {
+           { 
              !isLastVideo() && <button
                className='  py-1 px-2   md:py-2 md:px-3 mr-2  bg-yellow-100 text-richblue-800 border-b-2 border-r border-white rounded-md md:text-lg md:font-semibold'
                
