@@ -6,10 +6,10 @@ import { LiaWpbeginner } from "react-icons/lia";
 const ExploreMoreTab = () => {
     const tabs = [
         'Free' ,
-        'New to coding' ,
-        "Most popular" , 
-        "Skills paths" ,
-        "Career paths" 
+        'coding' ,
+        "popular" , 
+        "Skills" ,
+        "Career" 
     ]
 
     const [currentTab , setCurrentTab] = useState(tabs[0]);
@@ -24,28 +24,28 @@ const ExploreMoreTab = () => {
     }
     
   return (
-    <div className=' w-10/12 font-inter flex flex-col items-center gap-5 mx-auto pt-24 pb-60 relative'>
-        <div className=' text-4xl font-bold '>
+    <div className=' w-10/12 font-edu-sa flex flex-col items-center  gap-3 md:gap-5 mx-auto pb-[500px] md:pb-60 relative'>
+        <div className=' text-3xl md:text-4xl font-bold text-center'>
         Unlock the <HighlitedText text = {"Power of Code"} color = {'bg-gradient-to-r from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] '}/>
         </div>
-        <div className=' text-richblack-300 font-semibold text-xl'>Learn to Build Anything You Can Imagine</div>
-        <div className='h-12 justify-around w-fit flex flow-row items-center gap-[25px] px-2 rounded-full bg-richblack-800 text-richblack-200'>
+        <div className=' text-richblack-300 font-semibold text-lg md:text-xl'>Learn to Build Anything You Can Imagine</div>
+        <div className='h-12 w-screen md:w-fit justify-around  flex flow-row items-center md:gap-[25px] px-2 rounded-full bg-richblack-800 text-richblack-200'>
             {tabs.map((tab , index) => (
                 <div key={index} 
-                    className={`text-[16px] px-7 py-2 rounded-full cursor-pointer hover:text-white hover:bg-richblack-900 ${tab === currentTab ? 'text-white bg-richblack-900 font-bold' : ''}`}
+                    className={` text-[14px] md:text-[16px] px-5 md:px-7 py-2 rounded-full cursor-pointer hover:text-white hover:bg-richblack-900 ${tab === currentTab ? 'text-white bg-richblack-900 font-bold' : ''}`}
                     onClick={() => setCardHendeler(tab)}
                 >
                  {tab}
                 </div>
             ))}
         </div>
-        <div className='flex flex-row justify-between pt-12 absolute top-[270px]'>
+        <div className='flex flex-col gap-5 md:gap-0 md:flex-row justify-between  absolute top-[200px]'>
             {
                 cources.map((course , index) =>(
                     <div 
                         key = {index}
                         onClick={() => setCurrentCard(course.heading)}
-                    className={` cursor-pointer flex flex-col gap-6 py-4 w-[30%] ${currentCard === course.heading ? 'bg-pure-greys-5 shadow-[10px_10px_yellow] text-richblack-700' : 'bg-richblack-800'} `}>
+                    className={` cursor-pointer flex flex-col gap-3 md:gap-6 py-4 w-full md:w-[30%] ${currentCard === course.heading ? 'bg-pure-greys-5 shadow-[10px_10px_yellow] text-richblack-700' : 'bg-richblack-800'} `}>
                         <div className=' text-2xl font-bold px-4'>
                             {course.heading}
                         </div>

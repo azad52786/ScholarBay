@@ -35,9 +35,9 @@ const TimelineSection = () => {
     const [dataSize , setDatasize] = useState(timeLineData.length);
   return (
     
-    <div className=' bg-pure-greys-5 font-inter text-richblue-800 pt-16 pb-10'>
-        <div className=' w-10/12 mx-auto flex flex-row'>
-            <div className=' w-[45%] flex flex-col items-start gap-6'>
+    <div className=' bg-pure-greys-5 font-edu-sa text-richblue-800 pt-16 pb-10'>
+        <div className=' w-10/12 mx-auto flex flex-col md:flex-row'>
+            <div className=' w-full md:w-[45%] flex flex-col items-start gap-6'>
                 {
                 timeLineData.map((element , index) => {
                     return (
@@ -46,22 +46,22 @@ const TimelineSection = () => {
                 })
                 }
             </div>
-            <div className=' relative'>
+            <div className=' relative mt-16 md:mt-0 font-edu-sa'>
                     <div className='shadow-[-5px_-5px_50px_5px] shadow-blue-100 '>
                         <img src={TimeLineImage} alt="TimelineImage" className=' object-cover h-[450px] w-[650px] shadow-[15px_15px_white] ' />
                     </div>
-                    <div className=' absolute flex flex-row  w-[550px] h-[100px] bg-caribbeangreen-700 left-[50%] translate-x-[-50%] bottom-[-2.5rem] mx-auto font-inter text-white'>
+                    <div className=' absolute flex flex-row w-[350px]  md:w-[550px] h-[100px] bg-caribbeangreen-700 left-[50%] translate-x-[-50%] bottom-[-2.5rem] mx-auto font-edu-sa text-white'>
                         <div className='p-6 h-full  w-[45%] flex flex-row justify-between items-center '>
-                            <div className=' h-full flex flex-row items-center gap-10'>
-                                <h1 className=' font-bold text-3xl'>10</h1>
-                                <p className=' text-caribbeangreen-400'>YEARS EXPERIENCES</p>
+                            <div className=' h-full flex flex-col justify-center md:justify-start md:flex-row items-center gap-2 md:gap-10'>
+                                <h1 className=' font-semibold md:font-bold text-3xl'>10</h1>
+                                <p className=' text-sm text-center text-caribbeangreen-400'>YEARS EXPERIENCES</p>
                             </div>
                         </div >
                         <div className=' w-[2%] my-[.6rem] h-[80%] border-r-2'></div>
                         <div className='p-6 h-full  w-[45%] flex flex-row justify-between items-center '>
-                            <div className=' h-full flex flex-row items-center gap-10'>
-                                <h1 className=' font-bold text-3xl '>250</h1>
-                                <p className=' text-caribbeangreen-400'>TYPES OF COURSES</p>
+                            <div className=' h-full flex flex-col justify-center md:justify-start md:flex-row items-center gap-2 md:gap-10'>
+                                <h1 className=' font-semibold md:font-bold text-3xl '>250</h1>
+                                <p className=' text-sm text-center text-caribbeangreen-400'>TYPES OF COURSES</p>
                             </div>
                         </div >
                     </div>
