@@ -13,7 +13,7 @@ const Section1 = () => {
                 <HighlitedText text = "Brighter Future" color = {'bg-gradient-to-r from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] '}/>    
             </div>
             <div
-                className=' text-[#838894] text-[18px] mt-6'
+                className=' text-[#838894] text-[18px] mt-6 '
             >Studynotion is at the forefront of driving innovation in online education. We're passionate about creating a <br/> brighter future by offering cutting-edge courses, leveraging emerging technologies, and nurturing <br/> a vibrant learning community.</div>
             <div className='w-full mt-12 relative  flex justify-center items-start'>
             <div class=" bg-gradient-to-br from-yellow-300 to-yellow-500 h-24 w-64 blur-[50px] rounded-full mt-4"></div>

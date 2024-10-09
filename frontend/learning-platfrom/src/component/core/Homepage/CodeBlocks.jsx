@@ -4,8 +4,8 @@ import { TypeAnimation } from 'react-type-animation';
 
 const CodeBlocks = ({postion , heading , paragraph , ctabtn1 , ctabtn2 , codetext , codecolor , bgstyle}) => {
   return (
-    <div className={`flex ${postion} gap-28 justify-around`}>
-        <div className = ' w-[50%] flex flex-col justify-center gap-5 items-start'>
+    <div className={`flex flex-col md:flex-row ${postion} gap-28 justify-around `}>
+        <div className = ' w-full md:w-[50%] flex flex-col justify-center gap-5 items-start'>
                 {heading}
                 <div className=' font-semibold text-richblack-300 text-start'>{paragraph}</div>
                 <div className='flex flex-row gap-5 mt-8 font-bold'>
@@ -13,7 +13,7 @@ const CodeBlocks = ({postion , heading , paragraph , ctabtn1 , ctabtn2 , codetex
                     <CTAButton isyellow={ctabtn2.isyellow}> {ctabtn2.text}</CTAButton>
                 </div>
         </div>
-        <div className='relative w-[37%] font-mono'>
+        <div className='relative w-full md:w-[37%] font-mono'>
           <div className=' absolute top-0 left-0 w-80 h-64 rounded-full opacity-20 blur-2xl'
             style={bgstyle}
           >
