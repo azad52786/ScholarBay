@@ -133,13 +133,15 @@ export const logout = (navigate , setUserPresent) => {
 export const sendMessage = (data) => {
     return async function(){
         try{
+            console.log("hello world")
             const MailResponse = await Apiconnection("POST", SEND_MAIL.CONTACT_US_SEND_MAIL , data);
             console.log(MailResponse);
+            console.log("hello world sent!");
             if(MailResponse.data.success){
                 toast.success("Message is successfully sent");
             }
             else{
-                toast.error(MailResponse.data.message);
+                toast.error("Mail Send Failed Please try again!!");
             }
         }catch(e){
             console.error(e);

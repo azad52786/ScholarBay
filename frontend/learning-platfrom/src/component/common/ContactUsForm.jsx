@@ -48,7 +48,7 @@ const ContactUsForm = () => {
             className=' p-3 rounded-lg bg-richblack-700 border-b border-richblack-300 text-pure-greys-100 text-[18px]'
             {...register('firstName' , {required : true , maxLength: 80})}
             />
-            {errors.firstName && <span>First name is required.</span>}
+            {errors.firstName && <span className='  text-pink-400'>First name is required.</span>}
         </div>
         <div className=' flex flex-col gap-2 w-[48%]'>
           <label htmlFor="lastName">last Name</label>
@@ -60,7 +60,7 @@ const ContactUsForm = () => {
             className=' p-3 rounded-lg bg-richblack-700 border-b border-richblack-300 text-pure-greys-100 text-[18px]'
             {...register('lastName' , {required : true , maxLength: 80})}
             />
-            {errors.lastName && <span>Last name is required.</span>}
+            {errors.lastName && <span className='  text-pink-400'>Last name is required.</span>}
         </div>
       </div>
       <div className=' flex flex-col gap-2'>
@@ -73,7 +73,7 @@ const ContactUsForm = () => {
             className=' p-3 rounded-lg bg-richblack-700 border-b border-richblack-300 text-pure-greys-100 text-[18px]'
             {...register('email' , {required : true , pattern: /^\S+@\S+$/i})}
             />
-            {errors.email && <span>email is required.</span>}
+            {errors.email && <span className='  text-pink-400'>email is required.</span>}
         </div>
         <div className=' flex flex-col gap-2'>
             <label htmlFor="phoneNo">Phone No</label>
@@ -106,7 +106,7 @@ const ContactUsForm = () => {
                 )}
                 />
                 {
-                  errors.phoneNo && <span>{errors.message}</span>
+                  errors.phoneNo && <span className='  text-pink-400'>{"Phone no is required"}</span>
                 }
             </div>
               </div>
@@ -121,7 +121,7 @@ const ContactUsForm = () => {
                 {...register('message' , {required : true})}
               />
                {
-                  errors.message && <span>Please Enter your message</span>
+                  errors.message && <span className=' text-pink-400'>Please Enter your message</span>
                 }
             </div>
             <button type="submit" className="mt-4 w-full bg-yellow-50 p-3 text-richblack-900 rounded-lg text-center">
