@@ -214,3 +214,33 @@ exports.updateDisplayPicture = async (req, res) => {
     });
   }
 };
+
+
+
+exports.instructorDashBoard = async(req , res) => {
+    try{
+        const allCourseDetails = await Course.find({instructor : req.user?.id});
+        let courseData = allCourseDetails.map((course) => {
+            return {
+              _id : course._id , 
+              courseName : course.courseName , 
+              courseDescription : course.courseDescription , 
+              totalStudentEnrolled : course.studentsEnrolled , 
+              totalPrice : course.price , 
+              
+            }
+        });
+        
+        return res.status(200).json({
+          success : true , 
+          message : "All Course Details is Successfully Fetched " , 
+          courses : courseData 
+        })
+    }catch(e){
+        res.status(505).json({
+            success : false , 
+            message : "Internal Server Error" , 
+            error : e 
+        })
+    }
+}

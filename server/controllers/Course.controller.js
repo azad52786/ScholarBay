@@ -486,3 +486,22 @@ exports.getEnrolledCourse = async(req , res) => {
 }
 
 
+
+exports.getAllInstructorCourse = async(req , res) => {
+  try{
+      const courses = Course.find({instructor : req.user?.id}).sort({createdAt : -1});
+      
+      return res.status(201).json({
+        success : true , 
+        message : "Instructor Course Successfully Fetched" , 
+        courses , 
+      })
+  }catch(e){
+    console.log(e);
+    res.status(501).json({
+      success : false , 
+      message : "Internal Server Error " , 
+      error : e
+    })
+  }
+}

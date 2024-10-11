@@ -1,5 +1,5 @@
 const express = require('express');
-const { auth } = require('../middlewares/auth.middleware');
+const { auth, isInstructor } = require('../middlewares/auth.middleware');
 const { deleteUser } = require('../controllers/userDelete.controller');
 const { updateProfile, getUserDetails, getEnrolledCourses, updateDisplayPicture } = require('../controllers/Profile.controller');
 const router = express.Router();
@@ -20,6 +20,8 @@ router.get("/getEnrolledCourses", auth, getEnrolledCourses)
 // http://localhost:4000/api/v1/profile/getEnrolledCourses
 router.put("/updateDisplayPicture", auth, updateDisplayPicture)
 // http://localhost:4000/api/v1/profile/updateDisplayPicture
+router.get('/instructorDashBoardDetails' , auth , isInstructor , instructorDashBoard);
+// http://localhost:4000/api/v1/profile/instructorDashBoardDetails
 
 
 module.exports = router;
