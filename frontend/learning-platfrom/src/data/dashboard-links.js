@@ -10,7 +10,7 @@ export const sidebarLinks = [
   {
     id: 2,
     name: "Dashboard",
-    path: "/dashboard/default/instructor",
+    path: "/dashboard/default/instructorDashBoard",
     type: ACCOUNT_TYPE.INSTRUCTOR,
     icon: VscDashboard,
   },

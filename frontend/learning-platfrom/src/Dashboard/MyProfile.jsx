@@ -14,13 +14,13 @@ const MyProfile = () => {
     return isLoader ? (
       <Loader/>
     ) : (
-      <div className='w-full bg-richblack-900 flex flex-col items-center justify-center text-pure-greys-25'>
+      <div className='w-full bg-richblack-900 font-edu-sa flex flex-col items-center justify-center text-pure-greys-25'>
         {/* <FileDetails pathname={pathname} extra = {["Profile"]}/> */}
-        <div className='pl-3 font-edu-sa flex items-center justify-center text-4xl mt-4 font-bold text-pure-greys-200 mb-8'>My Profile</div>
+        <div className='pl-3 font-edu-sa flex items-center justify-center text-4xl mt-4 font-bold text-[#00BFFF] mb-8'>My Profile</div>
         <div className='flex justify-between w-[70%] h-fit bg-richblack-700 p-8 rounded-md items-center mb-16'>
           <div className=' flex gap-4 items-center'>
-            <div className='h-[8rem] w-[8rem] rounded-full overflow-hidden'>
-            <img src={user.image} alt='profile'height={50} width={50} className=' w-fit h-fit object-fit rounded-full'/>
+            <div className='h-fit w-fit '>
+            <img src={user.image} alt='profile'  className="h-32 w-32 rounded-full object-center "/>
             </div>
             
             <div className=' flex flex-col gap-2'>
@@ -59,12 +59,12 @@ const MyProfile = () => {
           </div>
           <div className='flex w-full'>
             <div className='w-[50%]'>
-              <p className=' text-sm text-pure-greys-300 font-inter mb-2'>Email</p>
-              <p className='font-bold font-inter text-start text-pure-greys-25'>{user?.email}</p>
+              <p className=' text-sm text-pure-greys-300  mb-2'>Email</p>
+              <p className='font-bold  text-start text-pure-greys-25'>{user?.email}</p>
             </div>
             <div className='w-[50%]'>
-              <div className=' text-sm  font-inter text-pure-greys-300 mb-2'>Contact Number</div>
-              <p className='font-bold font-inter text-pure-greys-25'>{user?.contact ? user.contact : "Null" }</p>
+              <div className=' text-sm   text-pure-greys-300 mb-2'>Contact Number</div>
+              <p className='font-bold  text-pure-greys-25'>{user?.contact ? user.contact : "Null" }</p>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { setLoader } from "../../Store/Slices/AuthSlice";
-import { COURSE_API } from "../Api";
+import { COURSE_API, INSTRUCTOR_DASHBOARD_API } from "../Api";
 import Apiconnection from "../Apiconnection";
 import { setCourseDetails, setStep } from "../../Store/Slices/CreateCourseSlice";
 
@@ -292,4 +292,23 @@ export const getEnrolledCourse = async(courseId , token) => {
         toast.error("Server Error")
         return [];
     }
+}
+
+
+export const getInstructorCourses = async(token) => {
+   
+    try{
+        let courses = await Apiconnection('get' , INSTRUCTOR_DASHBOARD_API.GET_INSTRUCTOR_COURSES , null , {
+            'Authorization' : `Bearer ${token}`
+        })
+        if(courses?.data?.success){
+            return courses.data?.courses;
+        }else{
+            throw new Error("Instructor course fetched Failed!!")
+        }
+    }catch(e){
+        console.log(e);
+    }
+    //  toast.dismiss(toastId)
+    return [];
 }

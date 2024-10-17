@@ -33,6 +33,11 @@ export const COURSE_API = {
     MARKED_SUBSECTION : `${BASE_URL + '/course/markWatched'}`
 }
 
+export const INSTRUCTOR_DASHBOARD_API = {
+    GET_INSTRUCTOR_COURSES : `${BASE_URL + "/course/getInstructorCourses"}` , 
+    GET_INSTRUCTOR_DASHBOARD_DETAILS : `${BASE_URL + '/profile/instructorDashBoardDetails'}`
+}
+
 export const CATAGORY_APIS = {
     CATAGORY_PAGE_DETAILS : `${BASE_URL + '/course/getCategoryPageDetails'}`
 }
