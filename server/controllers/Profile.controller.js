@@ -220,27 +220,34 @@ exports.updateDisplayPicture = async (req, res) => {
 exports.instructorDashBoard = async(req , res) => {
     try{
         const allCourseDetails = await Course.find({instructor : req.user?.id});
+        let totalIncome = 0;
+        let totalStudent = 0;
         let courseData = allCourseDetails.map((course) => {
+            totalIncome += (course.price * course.studentsEnrolled.length);
+            totalStudent += course.studentsEnrolled.length;
             return {
               _id : course._id , 
               courseName : course.courseName , 
               courseDescription : course.courseDescription , 
-              totalStudentEnrolled : course.studentsEnrolled , 
-              totalPrice : course.price , 
-              
+              totalStudentEnrolled : course.studentsEnrolled.length , 
+              Price : course.price , 
             }
         });
         
         return res.status(200).json({
           success : true , 
           message : "All Course Details is Successfully Fetched " , 
-          courses : courseData 
+          dashBoardDetails : {
+            courseData , 
+            totalIncome , 
+            totalStudent
+          } 
         })
     }catch(e){
         res.status(505).json({
             success : false , 
             message : "Internal Server Error" , 
-            error : e 
+            error : e.message 
         })
     }
 }

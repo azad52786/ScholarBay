@@ -1,7 +1,7 @@
 const express = require('express');
 const { auth, isInstructor } = require('../middlewares/auth.middleware');
 const { deleteUser } = require('../controllers/userDelete.controller');
-const { updateProfile, getUserDetails, getEnrolledCourses, updateDisplayPicture } = require('../controllers/Profile.controller');
+const { updateProfile, getUserDetails, getEnrolledCourses, updateDisplayPicture, instructorDashBoard } = require('../controllers/Profile.controller');
 const router = express.Router();
 
 

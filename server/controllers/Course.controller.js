@@ -489,8 +489,29 @@ exports.getEnrolledCourse = async(req , res) => {
 
 exports.getAllInstructorCourse = async(req , res) => {
   try{
-      const courses = Course.find({instructor : req.user?.id}).sort({createdAt : -1});
-      
+      const courses = await Course.aggregate([
+        {
+          $match : {
+            instructor : new mongoose.Types.ObjectId(req.user?.id)
+          }
+        } , 
+        {
+          $addFields : {
+            totalStudentsEnrolled : {
+              $size : "$studentsEnrolled"
+            }
+          }
+        }  , 
+        {
+          $sort : {
+            totalStudentsEnrolled : - 1 , 
+          }
+        } , 
+        {
+          $limit : 3
+        }
+        ])
+      console.log(courses)
       return res.status(201).json({
         success : true , 
         message : "Instructor Course Successfully Fetched" , 
@@ -501,7 +522,7 @@ exports.getAllInstructorCourse = async(req , res) => {
     res.status(501).json({
       success : false , 
       message : "Internal Server Error " , 
-      error : e
+      error : e.message
     })
   }
 }
