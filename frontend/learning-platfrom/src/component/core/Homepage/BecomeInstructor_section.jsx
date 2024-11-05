@@ -10,7 +10,7 @@ const BecomeInstructor_section = () => {
         className=' w-full md:w-[45%] object-contain shadow-[-20px_-20px_white]'
          alt="instructor" />
         <div className=' flex flex-col gap-12 justify-center items-center md:items-start'>
-            <div className=' font-bold text-4xl'>
+            <div className=' font-bold text-3xl md:text-4xl'>
                 Become an <br/>
                 <HighlitedText text ={"instructor"} color = {'bg-gradient-to-r from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] '}/>
             </div>

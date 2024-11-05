@@ -4,7 +4,7 @@ import { TypeAnimation } from 'react-type-animation';
 
 const CodeBlocks = ({postion , heading , paragraph , ctabtn1 , ctabtn2 , codetext , codecolor , bgstyle}) => {
   return (
-    <div className={`flex flex-col md:flex-row ${postion} gap-28 justify-around `}>
+    <div className={`flex flex-col md:flex-row ${postion} gap-16 md:gap-28 justify-around `}>
         <div className = ' w-full md:w-[50%] flex flex-col justify-center gap-5 items-start'>
                 {heading}
                 <div className=' font-semibold text-richblack-300 text-start'>{paragraph}</div>

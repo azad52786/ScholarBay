@@ -18,12 +18,12 @@ const Section_1 = () => {
     </div>
     <div
     >
-        <p className=' font-bold text-4xl mt-7 font-edu-sa'>
+        <p className=' font-bold text-3xl md:text-4xl mt-7 font-edu-sa'>
             Empower Your Future with
             <HighlitedText text={"Coding Skills"} color = {'bg-gradient-to-r from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] '}/>
         </p>
     </div>
-    <div className=' max-w-[80%] mx-auto font-bold text-richblack-300 text-lg mt-5  text-justify leading-6 md:text-center'>
+    <div className=' max-w-[80%] mx-auto font-edu-sa md:font-bold text-richblack-300 text-lg mt-5  text-justify leading-6 md:text-center'>
     With our online coding courses, you can learn at your own pace, from anywhere in the world, and get access to a wealth of resources, including hands-on projects, quizzes, and personalized feedback from instructors. 
     </div>
     <div className=' flex flex-row gap-6 mt-12 font-edu-sa'>
@@ -46,11 +46,11 @@ const Section_1 = () => {
         </div>
    
     {/* code section 1  */}
-    <div className='  w-11/12 mt-24 font-edu-sa '>
+    <div className='  w-11/12 mt-12 md:mt-24 font-edu-sa '>
         <CodeBlocks
             postion={`lg:flex-row`}
             heading = {
-                <div className='text-4xl text-balance  md:text-start font-semibold md:font-bold'>
+                <div className=' text-3xl md:text-4xl text-balance  md:text-start font-semibold md:font-bold'>
                     Unlock your 
                     <HighlitedText text="coding potential" color = {'bg-gradient-to-r from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] '}></HighlitedText><br/> 
                     with our online courses.
@@ -75,11 +75,11 @@ const Section_1 = () => {
             bgstyle={{ background: 'linear-gradient(123.77deg, #8a2be2 -6.46%, orange 59.04%, #f8f8ff 124.53%)' }}
         />
     </div>
-    <div className='  w-11/12 mt-24 font-edu-sa'>
+    <div className='  w-11/12 mt-12 md:mt-24 font-edu-sa'>
         <CodeBlocks
             postion={`lg:flex-row-reverse`}
             heading = {
-                <div className='text-4xl  text-balance  md:text-start font-semibold md:font-bold'>
+                <div className='md:text-4xl text-3xl text-balance  md:text-start font-semibold md:font-bold'>
                     Start 
                     <HighlitedText text="coding in seconds" color = {'bg-gradient-to-r from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] '}></HighlitedText><br/> 
                 </div>

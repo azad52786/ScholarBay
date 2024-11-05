@@ -6,7 +6,7 @@ import Plan_your_lessons from '../../../assets/Images/Plan_your_lessons.svg'
 import CTAButton from '../Homepage/CTAButton'
 const LearningLanguageSection = () => {
   return (
-    <div className=' font-edu-sa w-screen bg-pure-greys-5 text-richblack-800 md:pt-32 pt-24 pb-32'>
+    <div className=' font-edu-sa w-screen bg-pure-greys-5 text-richblack-800 md:pt-32 pt-16 pb-32'>
       <div className=' w-10/12 mx-auto flex flex-col items-center'>
           <div className=' text-3xl font-bold'>
           Your swiss knife for
