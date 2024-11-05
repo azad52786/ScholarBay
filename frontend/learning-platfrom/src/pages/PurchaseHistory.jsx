@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Contact = () => {
+const PurchaseHistory = () => {
   return (
     <div className=' w-screen h-screen flex items-center justify-center'>
-      <p className=' font-bold'>Page Under Construction.</p>
+      Page Under Construction
     </div>
   )
 }
 
-export default Contact
+export default PurchaseHistory

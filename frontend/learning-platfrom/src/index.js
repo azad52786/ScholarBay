@@ -31,6 +31,7 @@ import VideoPage from "./pages/VideoPage.jsx";
 import InstructorRoute from "./component/core/Auth/InstructorRoute.jsx";
 import StudentRoute from "./component/core/Auth/StudentRoute.jsx";
 import InstructorDashBoard from "./pages/InstructorDashBoard.jsx";
+import PurchaseHistory from "./pages/PurchaseHistory.jsx";
 
 const router = createBrowserRouter([
   {
@@ -158,6 +159,13 @@ const router = createBrowserRouter([
                 <InstructorDashBoard/>
               </InstructorRoute>
             </ProtectedRoute>)
+          } , {
+            path : "/dashboard/default/purchase-history" , 
+            element : (<ProtectedRoute>
+              <StudentRoute>
+                <PurchaseHistory/>
+              </StudentRoute>
+            </ProtectedRoute>) 
           }
         ],
       },

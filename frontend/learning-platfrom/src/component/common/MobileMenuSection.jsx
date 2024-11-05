@@ -153,7 +153,7 @@ const MobileMenuSection = ({
         </p>
         <div className=" mt-2 flex flex-col items-center gap1">
           {tags.length < 0 ? (
-            <div>wait...</div>
+            <div>Loading...</div>
           ) : (
             tags.map((tag, index) => (
               <div

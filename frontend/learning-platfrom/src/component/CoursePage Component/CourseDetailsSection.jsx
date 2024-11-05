@@ -31,9 +31,9 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
     }
   }
   return (
-    <div className=" font-inter w-full h-fit grid grid-cols-1 grid-rows-3 md:grid-cols-2 lg:grid-cols-3 md:grid-rows-2 gap-2 justify-stretch content-start">
-      <div className=" h-fit flex gap-y-5 flex-col py-10 lg:col-span-2">
-        <p className=" text-2xl md:text-4xl font-bold text-richblack-5 sm:text-[42px]">
+    <div className=" font-edu-sa w-full h-fit grid grid-cols-1 grid-rows-3 md:grid-cols-2 lg:grid-cols-3 md:grid-rows-2 gap-2 justify-stretch content-start">
+      <div className=" mt-[-50px] md:mt-0 h-fit flex gap-y-5 flex-col py-10 lg:col-span-2">
+        <p className=" text-2xl md:text-4xl font-bold text-[#5692d3] sm:text-[42px]">
           {courseName}
         </p>
         <p class="text-richblack-200 md:text-xl w-full text-justify md:px-0">

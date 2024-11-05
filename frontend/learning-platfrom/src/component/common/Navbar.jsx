@@ -13,6 +13,8 @@ import { COURSE_API, PROFILE_API } from "../../service/Api.js";
 import { logout } from "../../service/operations/BackendConnection.js";
 import { CgMenuRightAlt } from "react-icons/cg";
 import MobileMenuSection from "./MobileMenuSection.jsx";
+import { IoLogOutOutline } from "react-icons/io5";
+import { RiDashboard2Line } from "react-icons/ri";
 
 const Navbar = () => {
   const { token } = useSelector((state) => state.Auth);
@@ -51,14 +53,9 @@ const Navbar = () => {
   return (
     <div className="w-screen h-14 relative bg-richblack-900 border-b border-richblack-600">
       <div className="w-10/12 relative min-h-full mx-auto flex flex-row items-center justify-between">
-        {/* <img
-          // src={logo}
-          // className="h-[2rem] w-[7rem] md:h-[2.2rem] md:w-[10rem] "
-          src={logo1}
-          className=" h-12 w-12 rounded-md"
-          alt="logo"
-        /> */}
-        <div className=" flex items-center gap-2">
+        <div className=" flex items-center gap-2 cursor-pointer"
+          onClick={() => navigate('/')}
+        >
           
           <img
           src={logo1}
@@ -140,7 +137,7 @@ const Navbar = () => {
           )}
         </nav>
         {!token && (
-          <div className=" hidden md:flex flex-row md:gap-2 gap-2 lg:gap-3 font-inter text-richblack-100">
+          <div className=" hidden  lg:flex flex-row md:gap-2 gap-2 lg:gap-3 font-inter text-richblack-100">
             <Link to="/login">
               <button className=" px-2 py-1 bg-richblack-800 lg:px-3 lg:py-2 rounded-md border border-richblack-600">
                 Log In
@@ -157,7 +154,7 @@ const Navbar = () => {
           <div className="flex flex-row gap-4 items-center text-richblack-5 relative">
             <MdOutlineSearch className=" hidden lg:block h-10 w-8  cursor-pointer" />
             <div
-              className=" relative ml-20 lg:ml-0 cursor-pointer"
+              className=" hidden lg:block relative ml-20 lg:ml-0 cursor-pointer"
               onClick={() => navigate("/cart")}
             >
               <div className="  text-sm absolute right-[-6px] text-white rounded-full w-5 h-5 top-[-6px] text-center bg-caribbeangreen-400">
@@ -173,25 +170,41 @@ const Navbar = () => {
                 className="w-8 h-8 rounded-full cursor-pointer"
               />
               <div
-                className=" absolute top-[100%] right-[-100%] p-4
-                             bg-richblack-800 cursor-pointer text-richblack-50 flex-col gap-3 rounded-md 
-                              font-inter hidden group-hover:flex"
+                className=" absolute top-[103%] right-[-150%]
+                             bg-richblack-800 cursor-pointer text-richblack-50 flex-col rounded-md 
+                              font-inter hidden group-hover:flex border border-opacity-65 border-richblack-50"
               >
                 <Link to={"/dashboard/default"}>
-                  <div>Dashbord</div>
+                  <div className="flex cursor-pointer px-3 items-center py-1  gap-2 border-b border-opacity-65
+              border-richblack-50"><RiDashboard2Line /> <p>DashBoard</p></div>
                 </Link>
-                <div onClick={logoutHandeler}>LogOut</div>
+                <div onClick={logoutHandeler} className="flex cursor-pointer px-3 items-center py-1 gap-2"> <IoLogOutOutline />
+                <p>LogOut</p></div>
               </div>
             </div>
           </div>
         )}
+       
             <div
-              className=" block lg:hidden cursor-pointer"
-              onClick={() => setShowMenuSlider((pre) => !pre)}
+              className=" flex gap-3 justify-center items-center lg:hidden "
+              
             >
-              <CgMenuRightAlt className=" w-8 h-8" />
+             <div
+              className=" lg:hidden relative ml-20 lg:ml-0 cursor-pointer"
+              onClick={() => navigate("/cart")}
+            >
+              <div className="  text-sm absolute right-[-6px] text-richblack-700 font-edu-sa font-bold rounded-full w-5 h-5 top-[-6px] text-center bg-[#4be667]">
+                {totalItems}
+              </div>
+              <TiShoppingCart className=" h-10 w-8" />
+            </div> 
+              <CgMenuRightAlt className=" w-8 h-8 cursor-pointer" 
+              onClick={() => setShowMenuSlider((pre) => !pre)}/>
             </div>
       </div>
+      
+      <>
+      
       {
         <MobileMenuSection
           token={token}
@@ -201,7 +214,8 @@ const Navbar = () => {
           user={user}
           tags={tags}
         />
-      }
+
+      }</>
     </div>
   );
 };
