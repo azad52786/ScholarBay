@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
+import logo1 from '../../assets/Images/logo1.jpg';
 import { NavbarLinks } from "../../data/navbar-links.js";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdOutlineSearch } from "react-icons/md";
@@ -50,11 +51,36 @@ const Navbar = () => {
   return (
     <div className="w-screen h-14 relative bg-richblack-900 border-b border-richblack-600">
       <div className="w-10/12 relative min-h-full mx-auto flex flex-row items-center justify-between">
-        <img
-          src={logo}
-          className="h-[2rem] w-[7rem] md:h-[2.2rem] md:w-[10rem] "
+        {/* <img
+          // src={logo}
+          // className="h-[2rem] w-[7rem] md:h-[2.2rem] md:w-[10rem] "
+          src={logo1}
+          className=" h-12 w-12 rounded-md"
+          alt="logo"
+        /> */}
+        <div className=" flex items-center gap-2">
+          
+          <img
+          src={logo1}
+          style={{
+            boxShadow : "0px 0px 10px blue"
+          }}
+          className=" h-10 w-10  rounded-full "
           alt="logo"
         />
+        {/* <div className=" w-1 ml-[-5px] mr-2 h-10 bg-blue-200 rounded-l rounded-full"></div> */}
+          <h1 className=""
+            style={{
+          font : 'italic 1.2rem "Fira Sans", serif' , 
+          color : "white" , 
+          fontSize : "1.5rem" , 
+          textShadow : "0px 0px 20px blue"
+        }}
+          >
+          SholarBay 
+          </h1>
+        </div>
+      
         <nav className=" gap-10  text-richblack-300 hidden lg:flex">
           {NavbarLinks.map((element, index) =>
             element.title === "Catalog" ? (

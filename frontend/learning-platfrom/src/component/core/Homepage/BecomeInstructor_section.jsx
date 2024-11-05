@@ -15,7 +15,7 @@ const BecomeInstructor_section = () => {
                 <HighlitedText text ={"instructor"} color = {'bg-gradient-to-r from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] '}/>
             </div>
             <p className=' text-richblack-300 text-lg font-semibold'>
-                Instructors from around the world teach millions of students on StudyNotion. We provide the tools and skills to teach what you love.
+                Instructors from around the world teach millions of students on SholarBay. We provide the tools and skills to teach what you love.
             </p>
             <CTAButton isyellow={true} path='/'>Start Teaching Today  ➡</CTAButton>
         </div>
