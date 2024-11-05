@@ -38,27 +38,27 @@ const ChangeProfileInformation = () => {
         dispatch(updateUserAdditionalData(formData , token));
     }
   return (
-    <div className='flex justify-between w-[70%] bg-richblack-700 p-8 rounded-md items-center mb-16'>
-    <form className=' flex flex-col gap-12  w-full'
+    <div className='flex justify-between w-[90%] border border-richblack-50 md:w-[70%] bg-richblack-700 p-8 rounded-md items-center mb-16'>
+    <form className=' flex flex-col gap-4 md:gap-12  w-full'
         onSubmit={submitHandler}
     >
-      <p className=' text-pure-greys-100 font-semibold text-2xl'>Profile Information</p>
-      <div className=' flex gap-6 text-pure-greys-25'>
-        <div className=' w-[50%] text-sm '>
-            <label htmlFor="name" className=' font-semibold mb-3'>Display Name</label>
+      <p className=' text-pure-greys-100 font-semibold  text-lg md:text-2xl'>Profile Information</p>
+      <div className=' flex flex-col md:flex-row gap-3 md:gap-6 text-pure-greys-25'>
+        <div className=' flex flex-col md:flex-none md:w-[50%] text-sm'>
+            <label htmlFor="name" className=' text-richblack-400 md:font-semibold '>Display Name</label>
             <input 
                 type="text" 
                 id='name'
-                className=' text-lg h-12 p-2 rounded-md w-[100%]'
+                className=' mt-1 text-lg h-12 p-2 rounded-md'
                 placeholder={user.firstName + " " + user.lastName}
                 disabled
                 ref={name}
             />
         </div>
-        <div className=' w-[50%] text-sm '>
-            <label htmlFor="profession" className=' font-semibold mb-3'> Profession </label>
+        <div className=' w-full  md:w-[50%] text-sm '>
+            <label htmlFor="profession" className=' mb-3 text-richblack-400 md:font-semibold'> Profession </label>
             <select name="profession" id="profession" ref={profession}
-                className='text-lg block w-full h-12 bg-richblack-600 rounded-md p-2 cursor-pointer'
+                className='  mt-1 text-lg block w-full h-12 border-r-2 border-b-2 bg-richblack-600 rounded-md p-2 cursor-pointer'
             >
             {
                 professionData.map((ele , index) => (
@@ -68,19 +68,19 @@ const ChangeProfileInformation = () => {
             </select>
         </div>
       </div>
-      <div className=' flex gap-6 text-pure-greys-25'>
-        <div className=' w-[50%] text-sm '>
-            <label htmlFor="dateOfBirth" className=' font-semibold mb-3'>Date Of Birth</label>
+      <div className=' flex flex-col md:flex-row gap-6 text-pure-greys-25'>
+        <div className=' w-full md:w-[50%] text-sm '>
+            <label htmlFor="dateOfBirth" className=' text-richblack-400 md:font-semibold'>Date Of Birth</label>
             <input 
                 type="date" 
                 id='dateOfBirth'
-                className=' text-lg h-12 p-2 rounded-md w-[100%] bg-richblack-600'
+                className='border-r-2 border-b-2 text-lg mt-1 h-12 p-2 rounded-md w-[100%] bg-richblack-600'
                 ref={dateOfBirth}
             />
         </div>
-        <div className=' w-[50%] text-sm '>
-        <label htmlFor="gender" className='font-semibold mb-3'>Gender</label>
-        <div className='bg-richblack-600 h-12 rounded-md flex gap-4 items-center justify-around'>
+        <div className=' w-full md:w-[50%] text-sm'>
+        <label htmlFor="gender" className='font-semibold '>Gender</label>
+        <div className='bg-richblack-600 mt-1 h-12  border-r-2 border-b-2 rounded-md flex gap-4 items-center justify-around'>
             <div className='flex gap-2 cursor-pointer w-fit h-fit'>
                 <input 
                     type='radio' 
@@ -122,38 +122,38 @@ const ChangeProfileInformation = () => {
 
         </div>
         </div>
-        <div className=' w-[50%] text-sm '>
+        <div className=' md:w-[50%] text-sm '>
             <label htmlFor="number" className=' font-semibold mb-3'>Contact Number</label>
             <input 
                 type="number" 
                 id='number'
-                className=' text-lg h-12 p-2 rounded-md w-[100%]  bg-richblack-600'
-                placeholder={"12232134324"}
+                className='mt-1  border-r-2 border-b-2 text-lg h-12 p-2 rounded-md w-[100%]  bg-richblack-600'
+                placeholder={"97xxxxxx65"}
                 ref={contactNumber}
             />
         </div>
-        <div className=' flex gap-6 text-pure-greys-25'>
-        <div className=' w-[50%] text-sm '>
+        <div className=' flex flex-col md:flex-row gap-6 text-pure-greys-25'>
+        <div className=' md:w-[50%] text-sm '>
             <label htmlFor="password" className='font-semibold mb-3'>Password</label>
             <input 
                 type="password" 
-                className=' text-lg h-12 p-2 rounded-md w-[100%] bg-richblack-600'
+                className=' text-lg  border-r-2 border-b-2 mt-1 h-12 p-2 rounded-md w-[100%] bg-richblack-600'
                 placeholder={"******"}
                 ref={password}
             />
         </div>
-        <div className=' w-[50%] text-sm '>
+        <div className=' md:w-[50%] text-sm '>
             <label htmlFor="confirmPassword" className='font-semibold mb-3'>Confirm Password</label>
             <input 
                 type="password" 
                 id="confirmPassword"
-                className=' text-lg h-12 p-2 rounded-md w-[100%] bg-richblack-600'
+                className=' text-lg mt-1  border-r-2 border-b-2 h-12 p-2 rounded-md w-[100%] bg-richblack-600'
                 placeholder={"******"}
                 ref={confirmPassword}
             />
         </div>
         </div>
-        <button className={` ml-7 font-bold text-black bg-[#FFD60A]
+        <button className={` font-bold text-black bg-[#FFD60A]
             w-fit h-fit py-2 px-4 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
             type='submit'
         >Submit</button>
