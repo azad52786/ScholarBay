@@ -4,8 +4,8 @@ import { FaCirclePlus } from "react-icons/fa6";
 
 const TopBarSection = () => {
   return (
-    <div className=" w-full h-[120px] flex items-center justify-between">
-      <div className="text-3xl font-bold font-inter text-pure-greys-50">
+    <div className=" w-full h-[120px] font-edu-sa  flex items-center justify-between">
+      <div className="text-3xl font-bold text-[#44c2e5]">
         My Course
       </div>
       <Link
@@ -14,7 +14,7 @@ const TopBarSection = () => {
       bg-yellow-25 rounded-md cursor-pointer"
       >
         <FaCirclePlus className=" text-richblack-800 " />
-        <button className=" font-inter text-[14px] font-bold text-richblack-800">
+        <button className=" text-[14px] font-bold text-richblack-800">
           New
         </button>
       </Link>

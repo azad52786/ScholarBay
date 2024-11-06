@@ -59,7 +59,7 @@ const PublishHome = () => {
             htmlFor="publish"
             className="text-pure-greys-400 text-lg cursor-pointer"
           >
-            Make this Course Public
+            Make this Course {courseDetails.status === "Private" ? "Public" : "Private"}
           </label>
         </div>
         {errors.publish && (
@@ -69,7 +69,10 @@ const PublishHome = () => {
         <div className="flex items-center justify-between">
           <button
             type="button"
-            className="py-3 px-4 gap-x-2 bg-richblack-700 border-b-2 border-pure-greys-400 rounded-md flex items-center justify-center hover:translate-y-[-7px] duration-150"
+            className="md:py-3 py-1 px-4 gap-x-2 bg-richblack-700 
+            border-b-2 border-pure-greys-400 rounded-md flex
+            items-center justify-center hover:translate-y-[-7px] 
+            duration-150"
             onClick={() => dispatch(setStep(2))}
           >
             <FaChevronLeft />
@@ -80,10 +83,13 @@ const PublishHome = () => {
             <div className="flex gap-x-3">
               <button
                 type="submit"
-                className="py-3 px-4 gap-x-2 bg-yellow-25 text-pure-greys-600 border-b-2 border-pure-greys-400 rounded-md hover:translate-y-[-7px] duration-150"
+                className="md:py-3 py-1 px-4 gap-x-2 bg-yellow-25
+                text-pure-greys-600 border-b-2
+                border-pure-greys-400 rounded-md 
+                hover:translate-y-[-7px] duration-150"
                 // onClick={() => ChangeModeHandler("Public")}
               >
-                Save Changes And Public Course
+                Save
               </button>
             </div>
           ) : (
@@ -93,7 +99,7 @@ const PublishHome = () => {
                 className="py-3 px-4 gap-x-2 bg-yellow-25 text-pure-greys-600 border-b-2 border-pure-greys-400 rounded-md hover:translate-y-[-7px] duration-150"
                 // onClick={() => ChangeModeHandler("Private")}
               >
-                Save Changes And Private Course
+                Save
               </button>
             </div>
           )}

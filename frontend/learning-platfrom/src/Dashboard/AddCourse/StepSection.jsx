@@ -3,7 +3,7 @@ import { FaCheck } from 'react-icons/fa'
 
 const StepSection = ({CourseCreationData , step}) => {
   return (
-    <div className=' w-[90%] mx-auto mt-6 flex'>
+    <div className=' w-[90%] mx-auto mt-6 flex font-edu-sa '>
       {
         CourseCreationData.map((CreateData , index) => (
             <div className=' w-[30%] h-full flex flex-col items-center justify-between mr-1 gap-y-3' key={index}>
@@ -30,7 +30,7 @@ const StepSection = ({CourseCreationData , step}) => {
                         : (<div className=' w-[40%] h-1'></div>)
                 }
             </div>
-            <div className={`text-sm ${step === CreateData.step ?"text-pure-greys-25" : "text-pure-greys-200"}  font-inter`}>{CreateData.title}</div>
+            <div className={`text-xs ${step === CreateData.step ?"text-pure-greys-25" : "text-pure-greys-200"}  `}>{CreateData.title}</div>
         </div>
             
         ))

@@ -156,11 +156,11 @@ function resetAllData() {
     }
   }, []);
   return (
-    <div className=" h-full w-full mt-6">
+    <div className=" h-full w-full mt-6 font-edu-sa">
       <form
         onSubmit={handleSubmit(onsubmit)}
         className=" bg-richblack-800 w-[93%] mr-3 mx-auto h-fit rounded-md border border-pure-greys-600
-            p-6 pr-12 text-pure-greys-25 font-inter"
+            p-6 pr-12 text-pure-greys-25 "
       >
         <div className=" w-full h-fit flex gap-y-1 flex-col mb-3 text-pure-greys-100 ">
           <label htmlFor="course" className="text-pure-greys-25 w-fit">
@@ -398,7 +398,7 @@ function resetAllData() {
         {
           editCourseDetails && 
           <div className=" mt-10 flex flex-col gap-y-3 items-start">
-          <div className={`font-semibold flex gap-x-2 items-center font-inter text-pure-greys-5 bg-pure-greys-400
+          <div className={`md:font-semibold flex gap-x-2 items-center  text-pure-greys-5 bg-pure-greys-400
             w-fit py-2 px-2 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
               onClick={() => {
                   resetAllData();
@@ -407,7 +407,7 @@ function resetAllData() {
             >
             Continue With Out Changes <FaArrowAltCircleRight/>
           </div>
-          <button type="submit" className={`font-semibold flex gap-x-2 items-center font-inter text-black bg-[#FFD60A]
+          <button type="submit" className={`md:font-semibold flex gap-x-2 items-center  text-black bg-[#FFD60A]
             w-fit py-2 px-2  rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
               // onClick={continueWithChangesHandeler}
             >
