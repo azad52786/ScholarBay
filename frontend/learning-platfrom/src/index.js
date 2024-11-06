@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import InstructorRoute from "./component/core/Auth/InstructorRoute";
 import StudentRoute from "./component/core/Auth/StudentRoute";
 import Loading from "./catalogs/Loading";
+import ErrorPage from "./component/core/Auth/ErrorPage";
 
 
 const Home = lazy(() => import("./pages/Home"));
@@ -30,7 +31,7 @@ const Enrolled_Main = lazy(() => import("./Dashboard/Enrolled_Cources/Enrolled_M
 const AddCourse = lazy(() => import("./Dashboard/AddCourse/index"));
 const MyCourseHome = lazy(() => import("./Dashboard/MyCourseSection/MyCourseHome"));
 const CoursePage = lazy(() => import("./pages/CoursePage"));
-const Cart = lazy(() => import("./pages/Cart"));
+  const Cart = lazy(() => import("./pages/Cart"));
 const VideoPage = lazy(() => import("./pages/VideoPage"));
 const InstructorDashBoard = lazy(() => import("./pages/InstructorDashBoard"));
 const PurchaseHistory = lazy(() => import("./pages/PurchaseHistory"));
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage /> , 
     children: [
       {
         path: "/",
@@ -247,7 +249,7 @@ const router = createBrowserRouter([
             </StudentRoute>
           </ProtectedRoute>
         ),
-      },
+      }
     ],
   },
 ]);

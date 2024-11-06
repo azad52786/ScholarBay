@@ -159,7 +159,7 @@ const Navbar = () => {
               className=" hidden lg:block relative ml-20 lg:ml-0 cursor-pointer"
               onClick={() => navigate("/cart")}
             >
-              <div className="  text-sm absolute right-[-6px] text-white rounded-full w-5 h-5 top-[-6px] text-center bg-caribbeangreen-400">
+              <div className="  text-sm absolute right-[-6px] text-richblack-700 font-edu-sa rounded-full w-5 h-5 top-[-6px] text-center bg-[#4be667]">
                 {totalItems}
               </div>
               <TiShoppingCart className=" h-10 w-8" />

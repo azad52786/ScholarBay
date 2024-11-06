@@ -6,6 +6,7 @@ import { FaShareFromSquare } from "react-icons/fa6";
 import { toast } from "react-hot-toast"
 import { useDispatch } from 'react-redux';
 import { addToCart } from "../../Store/Slices/CartSlice";
+import { useNavigate } from "react-router-dom";
 
 
 const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
@@ -22,6 +23,7 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
   } = course;
   console.log(category);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const copyUrl = async() => {
     try{
         await navigator.clipboard.writeText(window.location.href);
@@ -109,6 +111,7 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
             <button
               className=" flex items-center justify-center w-full py-3 rounded-md bg-blue-200 text-pure-greys-800
                font-edu-sa font-semibold text-lg  border-b-[3px] border-l-[3px] border-black hover:scale-105 transition-all duration-500"
+               onClick={() => navigate("/dashboard/default/enrolled-courses")}
             >
               Go to Course
             </button>

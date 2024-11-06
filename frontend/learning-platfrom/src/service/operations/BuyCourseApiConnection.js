@@ -2,6 +2,8 @@ import { toast } from "react-hot-toast";
 import Apiconnection from "../Apiconnection";
 import { PAYMENT_API } from "../Api";
 import rzpLogo from "../../assets/Images/rzp_logo.png";
+import { load } from "@cashfreepayments/cashfree-js";
+import { resetCart } from "../../Store/Slices/CartSlice";
 const loadScript = async (src) => {
   let script = document.createElement("script");
   script.src = src;
@@ -25,18 +27,7 @@ export const buyCourse = async (
   dispatch,
   isBuyOne = false , 
 ) => {
-  let secret_key = process.env.REACT_APP_RAZORPAY_KEY;
-  console.log(secret_key);
   try {
-    let loadsrc = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
-    if (!loadsrc) {
-      toast.error("RazorPay SDK failed to load");
-      console.log("RazorPay SDK failed to load failure message");
-      return;
-    }
-
     let responce = await Apiconnection(
       "POST",
       PAYMENT_API.PAYMENT_CAPTURE,
@@ -49,51 +40,45 @@ export const buyCourse = async (
       toast.error("Something went wrong!! 🥲🥲🥲");
       throw new Error("Error Occure While Buying Course");
     }
-    console.log("order id : " , responce);
-    const { amount, currency, id, notes, offer_id, receipt, status } =
-      responce.data?.OrderDetails;
-    const { firstName, lastName, email } = userDetails;
-    const options = {
-      key: secret_key, 
-      amount: amount,
-      currency: "INR",
-      name: "StudyNotion",
-      description: "Thank You see you inside Course",
-      image: rzpLogo,
-      account_id: "acc_Ef7ArAsdU5t0XL",
-      order_id: id,
-      handler: function (response) {
-      console.log(responce)
-        // successfully
-        sendSuccessfulPaymentEmail(
-          {
-            orderId: response.razorpay_order_id,
-            paymentId: response.razorpay_payment_id,
-            amount,
-          },
-          token
-        );
-        const { razorpay_payment_id , razorpay_order_id , razorpay_signature } = response;
-        // razorpay_payment_id , razorpay_order_id , razorpay_signature , courses
-        paymentVerificationHandler( {razorpay_payment_id , razorpay_order_id , razorpay_signature , courses} , token , isBuyOne);
-      },
-      prefill: {
-        name: `${firstName + " " + lastName}`,
-        email: email,
-        contact: "9000090000",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-    console.log(options);
-    var rzp = new window.Razorpay(options);
-    rzp.open();
-    rzp.on("payment.failed", function (response) {
-      toast.error("oops, payment failed");
-      console.log(response.error);
-      console.log(response)
-    });
+    
+    console.log(responce.data.OrderDetails);
+   let cashfree;
+    var initializeSDK = async function () {          
+        cashfree = await load({
+            mode: "sandbox"
+        });
+    }
+    await initializeSDK();
+    const { payment_session_id , order_id }= responce.data?.OrderDetails;
+    let checkoutOptions = {
+            paymentSessionId: payment_session_id,
+            redirectTarget: "_modal",
+      };
+      
+    console.log("CashFree is : " , cashfree);
+      
+      
+      cashfree.checkout(checkoutOptions).then(async(result) => {
+            if(result.error){
+                // This will be true whenever user clicks on close icon inside the modal or any error happens during the payment
+                console.log("User has closed the popup or there is some payment error, Check for Payment Status");
+                console.log(result.error);
+            }
+            if(result.redirect){
+                // This will be true when the payment redirection page couldnt be opened in the same window
+                // This is an exceptional case only when the page is opened inside an inAppBrowser
+                // In this case the customer will be redirected to return url once payment is completed
+                console.log("Payment will be redirected");
+            }
+            if(result.paymentDetails){
+                // This will be called whenever the payment is completed irrespective of transaction status
+                console.log("Payment has been completed, Check for Payment Status");
+                console.log(payment_session_id);
+                await paymentVerificationHandler( { order_id , courses} , token , isBuyOne , navigate , dispatch);
+                
+            }
+        });
+   
   } catch (e) {
     // console.log(e);
     console.log("error : ", e);
@@ -122,7 +107,7 @@ const sendSuccessfulPaymentEmail = async (orderData, token) => {
   }
 };
 
-const paymentVerificationHandler = async (verificationData, token , isOneBuy) => {
+const paymentVerificationHandler = async (verificationData, token , isOneBuy , navigate , dispatch) => {
   let toastId = toast.loading("Verifying the payment ...");
   try {
     const response = await Apiconnection(
@@ -140,8 +125,12 @@ const paymentVerificationHandler = async (verificationData, token , isOneBuy) =>
     toast.success("Verified payment successfully");
     if(isOneBuy){
       // navigate in the already having course
+      navigate("/dashboard/default/enrolled-courses")
     }else{
       // remove all the cart and navigate in the already having course
+      dispatch(resetCart());
+      console.log("cart Cleared successfully done");
+      navigate("/dashboard/default/enrolled-courses")
     }
   } catch (e) {
     toast.dismiss(toastId);

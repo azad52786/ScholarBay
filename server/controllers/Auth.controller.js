@@ -47,7 +47,8 @@ exports.sendOtp = async(req , res) => {
         console.error(e);
         res.status(500).json({
             success: false,
-            message: e.message
+            message : "Something went wrong Please try again",
+            error: e.message
         })
     }
 }

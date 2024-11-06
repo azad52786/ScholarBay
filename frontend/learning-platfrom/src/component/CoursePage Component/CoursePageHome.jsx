@@ -13,11 +13,10 @@ const CoursePageHome = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [course , setCourse] = useState([]);
-    console.log(courseId)
     const { token } = useSelector((store) => store.Auth);
     const { user } = useSelector((store) => store.User)
     const buyNowHandeler = async () => {
-        if(user.accountType != "Studnet"){
+        if(user.accountType != "Student"){
                     toast.error("Please Lon in into a Student account");
                     return;
                   }
