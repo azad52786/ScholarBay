@@ -1,37 +1,39 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import { Provider } from "react-redux";
 import store from "./Store/MainStore/Store";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
 import OpenRoute from "./component/core/Auth/OpenRoute";
-import ForgetPassword from "./pages/ForgetPassword";
-import UpdatePassword from "./pages/UpdatePassword";
-import { Toaster } from "react-hot-toast";
-import VerifyEmail from "./pages/VerifyEmail";
-import DashBoard from "./pages/DashBoard";
-import MyProfile from "./Dashboard/MyProfile";
 import ProtectedRoute from "./component/core/Auth/ProtectedRoute";
-import Main from "./Dashboard/settings/Main";
-import Enrolled_Main from "./Dashboard/Enrolled_Cources/Enrolled_Main";
-import AddCourse from "./Dashboard/AddCourse/index.js";
-import MyCourseHome from "./Dashboard/MyCourseSection/MyCourseHome.jsx";
-import CatalogsHome from "./catalogs/CatalogsHome.jsx";
-import CoursePageHome from "./component/CoursePage Component/CoursePageHome.jsx";
-import CoursePage from "./pages/CoursePage.jsx";
-import Cart from "./pages/Cart.jsx";
-import VideoPage from "./pages/VideoPage.jsx";
-import InstructorRoute from "./component/core/Auth/InstructorRoute.jsx";
-import StudentRoute from "./component/core/Auth/StudentRoute.jsx";
-import InstructorDashBoard from "./pages/InstructorDashBoard.jsx";
-import PurchaseHistory from "./pages/PurchaseHistory.jsx";
+import { Toaster } from "react-hot-toast";
+import InstructorRoute from "./component/core/Auth/InstructorRoute";
+import StudentRoute from "./component/core/Auth/StudentRoute";
+import Loading from "./catalogs/Loading";
+
+
+const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const ForgetPassword = lazy(() => import("./pages/ForgetPassword"));
+const UpdatePassword = lazy(() => import("./pages/UpdatePassword"));
+const VerifyEmail = lazy(() => import("./pages/VerifyEmail"));
+const CatalogsHome = lazy(() => import("./catalogs/CatalogsHome"));
+const DashBoard = lazy(() => import("./pages/DashBoard"));
+const MyProfile = lazy(() => import("./Dashboard/MyProfile"));
+const Main = lazy(() => import("./Dashboard/settings/Main"));
+const Enrolled_Main = lazy(() => import("./Dashboard/Enrolled_Cources/Enrolled_Main"));
+const AddCourse = lazy(() => import("./Dashboard/AddCourse/index"));
+const MyCourseHome = lazy(() => import("./Dashboard/MyCourseSection/MyCourseHome"));
+const CoursePage = lazy(() => import("./pages/CoursePage"));
+const Cart = lazy(() => import("./pages/Cart"));
+const VideoPage = lazy(() => import("./pages/VideoPage"));
+const InstructorDashBoard = lazy(() => import("./pages/InstructorDashBoard"));
+const PurchaseHistory = lazy(() => import("./pages/PurchaseHistory"));
 
 const router = createBrowserRouter([
   {
@@ -40,13 +42,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Home />
+          </Suspense>
+        ),
       },
       {
         path: "/login",
         element: (
           <OpenRoute>
-            <Login />
+            <Suspense fallback={<Loading />}>
+              <Login />
+            </Suspense>
           </OpenRoute>
         ),
       },
@@ -54,23 +62,35 @@ const router = createBrowserRouter([
         path: "/signup",
         element: (
           <OpenRoute>
-            <Signup />
+            <Suspense fallback={<Loading />}>
+              <Signup />
+            </Suspense>
           </OpenRoute>
         ),
       },
       {
         path: "/about",
-        element: <About />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <About />
+          </Suspense>
+        ),
       },
       {
         path: "/contact",
-        element: <Contact />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Contact />
+          </Suspense>
+        ),
       },
       {
         path: "/forget-password",
         element: (
           <OpenRoute>
-            <ForgetPassword />
+            <Suspense fallback={<Loading />}>
+              <ForgetPassword />
+            </Suspense>
           </OpenRoute>
         ),
       },
@@ -78,7 +98,9 @@ const router = createBrowserRouter([
         path: "/UpdatePassword/:tokenId",
         element: (
           <OpenRoute>
-            <UpdatePassword />
+            <Suspense fallback={<Loading />}>
+              <UpdatePassword />
+            </Suspense>
           </OpenRoute>
         ),
       },
@@ -86,7 +108,9 @@ const router = createBrowserRouter([
         path: "/verify-email",
         element: (
           <OpenRoute>
-            <VerifyEmail />
+            <Suspense fallback={<Loading />}>
+              <VerifyEmail />
+            </Suspense>
           </OpenRoute>
         ),
       },
@@ -94,7 +118,9 @@ const router = createBrowserRouter([
         path: "/catagory/:tagName",
         element: (
           <ProtectedRoute>
-            <CatalogsHome />
+            <Suspense fallback={<Loading />}>
+              <CatalogsHome />
+            </Suspense>
           </ProtectedRoute>
         ),
       },
@@ -102,7 +128,9 @@ const router = createBrowserRouter([
         path: "/dashboard/default",
         element: (
           <ProtectedRoute>
-            <DashBoard />
+            <Suspense fallback={<Loading />}>
+              <DashBoard />
+            </Suspense>
           </ProtectedRoute>
         ),
         children: [
@@ -110,7 +138,9 @@ const router = createBrowserRouter([
             path: "/dashboard/default",
             element: (
               <ProtectedRoute>
-                <MyProfile />
+                <Suspense fallback={<Loading />}>
+                  <MyProfile />
+                </Suspense>
               </ProtectedRoute>
             ),
           },
@@ -118,7 +148,9 @@ const router = createBrowserRouter([
             path: "/dashboard/default/setting",
             element: (
               <ProtectedRoute>
-                <Main />
+                <Suspense fallback={<Loading />}>
+                  <Main />
+                </Suspense>
               </ProtectedRoute>
             ),
           },
@@ -127,7 +159,9 @@ const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <StudentRoute>
-                  <Enrolled_Main />
+                  <Suspense fallback={<Loading />}>
+                    <Enrolled_Main />
+                  </Suspense>
                 </StudentRoute>
               </ProtectedRoute>
             ),
@@ -137,7 +171,9 @@ const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <InstructorRoute>
-                  <AddCourse />
+                  <Suspense fallback={<Loading />}>
+                    <AddCourse />
+                  </Suspense>
                 </InstructorRoute>
               </ProtectedRoute>
             ),
@@ -147,33 +183,46 @@ const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <InstructorRoute>
-                  <MyCourseHome />
+                  <Suspense fallback={<Loading />}>
+                    <MyCourseHome />
+                  </Suspense>
                 </InstructorRoute>
               </ProtectedRoute>
             ),
-          }, 
+          },
           {
-            path : "/dashboard/default/instructorDashBoard" , 
-            element : (<ProtectedRoute>
-              <InstructorRoute>
-                <InstructorDashBoard/>
-              </InstructorRoute>
-            </ProtectedRoute>)
-          } , {
-            path : "/dashboard/default/purchase-history" , 
-            element : (<ProtectedRoute>
-              <StudentRoute>
-                <PurchaseHistory/>
-              </StudentRoute>
-            </ProtectedRoute>) 
-          }
+            path: "/dashboard/default/instructorDashBoard",
+            element: (
+              <ProtectedRoute>
+                <InstructorRoute>
+                  <Suspense fallback={<Loading />}>
+                    <InstructorDashBoard />
+                  </Suspense>
+                </InstructorRoute>
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "/dashboard/default/purchase-history",
+            element: (
+              <ProtectedRoute>
+                <StudentRoute>
+                  <Suspense fallback={<Loading />}>
+                    <PurchaseHistory />
+                  </Suspense>
+                </StudentRoute>
+              </ProtectedRoute>
+            ),
+          },
         ],
       },
       {
         path: "/course/:courseId",
         element: (
           <ProtectedRoute>
-            <CoursePage />
+            <Suspense fallback={<Loading />}>
+              <CoursePage />
+            </Suspense>
           </ProtectedRoute>
         ),
       },
@@ -181,7 +230,9 @@ const router = createBrowserRouter([
         path: "/cart",
         element: (
           <ProtectedRoute>
-            <Cart />
+            <Suspense fallback={<Loading />}>
+              <Cart />
+            </Suspense>
           </ProtectedRoute>
         ),
       },
@@ -189,25 +240,24 @@ const router = createBrowserRouter([
         path: "/view-course/:courseId/section/:sectionId/sub-section/:subSectionId",
         element: (
           <ProtectedRoute>
-          <StudentRoute>
-            <VideoPage /></StudentRoute>
+            <StudentRoute>
+              <Suspense fallback={<Loading />}>
+                <VideoPage />
+              </Suspense>
+            </StudentRoute>
           </ProtectedRoute>
         ),
       },
     ],
   },
 ]);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
   <Provider store={store}>
     <RouterProvider router={router} />
     <Toaster />
   </Provider>
-  // </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
