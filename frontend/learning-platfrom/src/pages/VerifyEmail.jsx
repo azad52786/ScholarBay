@@ -28,9 +28,9 @@ const VerifyEmail = () => {
       toast.success("OTP is successfully resend")
     }
   return  (
-        <div className=" w-full bg-richblack-900 text-richblack-5 min-h-screen flex items-center justify-center font-inter">
-          <div className=" w-[25%] mx-auto flex flex-col items-start gap-3">
-            <div className=" font-bold text-3xl text-richblack-5">Verify Email</div>
+        <div className=" w-full font-edu-sa bg-richblack-900 text-richblack-5 min-h-screen flex items-center justify-center">
+          <div className=" w-[90%] md:w-[30%] lg:w-[25%] mx-auto flex flex-col items-start gap-3">
+            <div className=" font-bold text-3xl text-[#46c7d5]">Verify Email</div>
             <div className=" text-richblack-300  leading-6 text-[18px]">A verification code has been sent to you. Enter the code below</div>
             <OtpInput
                 value={otp}
@@ -38,7 +38,7 @@ const VerifyEmail = () => {
                 numInputs={6}
                 renderSeparator={<span>-</span>}
                 renderInput={(props) =>  (<div className=' w-full flex flex-row gap-4'>
-                  <input   {...props}  className='mx-5 text-lg bg-richblack-800 text-richblack-5 h-[3em]'/>
+                  <input   {...props}  className=' bg-richblack-700 inputStyle border border-richblack-100'/>
                 </div>)
             }
             />

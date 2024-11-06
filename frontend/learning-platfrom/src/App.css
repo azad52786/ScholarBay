@@ -111,6 +111,19 @@ body {
   }
 }
 
+
+.inputStyle {
+  width: 45px !important;
+  height: 55px !important;
+  font-size: 18px;
+  text-align: center;
+  /* background-color: rgb(24, 44, 63); */
+  /* border: 2px solid #3481c9; */
+  border-radius: 8px;
+  margin: 0 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
 /* @keyframes duration | easing-function | delay |
  * iteration-count | direction | fill-mode | play-state | name */
 /* animation: 3s ease-in 1s 2 reverse both paused slidein; */

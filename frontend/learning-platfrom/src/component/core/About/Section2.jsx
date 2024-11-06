@@ -7,7 +7,7 @@ const Section2 = () => {
   return (
     <div className=' w-full bg-richblack-900 pt-[350px] md:pt-24'>
         <div className=' w-10/12 mx-auto text-center font-edu-sa text-2xl md:text-4xl'>
-            <div className=' font-semibold md:font-bold md:leading-12 text-balance'>
+            <div className=' md:mt-9 font-semibold md:font-bold md:leading-12 text-balance'>
             We are passionate about revolutionizing the way we learn. Our innovative platform
             <HighlitedText text = " combines technology" color = {'bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] '}/>, 
             <HighlitedText text = "expertise" color = {'bg-gradient-to-b from-[#e65c00] via-[#e65c00] to-[#A6FFCB]'}/> , and community to create an 
