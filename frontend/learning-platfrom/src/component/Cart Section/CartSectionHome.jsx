@@ -2,9 +2,11 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import CartItemCard from './CartItemCard';
 import { resetCart } from '../../Store/Slices/CartSlice';
+import toast from 'react-hot-toast';
 
 const CartSectionHome = () => {
   const {totalPrice ,  cartItems , totalItems } = useSelector((store) => store.Cart);
+  const { user } = useSelector((store) => store.User);
   // console.log(to)
   const dispatch = useDispatch();
   const style = {
@@ -35,7 +37,12 @@ const CartSectionHome = () => {
             <button
                 className=" font-edu-sa w-fit flex items-center justify-center px-3 lg:px-6 py-3 rounded-md bg-yellow-100 text-pure-greys-800
              font-semibold lg:text-lg border-b-[3px] border-l-[3px] border-white hover:scale-105 transition-all duration-500"
-            //  onClick={buyNowHandeler}
+             onClick={() => {
+              if(user.accountType != "Studnet"){
+                    toast.error("Please Lon in into a Student account");
+                    return;
+                  }
+             }}
               >
                 Buy Now
               </button>

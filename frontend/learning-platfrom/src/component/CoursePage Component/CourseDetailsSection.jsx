@@ -97,7 +97,9 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
               <button
                 className=" font-edu-sa flex items-center justify-center w-full py-3 rounded-md bg-blue-200 text-pure-greys-800
              font-semibold text-lg  border-b-[3px] border-l-[3px] border-black hover:scale-105 transition-all duration-500"
-                onClick={() => dispatch(addToCart(course))}
+                onClick={() =>{
+                   dispatch(addToCart(course))
+                }}
               >
                 Add to Cart
               </button>

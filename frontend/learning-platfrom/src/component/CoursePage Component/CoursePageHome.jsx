@@ -6,6 +6,7 @@ import CourseDetailsSection from './CourseDetailsSection';
 import { getEntireCourseDetails } from '../../service/operations/CourseBackendConnection';
 import Loading from '../../catalogs/Loading';
 import CourseContentSection from './CourseContentSection';
+import toast from 'react-hot-toast';
 
 const CoursePageHome = () => {
     const { courseId } = useParams();
@@ -16,6 +17,10 @@ const CoursePageHome = () => {
     const { token } = useSelector((store) => store.Auth);
     const { user } = useSelector((store) => store.User)
     const buyNowHandeler = async () => {
+        if(user.accountType != "Studnet"){
+                    toast.error("Please Lon in into a Student account");
+                    return;
+                  }
         await buyCourse(token , [courseId] , user , navigate , dispatch , true);
     }
     

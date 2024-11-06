@@ -153,6 +153,8 @@ const Navbar = () => {
         {token && (
           <div className="flex flex-row gap-4 items-center text-richblack-5 relative">
             <MdOutlineSearch className=" hidden lg:block h-10 w-8  cursor-pointer" />
+            {
+            
             <div
               className=" hidden lg:block relative ml-20 lg:ml-0 cursor-pointer"
               onClick={() => navigate("/cart")}
@@ -162,6 +164,7 @@ const Navbar = () => {
               </div>
               <TiShoppingCart className=" h-10 w-8" />
             </div>
+            }
             <div className="relative hidden w-fit lg:flex items-center gap-4 h-fit cursor-pointer z-50 group">
               <img
                 src={user?.image}
