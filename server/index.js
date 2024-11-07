@@ -33,7 +33,8 @@ app.use(cors({
             }
         }
     }
-    , credentials: true 
+    , credentials: true , 
+    allowedHeaders: ["Authorization", "Content-Type"]
 }))
 
 app.use(fileUpload({
