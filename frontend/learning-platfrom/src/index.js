@@ -117,7 +117,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/catagory/:tagName",
+        path: "/category/:tagName",
         element: (
           <ProtectedRoute>
             <Suspense fallback={<Loading />}>
