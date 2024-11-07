@@ -35,7 +35,7 @@ const InstructorDashBoardHome = () => {
 
             <div className=" w-full lg:w-[25%] bg-richblack-800 p-5 rounded-md flex flex-col items-center lg:items-start gap-7">
               {!instructorDetails ? (
-                <div className=" w-full h-[200px] items-center justify-center">
+                <div className=" w-full h-[200px] flex items-center justify-center">
                   <Spinner />
                 </div>
               ) : (
@@ -47,7 +47,7 @@ const InstructorDashBoardHome = () => {
                     <p className=" font-semibold text-yellow-25 text-xl">
                       Total Earning :{" "}
                       <span className=" text-pure-greys-100">
-                        {"$ " + instructorDetails?.totalIncome ? instructorDetails?.totalIncome : "0"}
+                        {"$ " + instructorDetails?.totalIncome ? instructorDetails?.totalIncome : 0}
                       </span>
                     </p>
                   </div>
