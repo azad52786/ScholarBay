@@ -47,7 +47,7 @@ const InstructorDashBoardHome = () => {
                     <p className=" font-semibold text-yellow-25 text-xl">
                       Total Earning :{" "}
                       <span className=" text-pure-greys-100">
-                        {"$ " + instructorDetails?.totalIncome}
+                        {"$ " + instructorDetails?.totalIncome ? instructorDetails?.totalIncome : "0"}
                       </span>
                     </p>
                   </div>
@@ -55,7 +55,7 @@ const InstructorDashBoardHome = () => {
                     <p className=" font-semibold text-yellow-25 text-xl">
                       Total Students :{" "}
                       <span className=" text-pure-greys-100">
-                        {instructorDetails?.totalStudent}
+                        {instructorDetails?.totalStudent ? instructorDetails.totalStudent : 0}
                       </span>
                     </p>
                   </div>
