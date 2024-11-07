@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const CourseSection = ({ courses }) => {
   return !courses ? (
-    <div className=" w-full h-[200px] items-center justify-center my-12">
+    <div className=" w-full h-[200px]  bg-richblack-800 rounded-md flex items-center justify-center my-12">
       <Spinner />
     </div>
   ) : (

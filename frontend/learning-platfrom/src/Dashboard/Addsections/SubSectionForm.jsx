@@ -107,8 +107,8 @@ const SubSectionForm = () => {
     }
   }, []);
   return (
-    <div className=" w-screen h-full z-30 absolute top-0 left-0 flex font-inter items-center justify-center backdrop-blur-sm">
-      <div className=" w-[40%] h-fit ">
+    <div className=" w-screen min-h-screen z-30 absolute pb-52 pt-2 top-0 left-0 flex font-inter items-center justify-center backdrop-blur-sm">
+      <div className=" w-[90%] md:w-[75%] lg:w-[50%] h-fit ">
         <div
           className=" flex items-center justify-between px-4 py-3 bg-richblack-600  rounded-t-md font-semibold text-lg
               text-pure-greys-200

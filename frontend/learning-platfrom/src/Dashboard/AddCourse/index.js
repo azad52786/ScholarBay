@@ -40,7 +40,7 @@ export default function AddCourse(){
                 <div className=" w-[90%] mx-auto md:w-[30%] flex items-center justify-center md:items-start">
                 <div className=" w-fit h-fit p-6  bg-richblack-700 rounded-md text-start border border-pure-greys-500 font-edu-sa">
                    <div className=" text-lg text-[#50c4d5] font-bold mb-4">⚡Course Upload Tips</div>
-                   <ul style={{"list-style-type":"circle"}} className=" text-sm text-pure-greys-100 pl-4">
+                   <ul style={{"listStyleType":"circle"}} className=" text-sm text-pure-greys-100 pl-4">
                         {
                             courseUploadTips.map((tips , index) => (
                                 <li key={ index} className=" text-xs mb-2">{tips}</li>

@@ -71,7 +71,7 @@ const Section = ({
     dispatch(setCourseDetails(response.updatedCourse))
   }
   return (
-    <div key={section._id} className=" px-2 flex flex-col items-center">
+    <div key={index} className=" px-2 flex flex-col items-center">
       <div className="flex w-[90%] items-center justify-between font-inter p-5 border-b border-richblack-500">
         <div className="flex items-center">
           <FaSortAmountDown className=" h-4 w-8 text-[#6E727F]" />
