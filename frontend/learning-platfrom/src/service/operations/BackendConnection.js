@@ -16,6 +16,10 @@ export const getResetPasswordToken = (email, setSendEmail) => {
       }
       dispatch(setSendEmail(true));
     } catch (error) {
+      if(!error.response){
+        toast.error("Network Error");
+        return;
+      }
       toast.error(error.message);
       console.log(error);
     }
@@ -37,6 +41,10 @@ export const resetPassword = (formData, navigate) => {
       navigate("/login");
     } catch (error) {
       console.log(error);
+      if(!error.response){
+        toast.error("Network Error");
+        return;
+      }
       toast.error(
         "Unable to reset Password Try Again from Reset Password Page"
       );
@@ -61,6 +69,10 @@ export const sendOtp = (email, navigate) => {
       navigate("/verify-email");
     } catch (e) {
       console.error(e);
+      if(!error.response){
+        toast.error("Network Error");
+        return;
+      }
       toast.error(e.response?.data?.message);
     }
     dispatch(setLoader(false));
@@ -83,6 +95,10 @@ export const signUp = (otp, signUpData, navigate) => {
       navigate("/login");
     } catch (e) {
       console.log(e);
+      if(!error.response){
+        toast.error("Network Error");
+        return;
+      }
       toast.error(e.response?.data?.message);
     }
     dispatch(setLoader(false));
@@ -113,7 +129,9 @@ export const login = (formData, navigate) => {
       navigate("/");
     } catch (e) {
       console.log(e);
-      toast.error(e.response?.data?.message);
+      if(!e.response){
+        toast.error("NetWork Error"); 
+      }else toast.error(e.response?.data?.message);
     }
     dispatch(setLoader(false));
   };
@@ -145,6 +163,7 @@ export const sendMessage = (data) => {
       }
     } catch (e) {
       console.error(e);
+      
     }
   };
 };
@@ -173,6 +192,10 @@ export const updateUserProfile = (formData, token) => {
       toast.dismiss(toastId);
       console.error("error occur");
       console.log("error messase is", e.message);
+      if(!error.response){
+        toast.error("Network Error");
+        return;
+      }
       toast.error(e.message);
     }
   };
@@ -199,6 +222,10 @@ export const updateUserAdditionalData = (formData, token) => {
     } catch (e) {
       toast.dismiss(toastId);
       console.log("error messase is", e);
+      if(!error.response){
+        toast.error("Network Error");
+        return;
+      }
       toast.error(e.response.data.message);
     }
   };
@@ -215,6 +242,7 @@ export const deleteUser = (navigate) => {
       toast.success("User is successfully deleted");
     } catch (e) {
       console.error(e);
+      
     }
   };
 };
@@ -226,7 +254,7 @@ export const getUserAllCources = async (token) => {
       COURSE_API.GET_ALL_USER_ENROLLED_COURSE,
       null,
       {
-        Authorization: `Bearer  + ${token}`,
+        Authorization: `Bearer ${token}`,
       }
     );
     if (!response.data.success) {

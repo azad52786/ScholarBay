@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
-import logo1 from '../../assets/Images/logo1.jpg';
+import logo1 from "../../assets/Images/logo1.jpg";
 import { NavbarLinks } from "../../data/navbar-links.js";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdOutlineSearch } from "react-icons/md";
@@ -23,7 +23,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.User);
 
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(null);
   const [showMenuSlider, setShowMenuSlider] = useState(true);
   const getUserDetails = async () => {
     try {
@@ -36,6 +36,7 @@ const Navbar = () => {
     try {
       const result = await Apiconnection("get", COURSE_API.GET_ALL_TAGS);
       setTags(result.data.tags);
+      console.log(tags)
     } catch (error) {
       console.error(error);
     }
@@ -50,31 +51,32 @@ const Navbar = () => {
   return (
     <div className="w-screen h-14 relative bg-richblack-900 border-b border-richblack-600">
       <div className="w-10/12 relative min-h-full mx-auto flex flex-row items-center justify-between">
-        <div className=" flex items-center gap-2 cursor-pointer"
-          onClick={() => navigate('/')}
+        <div
+          className=" flex items-center gap-2 cursor-pointer"
+          onClick={() => navigate("/")}
         >
-          
           <img
-          src={logo1}
-          style={{
-            boxShadow : "0px 0px 10px blue"
-          }}
-          className=" h-10 w-10  rounded-full "
-          alt="logo"
-        />
-        {/* <div className=" w-1 ml-[-5px] mr-2 h-10 bg-blue-200 rounded-l rounded-full"></div> */}
-          <h1 className=""
+            src={logo1}
             style={{
-          font : 'italic 1.2rem "Fira Sans", serif' , 
-          color : "white" , 
-          fontSize : "1.5rem" , 
-          textShadow : "0px 0px 20px blue"
-        }}
+              boxShadow: "0px 0px 10px blue",
+            }}
+            className=" h-10 w-10  rounded-full "
+            alt="logo"
+          />
+          {/* <div className=" w-1 ml-[-5px] mr-2 h-10 bg-blue-200 rounded-l rounded-full"></div> */}
+          <h1
+            className=""
+            style={{
+              font: 'italic 1.2rem "Fira Sans", serif',
+              color: "white",
+              fontSize: "1.5rem",
+              textShadow: "0px 0px 20px blue",
+            }}
           >
-          SholarBay 
+            SholarBay
           </h1>
         </div>
-      
+
         <nav className=" gap-10  text-richblack-300 hidden lg:flex">
           {NavbarLinks.map((element, index) =>
             element.title === "Catalog" ? (
@@ -94,21 +96,22 @@ const Navbar = () => {
                                      text-black flex flex-col items-center justify-around p-3 relative z-10 gap-y-1
                                 "
                   >
-                    {tags.length <= 0 ? (
-                      <div>Loading....</div>
+                    {!tags ? (
+                      <div>Loading...</div>
+                    ) : (tags && tags.length === 0) ? (
+                      <div>No Tag Found</div>
                     ) : (
-                      tags.map((tag, index) => (
+                      tags.map((tag) => (
                         <NavLink
-                          to={`/catagory/${tag.name
+                          to={`/category/${tag.name
                             .split(" ")
                             .join("-")
                             .toLowerCase()}?tagId=${tag._id}`}
-                          key={index}
-                          // className=''>
+                          key={tag._id}
                           className={({ isActive }) =>
                             isActive
-                              ? "w-full rounded-md bg-richblack-300 py-3  flex items-center justify-center"
-                              : "w-full rounded-md hover:bg-richblack-50  py-3  flex items-center justify-center"
+                              ? "w-full rounded-md bg-richblack-300 py-3 flex items-center justify-center"
+                              : "w-full rounded-md hover:bg-richblack-50 py-3 flex items-center justify-center"
                           }
                         >
                           <div>{tag.name}</div>
@@ -151,16 +154,15 @@ const Navbar = () => {
           <div className="flex flex-row gap-4 items-center text-richblack-5 relative">
             <MdOutlineSearch className=" hidden lg:block h-10 w-8  cursor-pointer" />
             {
-            
-            <div
-              className=" hidden lg:block relative ml-20 lg:ml-0 cursor-pointer"
-              onClick={() => navigate("/cart")}
-            >
-              <div className="  text-sm absolute right-[-6px] text-richblack-700 font-edu-sa rounded-full w-5 h-5 top-[-6px] text-center bg-[#4be667]">
-                {totalItems}
+              <div
+                className=" hidden lg:block relative ml-20 lg:ml-0 cursor-pointer"
+                onClick={() => navigate("/cart")}
+              >
+                <div className="  text-sm absolute right-[-6px] text-richblack-700 font-edu-sa rounded-full w-5 h-5 top-[-6px] text-center bg-[#4be667]">
+                  {totalItems}
+                </div>
+                <TiShoppingCart className=" h-10 w-8" />
               </div>
-              <TiShoppingCart className=" h-10 w-8" />
-            </div>
             }
             <div className="relative hidden w-fit lg:flex items-center gap-4 h-fit cursor-pointer z-50 group">
               <img
@@ -175,47 +177,55 @@ const Navbar = () => {
                               font-inter hidden group-hover:flex border border-opacity-65 border-richblack-50"
               >
                 <Link to={"/dashboard/default"}>
-                  <div className="flex cursor-pointer px-3 items-center py-1  gap-2 border-b border-opacity-65
-              border-richblack-50"><RiDashboard2Line /> <p>DashBoard</p></div>
+                  <div
+                    className="flex cursor-pointer px-3 items-center py-1  gap-2 border-b border-opacity-65
+              border-richblack-50"
+                  >
+                    <RiDashboard2Line /> <p>DashBoard</p>
+                  </div>
                 </Link>
-                <div onClick={logoutHandeler} className="flex cursor-pointer px-3 items-center py-1 gap-2"> <IoLogOutOutline />
-                <p>LogOut</p></div>
+                <div
+                  onClick={logoutHandeler}
+                  className="flex cursor-pointer px-3 items-center py-1 gap-2"
+                >
+                  {" "}
+                  <IoLogOutOutline />
+                  <p>LogOut</p>
+                </div>
               </div>
             </div>
           </div>
         )}
-       
-            <div
-              className=" flex gap-3 justify-center items-center lg:hidden "
-              
-            >
-             <div
-              className=" lg:hidden relative ml-20 lg:ml-0 cursor-pointer"
-              onClick={() => navigate("/cart")}
-            >
-              <div className="  text-sm absolute right-[-6px] text-richblack-700 font-edu-sa font-bold rounded-full w-5 h-5 top-[-6px] text-center bg-[#4be667]">
-                {totalItems}
-              </div>
-              <TiShoppingCart className=" h-10 w-8" />
-            </div> 
-              <CgMenuRightAlt className=" w-8 h-8 cursor-pointer" 
-              onClick={() => setShowMenuSlider((pre) => !pre)}/>
-            </div>
-      </div>
-      
-      <>
-      
-      {
-        <MobileMenuSection
-          token={token}
-          logoutHandeler={logoutHandeler}
-          showMenuSlider={showMenuSlider}
-          setShowMenuSlider={setShowMenuSlider}
-          user={user}
-          tags={tags}
-        />
 
-      }</>
+        <div className=" flex gap-3 justify-center items-center lg:hidden ">
+          <div
+            className=" lg:hidden relative ml-20 lg:ml-0 cursor-pointer"
+            onClick={() => navigate("/cart")}
+          >
+            <div className="  text-sm absolute right-[-6px] text-richblack-700 font-edu-sa font-bold rounded-full w-5 h-5 top-[-6px] text-center bg-[#4be667]">
+              {totalItems}
+            </div>
+            <TiShoppingCart className=" h-10 w-8" />
+          </div>
+          <CgMenuRightAlt
+            className=" w-8 h-8 cursor-pointer"
+            onClick={() => setShowMenuSlider((pre) => !pre)}
+          />
+        </div>
+      </div>
+
+      <>
+        {
+          <MobileMenuSection
+            token={token}
+            logoutHandeler={logoutHandeler}
+            showMenuSlider={showMenuSlider}
+            setShowMenuSlider={setShowMenuSlider}
+            user={user}
+            tags={tags}
+          />
+        }
+      </>
     </div>
   );
 };

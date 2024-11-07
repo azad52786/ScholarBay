@@ -151,8 +151,8 @@ const MobileMenuSection = ({
           Courses
         </p>
         <div className=" mt-2 flex flex-col items-center gap1">
-          {tags.length < 0 ? (
-            <div>Loading...</div>
+          {!tags ? (<div>Loading..</div>) : tags.length <= 0 ? (
+            <div>No Tag Found</div>
           ) : (
             tags.map((tag, index) => (
               <div

@@ -41,7 +41,7 @@ const TimelineSection = () => {
                 {
                 timeLineData.map((element , index) => {
                     return (
-                        <TimeLineBox key={element.key} data = {element} dataSize = {dataSize} index = {index}/>
+                        <TimeLineBox key={index} data = {element} dataSize = {dataSize} index = {index}/>
                     );
                 })
                 }
