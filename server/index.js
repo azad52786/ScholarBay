@@ -35,10 +35,10 @@ app.use(cors({
     }
     , credentials: true , 
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS", // Include OPTIONS
-    // allowedHeaders: "Content-Type,Authorization,Accept", // Ensure you include all necessary headers
-    allowedHeaders : (req, callback) => {
-    callback(null, req.headers['access-control-request-headers'])
-    } , 
+    allowedHeaders: "Content-Type,Authorization,Accept", // Ensure you include all necessary headers
+    // allowedHeaders : (req, callback) => {
+    // callback(null, req.headers['access-control-request-headers'])
+    // } , 
     optionsSuccessStatus: 204, // For legacy browsers
 })), 
 
