@@ -34,8 +34,10 @@ app.use(cors({
         }
     }
     , credentials: true , 
-    allowedHeaders: ["Authorization", "Content-Type"]
-}))
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS", // Include OPTIONS
+    allowedHeaders: "Content-Type,Authorization,Accept", // Ensure you include all necessary headers
+    optionsSuccessStatus: 204, // For legacy browsers
+})), 
 
 app.use(fileUpload({
     useTempFiles : true , 
