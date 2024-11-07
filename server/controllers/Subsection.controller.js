@@ -8,7 +8,6 @@ exports.createSubSection = async (req, res) => {
     const { sectionId, title, hours, minutes, description, courseId } =
       req.body;
     const video = req.files.video;
-    console.log(video);
     if (
       !sectionId ||
       !title ||
@@ -72,7 +71,6 @@ exports.updateSubsection = async function (req, res) {
   try {
     const {courseId , title, hours , minutes , description, subSectionId } = req.body;
     const video = req.files?.video;
-    // console.log(req.video)
     if (!courseId || !title || !hours || !minutes || !description  || !subSectionId) {
       return res.status(400).json({
         success: false,
@@ -108,7 +106,6 @@ exports.updateSubsection = async function (req, res) {
       } , 
       {new : true}
     );
-    console.log(updatedSubSection)
     const updatedCourse = await Course.findById(courseId).populate({
         path: "courseContent",
         populate: {
@@ -136,14 +133,12 @@ exports.updateSubsection = async function (req, res) {
 exports.deleteSubsection = async function (req, res) {
   try {
     const { subSectionId } = req.params;
-    console.log(subSectionId)
     const { courseId } = req.body;
     const deletedSection = await SubSection.findByIdAndDelete(subSectionId);
     const updateSecton = await Section.updateMany(
       { subSection: subSectionId },
       { $pull: { subSection : subSectionId } }
     );
-    console.log(updateSecton)
     const updatedCourse = await Course.findById(courseId).populate({
         path: "courseContent",
         populate: {

@@ -34,7 +34,6 @@ const ChangeProfileInformation = () => {
         password.current.value = null;
         confirmPassword.current.value = null;
         contactNumber.current.value = null;
-        console.log(formData);
         dispatch(updateUserAdditionalData(formData , token));
     }
   return (

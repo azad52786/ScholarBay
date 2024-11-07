@@ -35,7 +35,7 @@ const Section = ({
   const editSectionHandeler = () => {
     setEditSectionId(section._id);
     setEditSectionName(section.sectionName);
-    console.log(section);
+
     setShowCreateSection(false);
     setValue("sectionName", section.sectionName);
   };
@@ -62,12 +62,12 @@ const Section = ({
     dispatch(setSectionId(sectionId))
   }
   const deleteSubsectionHandeler = async (sectionId) => {
-    console.log("Delete ")
+
     let formData = new FormData();;
     formData.append("courseId" , courseDetails._id);
-    console.log(formData.get("courseId"))
+
     const response = await deleteSubSectionApi(formData , token , sectionId);
-    console.log(response.updatedCourse)
+
     dispatch(setCourseDetails(response.updatedCourse))
   }
   return (

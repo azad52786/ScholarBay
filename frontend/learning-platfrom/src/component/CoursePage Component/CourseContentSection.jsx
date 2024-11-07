@@ -2,7 +2,6 @@ import React from 'react'
 import Section from './Section'
 
 const CourseContentSection = ({courseContent}) => {
-    console.log(courseContent)
   return (
     <div className=' lg:w-[50%] w-full h-full font-inter flex flex-col gap-3 mt-10 md:mt-0 lg:mt-[-100px]'>
       <p className=' text-richblack-50 lg:text-3xl  md:text-3xl font-bold sm:text-2xl font-mono'>Course Content</p>

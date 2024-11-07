@@ -3,7 +3,7 @@ import Spinner from './SpinnerInstructor'
 import { Link } from 'react-router-dom'
 
 const CourseSection = ({courses}) => {
-  console.log(courses)
+
   return !courses ? (<div className=" w-full h-[200px] items-center justify-center my-12">
       <Spinner/>
     </div>) :  (

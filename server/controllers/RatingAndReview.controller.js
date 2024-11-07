@@ -24,7 +24,6 @@ exports.createRatingAndReview = async function (req, res) {
       course: courseId, 
       user: userId,
     });
-    console.log("check", checkAlreadyReview);
 
     if (checkAlreadyReview) {
       return res.status(401).json({
@@ -49,7 +48,6 @@ exports.createRatingAndReview = async function (req, res) {
       },
       { new: true }
     );
-    console.log(updatedCourse);
     return res.status(200).json({
       success: true,
       message: "Rating and Review Created Successfully",

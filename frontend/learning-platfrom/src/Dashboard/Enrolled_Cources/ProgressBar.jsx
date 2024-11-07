@@ -5,7 +5,7 @@ import React from 'react'
 const ProgressBar = () => {
     let randomNumber = Math.floor(Math.random() * 100) + 1;
     if(randomNumber < 40) randomNumber += 40;
-    console.log(randomNumber);
+
     const style = {
         width: `${randomNumber}%`,
     }

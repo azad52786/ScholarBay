@@ -25,7 +25,7 @@ const CartItemCard = ({item}) => {
             <p className=' text-yellow-50 font-edu-sa text-xl md:text-2xl lg:text-3xl mb-5'> ₹{price}</p>
             <div className=' md:p-4 p-2 bg-richblack-600 text-pink-200 w-fit h-fit rounded-md cursor-pointer'
                 onClick={ () => {
-                    console.log("hii");
+
                     dispatch(deleteItem(item._id));
                 }}
             >

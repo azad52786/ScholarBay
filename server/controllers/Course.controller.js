@@ -111,7 +111,6 @@ exports.updateCourseDetails = async (req , res) => {
         benefitOfCourse
       } = req.body;
       const thumbnail = req.files?.thumbnailImage;
-      console.log(thumbnail);
       if (
         !_id ||
         !course ||
@@ -140,8 +139,6 @@ exports.updateCourseDetails = async (req , res) => {
       );
       cloudinaryImage = cloudinaryImage.secure_url;
       }else{
-        console.log(req.body.thumbnailImage)
-        
         if(req.body.thumbnailImage === undefined){
           return res.json(401).status({
             message : "Thumbnail is required" , 
@@ -150,7 +147,6 @@ exports.updateCourseDetails = async (req , res) => {
         }
         cloudinaryImage = req.body.thumbnailImage;
       }
-      console.log(cloudinaryImage);
       const tagDetails = await Tag.findById(tag);
       if (!tagDetails) {
         return res.status(404).json({
@@ -207,8 +203,6 @@ exports.updateCourseDetails = async (req , res) => {
     .populate("ratingAndReviews")
     .populate("tag")
     .exec();
-    
-    console.log("courseDetails is : " , courseDetails.thumbnail)
     return res.status(200).json({
       success : true , 
       message : "Course is Successfully Updated 😍😍", 
@@ -351,22 +345,6 @@ exports.changeMode = async (req, res) => {
       })
     }
     const course = await Course.findById(courseId)
-    //   .populate({
-    //     path: "instructor",
-    //     populate: {
-    //       path: "additionalDetails",
-    //     },
-    //   })
-    //   .populate({
-    //     path: "courseContent",
-    //     populate: {
-    //       path: "subSection",
-    //     },
-    //   })
-    //   .populate("ratingAndReviews")
-    //   .populate("tag")
-    //   .exec();
-
     if (!course) {
       return res.status(404).json({
         success: false,
@@ -374,7 +352,7 @@ exports.changeMode = async (req, res) => {
       });
     }
     const updatedCourse = await Course.findByIdAndUpdate(courseId , { status : mode});
-    console.log(updatedCourse)
+
     return res.status(200).json({
       success: true,
       message: "Course Mode is successfully Updated",
@@ -432,7 +410,6 @@ exports.getEnrolledCourse = async(req , res) => {
   try{
     const { courseId } = req.query;
     const { id } = req.user;
-    console.log(courseId , " " , id)
     const CourseDetails = await Course.findById(courseId).populate({
       path: "instructor",
       populate: {
@@ -454,7 +431,6 @@ exports.getEnrolledCourse = async(req , res) => {
         message : "Course Not Found!!"
       })
     }
-    console.log(CourseDetails) 
     const userId = new mongoose.Types.ObjectId(id)
     if(!CourseDetails.studentsEnrolled.includes(userId)){
       return res.status(501).json({
@@ -511,7 +487,6 @@ exports.getAllInstructorCourse = async(req , res) => {
           $limit : 3
         }
         ])
-      console.log(courses)
       return res.status(201).json({
         success : true , 
         message : "Instructor Course Successfully Fetched" , 

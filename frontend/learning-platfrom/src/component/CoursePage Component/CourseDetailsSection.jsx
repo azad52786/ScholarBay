@@ -21,7 +21,6 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
     category,
     benefitOfCourse
   } = course;
-  console.log(category);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const copyUrl = async() => {

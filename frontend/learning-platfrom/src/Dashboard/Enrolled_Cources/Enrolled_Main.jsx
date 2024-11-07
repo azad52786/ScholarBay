@@ -13,21 +13,18 @@ const Enrolled_Main = () => {
   const [enrolledCourses, setEnrolledCourses] = useState(null);
   const { token } = useSelector((store) => store.Auth);
   const { pathname } = useLocation();
-  // const pathArray = getPathArray(pathname);
-  // console.log(pathArray);
+
   const getAllenrollcourses = useCallback(async () => {
     const data = await getUserAllCources(token);
-    console.log(data);
+
     if(data !== undefined) setEnrolledCourses(data);
-    // console.log(enrolledCourses);
+
   }, [setEnrolledCourses, token]);
 
   useEffect(() => {
     getAllenrollcourses();
-    console.log(enrolledCourses);
   }, [getAllenrollcourses]);
   
-  console.log(enrolledCourses);
   return (!enrolledCourses) ? (
     <Loading />
   ) :  (

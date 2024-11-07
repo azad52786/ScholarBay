@@ -5,7 +5,6 @@ import { ACCOUNT_TYPE } from '../../../utils/constants';
 
 const StudentRoute = ({children}) => {
   const { user } = useSelector((store) => store.User);
-    console.log(user.accountType)
   return (
         <>
             {

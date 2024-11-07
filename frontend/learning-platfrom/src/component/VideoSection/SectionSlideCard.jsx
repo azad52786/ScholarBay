@@ -7,7 +7,7 @@ import SubSectionCard from "./SubSectionCard";
 
 
 const SectionSlideCard = ({ section }) => {
-//   console.log(section);
+
   const [showSection , setShowSection ] = useState(false);
   const { sectionId } = useParams();
   const { sectionName, subSection } = section;

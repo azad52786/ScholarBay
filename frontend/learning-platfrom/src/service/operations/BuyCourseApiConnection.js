@@ -41,7 +41,6 @@ export const buyCourse = async (
       throw new Error("Error Occure While Buying Course");
     }
     
-    console.log(responce.data.OrderDetails);
    let cashfree;
     var initializeSDK = async function () {          
         cashfree = await load({
@@ -73,14 +72,12 @@ export const buyCourse = async (
             if(result.paymentDetails){
                 // This will be called whenever the payment is completed irrespective of transaction status
                 console.log("Payment has been completed, Check for Payment Status");
-                console.log(payment_session_id);
                 await paymentVerificationHandler( { order_id , courses} , token , isBuyOne , navigate , dispatch);
                 
             }
         });
    
   } catch (e) {
-    // console.log(e);
     console.log("error : ", e);
     toast.error(e.response?.data?.message);
   }

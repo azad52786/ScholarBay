@@ -20,7 +20,6 @@ const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}
           <RxCross2 className=' lg:hidden w-10 h-10  text-richblack-400 cursor-pointer rounded-lg bg-[rgba(39, 144, 245, 0.09)] backdrop:blur-sm'
             onClick={() => {
               setShowVideoSlider(false)
-              // console.log(showVideoSlider)
             }}
           />
           <button className=' flex font-edu-sa items-center gap-2

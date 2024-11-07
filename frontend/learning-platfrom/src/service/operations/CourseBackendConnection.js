@@ -17,7 +17,6 @@ export const createCourse = (formData , token ) => {
                         "Authorization" : `Bearer ${token}` , 
                     })
                     
-            console.log(responce.data.course)
             toast.dismiss(toastId)
             if(!responce.data.success){
                 toast.error("Failed to Createing Course Please try again")
@@ -47,7 +46,6 @@ export const updateCourseDetails = (formData , token ) => {
                         "Authorization" : `Bearer ${token}` , 
                     })
                     
-            console.log(responce)
             toast.dismiss(toastId)
             if(!responce.data.success){
                 toast.error("Failed to Createing Course Please try again")
@@ -77,10 +75,8 @@ export const createSectionCall = async(data , token , dispatch) => {
             "Authorization" : `Bearer ${token}` , 
         }
         );
-        console.log(responce.data)
         if(!responce.data.success){
             toast.error("Sorry Something Went Wrong . please Try Again 🙇")
-            console.log("Create section return success false")
         }
         toast.dismiss(toastId)
         toast.success("Section is Successfully Created 😍");
@@ -107,11 +103,9 @@ export const deleteSection = async(sectionId , token , dispatch) => {
         )
         if(!responce.data.success){
             toast.error("Sorry Something Went Wrong . please Try Again 🙇")
-            // console.log("Create section return success false")
         }
         toast.dismiss(toastId)
         toast.success("Section is Successfully Deleted 😍");
-        console.log(responce.data)
         dispatch(setCourseDetails(responce.data.updatedCourse));
     }catch(e){
         toast.dismiss(toastId)
@@ -134,11 +128,9 @@ export const updateSection = async(formData , token , dispatch) => {
         )
         if(!responce.data.success){
             toast.error("Sorry Something Went Wrong . please Try Again 🙇")
-            // console.log("Create section return success false")
         }
         toast.dismiss(toastId)
         toast.success("Section is Successfully Deleted 😍");
-        console.log(responce.data)
         return responce.data.updateSection;
     }catch(e){
         toast.dismiss(toastId)
@@ -165,7 +157,6 @@ export const createSubSection = async (data , token) => {
         }
         toast.dismiss(toastId)
         toast.success("SubSection is Successfully Created 😍");
-        console.log(response.data)
         return response.data;
     }catch(e){
         toast.dismiss(toastId)
@@ -191,7 +182,6 @@ export const updateSubSection = async (data , token) => {
         }
         toast.dismiss(toastId)
         toast.success("SubSection is Successfully Updated 😍");
-        console.log(response.data)
         return response.data;
     }catch(e){
         toast.dismiss(toastId)
@@ -201,7 +191,6 @@ export const updateSubSection = async (data , token) => {
 }
 export const deleteSubSectionApi = async ( formData , token , subSectionId) => {
     let toastId = toast.loading("deleteing Subsection...");
-    console.log(formData);
     try{    
         let response = await Apiconnection(
             "delete" , 
@@ -219,7 +208,6 @@ export const deleteSubSectionApi = async ( formData , token , subSectionId) => {
         }
         toast.dismiss(toastId)
         toast.success("SubSection is Successfully Deleted 😍");
-        console.log(response.data)
         return response.data;
     }catch(e){
         toast.dismiss(toastId)
@@ -229,7 +217,6 @@ export const deleteSubSectionApi = async ( formData , token , subSectionId) => {
 }
 export const modechange = async ( formData , token , navigate) => {
     let toastId = toast.loading("Updateing Status of Course...");
-    // console.log(formData);
     try{    
         let response = await Apiconnection(
             "post" , 
@@ -247,7 +234,6 @@ export const modechange = async ( formData , token , navigate) => {
         }
         toast.dismiss(toastId)
         toast.success(`your Course is ${formData.get('mode')}  😍`);
-        console.log(response.data)
         navigate("/dashboard/default/my-courses")
         // return response.data;
     }catch(e){

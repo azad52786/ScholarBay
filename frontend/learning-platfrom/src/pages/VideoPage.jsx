@@ -20,9 +20,7 @@ const VideoPage = () => {
   useEffect(() => {
     (async () => {
       const courseData = await getEnrolledCourse(courseId, token);
-      console.log(courseData);
       dispatch(setCourseEntireData(courseData));
-      console.log("dispatch done");
       dispatch(setCourseSectionData(courseData.courseContent));
     })();
   } , [courseId , token , dispatch]);

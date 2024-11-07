@@ -12,7 +12,7 @@ const Sidebar = () => {
     const [logoutModal , setLogoutModal] = useState(false); 
     const location = useLocation();
     const { user } = useSelector((store) => store.User);
-    console.log(location.pathname);
+;
     const matchRoute = (route) => {
         return matchPath({path : route} , location.pathname);
     }

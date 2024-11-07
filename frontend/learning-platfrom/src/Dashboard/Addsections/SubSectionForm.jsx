@@ -39,12 +39,11 @@ const SubSectionForm = () => {
     criteriaMode: "all",
   });
   const fileSubmitHandeler = (file) => {
-    console.log(videoInput.current);
-    console.log(file);
+
     setvideoFile(file);
     const previewUrl = URL.createObjectURL(file);
     setPreviewFile(previewUrl);
-    console.log(previewUrl);
+
   };
   const cancelVideoHandeler = () => {
     setPreviewFile(null);
@@ -65,7 +64,7 @@ const SubSectionForm = () => {
     return formData;
   }
   const onsubmit = async (data) => {
-    console.log(data);
+
     // sectionId , title , hours , minutes , description , video
     if (!editSubSection) {
       let formData = createForm(data);
@@ -85,7 +84,6 @@ const SubSectionForm = () => {
         return ;
       }
       let formData = createForm(data);
-      console.log(formData.get('video'))
       let response = await updateSubSection(formData, token);
       dispatch(setCourseDetails(response.updatedCourse));
       dispatch(removeSubsection());
@@ -95,7 +93,6 @@ const SubSectionForm = () => {
   useEffect(() => {
     if (videoFile) videoInput.current = videoFile;
     setValue("video", videoFile);
-    console.log(videoInput);
   }, [videoFile]);
 
   useEffect(() => {
@@ -154,7 +151,6 @@ const SubSectionForm = () => {
                   onDragOver={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log("hii");
                   }}
                   onDrop={(e) => {
                     e.preventDefault();

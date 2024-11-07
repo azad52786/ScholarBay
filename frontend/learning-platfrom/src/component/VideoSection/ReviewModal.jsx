@@ -17,11 +17,11 @@ const ReviewModal = ({ setShowReviewModal }) => {
     formState: { errors },
   } = useForm()
   function ratingChanged (newRating){
-    // console.log(newRating)
+
     setValue("starCount" , newRating)
   }
   async function onSubmit (data) {
-    // console.log(data);
+
     const formData = new FormData();
     // rating , review , courseId
     formData.append("rating" , data.starCount);

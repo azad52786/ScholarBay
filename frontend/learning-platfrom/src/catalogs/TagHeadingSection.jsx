@@ -2,7 +2,7 @@ import React from 'react'
 
 const TagHeadingSection = ({currentCatagroyDetails}) => {
     const { name , description } = currentCatagroyDetails;
-    console.log(currentCatagroyDetails)
+
   return (
     <div className=' box-content bg-richblack-800 px-4 mx-auto flex min-h-[260px]  flex-col justify-center gap-4'>
         <p className='text-sm text-richblack-300 tracking-wider'>Home / Catalog / <span className=' text-yellow-25'>{name.charAt(0).toUpperCase() + name.slice(1)}</span></p>

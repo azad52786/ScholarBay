@@ -30,12 +30,10 @@ const cartSlice = createSlice({
             toast.success("Course added to cart");
         } , 
         deleteItem : (state , action ) => {
-            console.log(JSON.parse(JSON.stringify(state.cartItems)))
             let courseId = action.payload ;
             let index = state.cartItems.findIndex((item) => item._id === courseId);
             let courseArray = current(state.cartItems);
             let price = courseArray[index].price;
-            console.log(price)
             state.cartItems.splice(index , 1);
             state.totalItems--;
             state.totalPrice -= price;
@@ -45,7 +43,6 @@ const cartSlice = createSlice({
             localStorage.setItem("cartItems" , JSON.stringify(state.cartItems));
             localStorage.setItem("totalPrice" , JSON.stringify(state.totalPrice));
             toast.success("Course Deleted From Cart")
-            console.log(JSON.parse(JSON.stringify(state)))
         } , 
         
         resetCart : (state , action ) => {

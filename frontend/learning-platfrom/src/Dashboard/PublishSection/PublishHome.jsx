@@ -16,7 +16,6 @@ const PublishHome = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data);
     if(data.publish === true){
         if(courseDetails.status === "Private") ChangeModeHandler("Public");
         else  ChangeModeHandler("Private") 

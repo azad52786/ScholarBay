@@ -4,7 +4,7 @@ import { Player , BigPlayButton , LoadingSpinner , VolumeMenuButton , PlaybackRa
 
 const Mainvideo = ({ videoData ,  preViewPicture , videoEnd , thumbnail}) => {
     const {subSectionId} = useParams();
-    console.log(videoData);
+
     let videoUrl = videoData?.videoUrl;
 
   return subSectionId === undefined ? <div></div> : (

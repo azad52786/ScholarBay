@@ -2,7 +2,6 @@ import React from 'react'
 import ProgressBar from './ProgressBar';
 
 const CourseCard = ({courseDetails}) => {
-  console.log(courseDetails);
   const {thumbnail, courseName , _id } = courseDetails;
   return (
     <div className=' w-full h-full flex items-center justify-between px-3'>

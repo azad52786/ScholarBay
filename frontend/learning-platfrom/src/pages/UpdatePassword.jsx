@@ -27,7 +27,6 @@ const UpdatePassword = () => {
     const { loader } = useSelector((store) => store?.Auth);
     const setFormDataHandeler = (e) => {
         e.preventDefault();
-        console.log(fromData);
         dispatch(resetPassword(fromData, navigate));
     };
 

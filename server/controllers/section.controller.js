@@ -83,7 +83,6 @@ exports.updateSection = async(req, res) => {
 exports.deleteSection = async(req, res) => {
     try {
       const { sectionId } = req.params;
-      console.log(sectionId)
       const deletedSection = await Section.findByIdAndDelete(sectionId);
       const updateCourse = await Course.findOneAndUpdate(
         {"courseContent" : { $in : sectionId}} , 

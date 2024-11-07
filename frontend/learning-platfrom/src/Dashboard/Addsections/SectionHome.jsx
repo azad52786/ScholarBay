@@ -51,10 +51,9 @@ const SectionHome = () => {
       formData.append("newSectionName", data.sectionName);
       formData.append("sectionId", editSectionId);
       let updatedSection = await updateSection(formData, token, dispatch);
-      // console.log(editIndex.current)
+
       let index = -1;
       courseDetails.courseContent.forEach((course, i) => {
-        // console.log(course._id , " " , updatedSection._id);
         if (course._id === updatedSection._id) index = i;
       });
       let newContent = [...courseDetails.courseContent];

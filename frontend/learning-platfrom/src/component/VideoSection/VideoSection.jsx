@@ -23,10 +23,10 @@ const VideoSection = ({ setShowVideoSlider }) => {
 
   // fetch the video
   useEffect(() => {
-    console.log(subSectionId)
+
     // make undefined -> string i take it from params it took a lot's of time to find this error 
     if(sectionId === "undefined" || subSectionId === "undefined") {
-      console.log('hii their')
+
       setNoLec(true)
       return;
     }else{
@@ -42,7 +42,7 @@ const VideoSection = ({ setShowVideoSlider }) => {
     let subSectionData = sectionData?.[0]?.subSection?.filter((subSec) => subSec?._id === subSectionId);
     setVideoData(subSectionData?.[0]);
     setPreViewPicture(thumbnail);
-    console.log(subSectionData);
+
     setVideoEnd(false);
   }, [courseEntireData, courseSectionData, location.pathname]);
 
@@ -54,13 +54,13 @@ const VideoSection = ({ setShowVideoSlider }) => {
 
   const isLastVideo = () => {
     const indexOfSection = courseSectionData?.findIndex((section) => section?._id === sectionId);
-    // console.log(sectionId , " " , courseSectionData)
+
     const noOfSection = courseSectionData?.length;
     const noOfSubSection = courseSectionData?.[indexOfSection]?.subSection?.length;
     const indexOfSubSection = courseSectionData?.[indexOfSection]?.subSection?.findIndex((subSec) => subSec?._id === subSectionId);
     return indexOfSection === noOfSection - 1 && indexOfSubSection === noOfSubSection - 1;
   };
-  // console.log(subSectionId)
+
   const goToNextHandeler = async() => {
     if(!videoData) return ;
     if(!videoData?.watched){
@@ -95,7 +95,7 @@ const VideoSection = ({ setShowVideoSlider }) => {
 
   const goToPreViousHandeler = () => {
     const indexOfSection = courseSectionData?.findIndex((section) => section?._id === sectionId);
-    // console.log(indexOfSection)
+
     let preSectionId, preSubSectionId;
     
     const indexOfSubSection = courseSectionData?.[indexOfSection]?.subSection?.findIndex((subSec) => subSec?._id === subSectionId);
@@ -106,7 +106,7 @@ const VideoSection = ({ setShowVideoSlider }) => {
     } else {
       preSectionId = courseSectionData?.[indexOfSection - 1]?._id;
       const noOfSubSection = courseSectionData?.[indexOfSection - 1]?.subSection?.length;
-      // console.log(noOfSubSection)
+
       preSubSectionId = courseSectionData?.[indexOfSection - 1]?.subSection?.[noOfSubSection - 1]?._id;
     }
     navigate(`/view-course/${courseId}/section/${preSectionId}/sub-section/${preSubSectionId}`);

@@ -80,7 +80,6 @@ exports.signUp = async (req , res) => {
         } 
 
         const currOtp = await OTP.findOne({email: email}).sort({createdAt: -1}).limit(1);
-        console.log(currOtp)
         if(!currOtp){
             return res.status(400).json({
                 success: false,
@@ -95,7 +94,6 @@ exports.signUp = async (req , res) => {
         }
 
         const hashPassword = await bcrypt.hash(password , 10);
-        console.log(hashPassword);
 
         const profile = await Profile.create({
             gender : null , 
@@ -167,10 +165,7 @@ exports.login = async (req , res) => {
                 secure : process.env.NODE_ENV === "production" , 
                 // sameSite : "None",
             }
-            console.log(Date.now());
-            console.log(Date.now() + 3 * 24 * 60 * 60 * 1000);
             res.cookie("token", token , option);
-            // console.log(token);
             res.status(200).json({
                 success: true,
                 message: "User Login Success",

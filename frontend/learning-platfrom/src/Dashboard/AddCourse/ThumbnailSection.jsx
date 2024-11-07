@@ -24,8 +24,6 @@ const ThumbnailSection = ({ register, setValue, getValues, name, errors, preview
 
   const handleDragOver = (e) => {
     e.preventDefault();
-    // console.log("hii")
-    // e.stopPropagation();
   };
 
   const handleDrop = (e) => {

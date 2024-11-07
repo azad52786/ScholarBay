@@ -7,7 +7,6 @@ import { IoVideocamOutline } from "react-icons/io5";
 const Section = ({ section }) => {
     const [showSubSection, setShowSubSection] = useState(false);
     let { sectionName, subSection } = section;
-    console.log(section);
   return (
   <div className=" w-full h-full">
       <div className=" font-inter w-full bg-richblack-700 border border-richblack-300 text-richblack-25 flex 

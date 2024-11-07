@@ -17,7 +17,6 @@ export const getAllCatagoryDetails = async ( formData , token ) => {
         if(!response.data.success){
             toast.error("Sorry Something Went Wrong . please Try Again 🙇")
         }
-        console.log(response)
         return response?.data;
     }catch(e){
         // toast.error(e.response.data.message);

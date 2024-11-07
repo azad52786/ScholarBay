@@ -19,11 +19,11 @@ const MobileMenuSection = ({
   const dashboardRef = useRef(null);
   const navigate = useNavigate();
   const menuRef = useRef(null);
-  console.log(tags);
+
   // Function to handle the click outside the account div
   const handleClickOutside = (event) => {
     if (accountRef.current && accountRef.current.contains(event.target)) {
-      console.log(accountRef.current.contains(event.target));
+
 
       if (!accountSlider) setaccountSlider(true);
       return;
@@ -36,7 +36,6 @@ const MobileMenuSection = ({
       return;
     }
     if (accountRef.current) {
-      // console.log(accountRef.current.contains(event.target));
       setaccountSlider(false); // Hide the accountBelow div
     }
   };

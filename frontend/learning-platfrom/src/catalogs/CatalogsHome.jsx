@@ -21,7 +21,6 @@ const CatalogsHome = () => {
       }
       getallCourses()
     } , [id]);
-    console.log(allCourseDetails)
   return allCourseDetails === null ? (<Loading/>) :  (
     <div className=' w-full h-full'>
       <TagHeadingSection currentCatagroyDetails = {allCourseDetails?.currentTagCourses}/>

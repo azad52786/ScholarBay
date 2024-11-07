@@ -22,7 +22,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.User);
-  console.log(user);
+
   const [tags, setTags] = useState([]);
   const [showMenuSlider, setShowMenuSlider] = useState(true);
   const getUserDetails = async () => {
@@ -35,8 +35,6 @@ const Navbar = () => {
   const fetchTagsLink = async () => {
     try {
       const result = await Apiconnection("get", COURSE_API.GET_ALL_TAGS);
-
-      console.log(result.data.tags);
       setTags(result.data.tags);
     } catch (error) {
       console.error(error);
@@ -44,7 +42,6 @@ const Navbar = () => {
   };
   useEffect(() => {
     fetchTagsLink();
-    console.log(tags);
   }, []);
 
   const logoutHandeler = () => {

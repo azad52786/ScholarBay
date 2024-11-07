@@ -110,8 +110,6 @@ function resetAllData() {
       dispatch(createCourse(formData , token));
       resetAllData();
     }else{
-      console.log(data);
-      console.log(courseDetails)
       if( data.course === courseDetails.courseName &&
         data.courseDescription === courseDetails.courseDescription &&
         data.price === courseDetails.price &&
@@ -126,7 +124,6 @@ function resetAllData() {
       }
       
       let formData = createFormData(data);
-      console.log(JSON.stringify(formData.get("category")))
       formData.append("_id" , courseDetails._id)
       dispatch(updateCourseDetails(formData , token));
     }

@@ -32,7 +32,7 @@ const CartSectionHome = () => {
     }
     await buyCourse(token, courseArray , user , navigate , dispatch);
   };
-  console.log(cartItems);
+
   return (
     <div className=" w-full h-full mb-10 font-mono">
       <div className=" w-[90%] md:w-[70%] h-full mx-auto mt-5">

@@ -1,12 +1,11 @@
 const jwt = require('jsonwebtoken');
 exports.auth = (req, res, next) => {
     try{
-        console.log("hii")
         // const token = req.headers.token || req.cookies.token;
         // const token = JSON.parse(req.body.token)
         //  req.body.token || req.cookies.token;
         const token = req.body.token || req.cookies.token || req.header.Authorization.replace("Bearer " , "");
-        console.log("token" , token);
+
         if(!token){
             return res.status(401).json({
                 success: false,
@@ -15,7 +14,6 @@ exports.auth = (req, res, next) => {
         }
         const decode = jwt.verify(token , process.env.JWT_SECRET);
         req.user = decode;
-        // console.log(req.user);
         next();
     }catch(e){
         console.log(e);

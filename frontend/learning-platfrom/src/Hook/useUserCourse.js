@@ -22,8 +22,6 @@ const useUserCourse = () => {
         }catch(e){
             console.error("Error fetching courses:", e);
         }
-      
-        // console.log(responce.data.data[0].createdTime);
         
     }
   useEffect(() => {

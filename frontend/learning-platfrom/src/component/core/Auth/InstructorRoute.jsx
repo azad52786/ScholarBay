@@ -5,7 +5,6 @@ import { Navigate } from 'react-router-dom'
 
 const InstructorRoute = ({children}) => {
     const { user } = useSelector((store) => store.User);
-    console.log(user.accountType)
   return (
         <>
             {

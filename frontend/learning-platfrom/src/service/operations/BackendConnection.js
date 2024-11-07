@@ -14,7 +14,6 @@ export const getResetPasswordToken = (email, setSendEmail) => {
       if (!responce.data.success) {
         throw new Error("You are not a Registered User");
       }
-      console.log(responce);
       dispatch(setSendEmail(true));
     } catch (error) {
       toast.error(error.message);
@@ -27,7 +26,6 @@ export const getResetPasswordToken = (email, setSendEmail) => {
 export const resetPassword = (formData, navigate) => {
   return async (dispatch) => {
     dispatch(setLoader(true));
-    console.log(formData);
     try {
       let responce = await Apiconnection("POST", AUTH_API.RESET_PASSWORD, {
         ...formData,
@@ -35,7 +33,6 @@ export const resetPassword = (formData, navigate) => {
       if (!responce.data.success) {
         throw new Error("Error while Passowrd-Reset");
       }
-      console.log(responce);
       toast.success("Your Password is reset Successfully");
       navigate("/login");
     } catch (error) {
@@ -52,12 +49,10 @@ export const sendOtp = (email, navigate) => {
   return async (dispatch) => {
     dispatch(setLoader(true));
     try {
-      console.log(email);
 
       const responce = await Apiconnection("POST", AUTH_API.SEND_OTP, {
         email,
       });
-      console.log(responce);
       if (!responce.data.success) {
         toast.error(responce.data.message);
         throw new Error("OTP send failed !! please try again");
@@ -74,14 +69,12 @@ export const sendOtp = (email, navigate) => {
 
 export const signUp = (otp, signUpData, navigate) => {
   return async (dispatch) => {
-    console.log("This is : ", signUpData);
     dispatch(setLoader(true));
     try {
       const responce = await Apiconnection("POST", AUTH_API.SIGN_UP, {
         ...signUpData,
         otp,
       });
-      console.log(responce);
       if (!responce.data.success) {
         toast.error("SignUp Faied");
         throw new Error("signup failed try again");
@@ -103,7 +96,6 @@ export const login = (formData, navigate) => {
       const responce = await Apiconnection("POST", AUTH_API.LOG_IN, {
         ...formData,
       });
-      console.log(responce);
       if (!responce.data.success) {
         toast.error("Login Faied");
         throw new Error("Login failed try again");
@@ -141,14 +133,11 @@ export const logout = (navigate, setUserPresent) => {
 export const sendMessage = (data) => {
   return async function () {
     try {
-      console.log("hello world");
       const MailResponse = await Apiconnection(
         "POST",
         SEND_MAIL.CONTACT_US_SEND_MAIL,
         data
       );
-      console.log(MailResponse);
-      console.log("hello world sent!");
       if (MailResponse.data.success) {
         toast.success("Message is successfully sent");
       } else {
@@ -173,7 +162,6 @@ export const updateUserProfile = (formData, token) => {
           Authorization: `Bearer ${token}`,
         }
       );
-      console.log("Profile updated responce is :", responce);
       // check data for errors
       if (!responce.data.success) {
         throw new Error(responce.data.data.message);
@@ -203,8 +191,6 @@ export const updateUserAdditionalData = (formData, token) => {
           Authorization: `Bearer ${token}`,
         }
       );
-      console.log("responce is : ");
-      console.log(response);
       if (!response.data.success) {
         throw new Error(response.message);
       }
@@ -243,7 +229,6 @@ export const getUserAllCources = async (token) => {
         Authorization: `Bearer  + ${token}`,
       }
     );
-    console.log(response);
     if (!response.data.success) {
       throw new Error("SomeThing went wrong while fetching all enroll courses");
     }
@@ -259,7 +244,6 @@ export const getInstructorDashBoardDetails = async (token) => {
     let instructor = await Apiconnection('get' , INSTRUCTOR_DASHBOARD_API.GET_INSTRUCTOR_DASHBOARD_DETAILS , null , {
         Authorization : `Bearer ${token}` 
     });
-    console.log(instructor)
     if(instructor.data?.success){
     toast.dismiss(toastId);
         return instructor.data?.dashBoardDetails ;

@@ -7,7 +7,6 @@ const ForgetPassword = () => {
     const dispatch = useDispatch();
   const [sendEmail, setSendEmail] = useState(false);
   const [email, setEmail] = useState("");
-  console.log(email)
   const { loader } = useSelector((store) => store?.Auth);
 
   function emailSendHandeler(e){

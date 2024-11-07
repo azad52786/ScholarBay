@@ -6,7 +6,7 @@ import Spinner from "./SpinnerInstructor";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 const InstructorChart = ({ courses }) => {
-  // console.log(courses);
+
   const [currChart, setCurrentChart] = useState("students");
   // color generation
   const generateChartColor = (numberOfColor) => {
@@ -47,7 +47,6 @@ const InstructorChart = ({ courses }) => {
     datasets: [
       {
         data: courses.map((course) => {
-          // console.log(course.Price, course.totalStudentEnrolled);
           return course.Price * course.totalStudentEnrolled;
         }),
         backgroundColor: generateChartColor(courses.length),

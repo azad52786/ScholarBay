@@ -129,7 +129,6 @@ exports.getEnrolledCourses = async (req, res) => {
         ],
       })
       .exec();
-    // console.log(userDetails)
 
     if (!userDetails) {
       return res.status(400).json({
@@ -158,7 +157,6 @@ exports.getEnrolledCourses = async (req, res) => {
       )
     }
       const date = new Date(course.createdAt);
-      // if(course.createdAt) console.log(date)
       return {
         ...course.toObject(),
         watchStatus , 
@@ -172,8 +170,6 @@ exports.getEnrolledCourses = async (req, res) => {
       };
     });
     
-
-    console.log(myCourses);
     return res.status(200).json({
       success: true,
       courses: myCourses,
@@ -196,7 +192,6 @@ exports.updateDisplayPicture = async (req, res) => {
       1000,
       1000
     );
-    console.log(image);
     const updatedProfile = await User.findByIdAndUpdate(
       { _id: userId },
       { image: image.secure_url },

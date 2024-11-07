@@ -11,7 +11,6 @@ exports.createTag = async(req , res) => {
             })
         }
         const tag = await Tag.find({name: name});
-        console.log(tag)
         if(tag.length > 0) {
             return res.status(400).json({
                 success: false,
@@ -68,7 +67,6 @@ exports.tagsPageDetails =async function (req, res){
                 }
             ]
         }).exec();
-        console.log("consodjfsodifidsf: " , currentTagCourses.courses.length)
         if(!currentTagCourses){
             return res.status(404).json({
                 success: false,
@@ -99,8 +97,6 @@ exports.tagsPageDetails =async function (req, res){
         const mostSellingCourses = allcourses
         .sort((a, b) => b.studentsEnrolled.length - a.studentsEnrolled.length)
         .slice(0, 6);
-        // console.log("Top Selling Courses " , mostSellingCourses)
-        // console.log(allCatagorys)
         return res.status(201).json({
             success: true,
             message: "Tags fetched successfully",

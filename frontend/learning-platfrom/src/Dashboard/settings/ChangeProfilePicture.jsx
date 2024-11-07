@@ -15,20 +15,17 @@ const ChangeProfilePicture = () => {
     const fileInputRef = useRef(null);
     const fileChangeHandler = (e) => {
         const file = e.target.files[0];
-        console.log(file);
         if(file){
-            console.log("reader called")
             preViewSourceDefineHandler(file);
             setImageFile(file);
         }
     }
     const profilePictureUpdateHandler = useCallback(() => {
       try{
-        console.log("uploading profile picture...");
         setLoading(true);
         const formData = new FormData();
         formData.append("displayPicture" , imageFile);
-        console.log("Form data is " , formData);
+
         dispatch(updateUserProfile(formData , token));
       setLoading(false);
       }catch(e){

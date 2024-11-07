@@ -26,7 +26,6 @@ const CoursePageHome = () => {
     useEffect(() => {
         const getEntireCourse  = async () => {
             let course = await getEntireCourseDetails(courseId , user?._id);
-            console.log(course);
             setCourse(course.data?.data);
         }
         getEntireCourse();

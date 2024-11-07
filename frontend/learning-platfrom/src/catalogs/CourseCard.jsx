@@ -3,7 +3,7 @@ import StarRatings from "react-star-ratings";
 import RatingStars from "./RatingStars";
 import { Link, useNavigate } from "react-router-dom";
 const CourseCard = ({ courseDetails , cardHeight = 250 }) => {
-  console.log(cardHeight)
+
   const navigate = useNavigate();
   const { thumbnail, courseName, price, instructor , _id } = courseDetails;
   const { firstName, lastName } = instructor;

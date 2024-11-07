@@ -30,17 +30,14 @@ exports.verifySignature = async (req, res) => {
 
     Cashfree.PGOrderFetchPayments("2023-08-01", order_id)
       .then(async (response) => {
-        console.log("Order fetched successfully:", response.data);
         let orderResponse = response.data;
        
         let successfulOrder = orderResponse.filter(
           (payment) => payment.payment_status === "SUCCESS"
         );
- console.log(successfulOrder)
         if (successfulOrder.length > 0) {
           // payment successful lets give him/her course
           await enrollStudents(res, courses, userId);
-          console.log("Enrollment successfully completed")
           // save the payment information in DB . But For now i'm just ignoring it
           let { payment_amount, order_id, cf_payment_id } = successfulOrder[0];
           await sendPaymentSuccessEmail(
@@ -73,7 +70,6 @@ exports.verifySignature = async (req, res) => {
           error.response?.data?.message || "Unknown error occurred";
 
         console.error("Error:", errorMessage);
-        console.log(error.response?.data);
 
         return res.status(500).json({
           success: false,
@@ -162,7 +158,6 @@ exports.createOrder = async (req, res) => {
   try {
     const userId = req.user.id;
     const { courses } = req.body;
-    console.log("len", courses);
 
     if (!courses || courses.length === 0) {
       return res.status(501).json({

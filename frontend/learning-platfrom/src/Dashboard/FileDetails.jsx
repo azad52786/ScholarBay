@@ -4,7 +4,7 @@ import { getPathArray } from '../utils/constants'
 const FileDetails = ({ pathname , extra = null }) => {
 
     const pathArray = getPathArray(pathname);
-    console.log(pathArray)
+
     if(extra && extra.length > 0) {
         for(let i of extra) {
             pathArray.push(i)
