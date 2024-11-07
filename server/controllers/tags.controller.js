@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Tag = require("../models/tags");
+const Tag = require("../models/Tags");
 
 exports.createTag = async(req , res) => {
     try{
