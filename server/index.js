@@ -21,10 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: 'http://localhost:3000',
-    // , "credentials" refers to the inclusion of user credentials such as cookies, HTTP authentication, 
-    //and client-side SSL certificates when making cross-origin requests.
-    credentials: true,
+    origin: 'http://localhost:3000', credentials: true 
 }))
 
 app.use(fileUpload({
