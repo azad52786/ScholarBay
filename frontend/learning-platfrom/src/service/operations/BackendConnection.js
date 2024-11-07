@@ -69,7 +69,7 @@ export const sendOtp = (email, navigate) => {
       navigate("/verify-email");
     } catch (e) {
       console.error(e);
-      if(!error.response){
+      if(!e.response){
         toast.error("Network Error");
         return;
       }
@@ -95,7 +95,7 @@ export const signUp = (otp, signUpData, navigate) => {
       navigate("/login");
     } catch (e) {
       console.log(e);
-      if(!error.response){
+      if(!e.response){
         toast.error("Network Error");
         return;
       }
@@ -192,7 +192,7 @@ export const updateUserProfile = (formData, token) => {
       toast.dismiss(toastId);
       console.error("error occur");
       console.log("error messase is", e.message);
-      if(!error.response){
+      if(!e.response){
         toast.error("Network Error");
         return;
       }
@@ -222,7 +222,7 @@ export const updateUserAdditionalData = (formData, token) => {
     } catch (e) {
       toast.dismiss(toastId);
       console.log("error messase is", e);
-      if(!error.response){
+      if(!e.response){
         toast.error("Network Error");
         return;
       }
