@@ -4,6 +4,9 @@ exports.auth = (req, res, next) => {
         // const token = req.headers.token || req.cookies.token;
         // const token = JSON.parse(req.body.token)
         //  req.body.token || req.cookies.token;
+        console.log(req.body.token);
+        console.log(req.cookies?.token);
+        console.log(req.header.Authorization);
         const token = req.body.token || req.cookies.token || req.header.Authorization.replace("Bearer " , "");
 
         if(!token){
