@@ -17,7 +17,7 @@ const CatagoryCourseSection = ({ allCourseDetails }) => {
   }, []);
   return (
     <div className=" w-full h-fit font-inter">
-      <div className=" border-b border-richblack-600 mx-auto box-content w-[90%] max-w-maxContentTab px-2 py-4 md:py-6 lg:max-w-maxContent">
+      <div className=" border-b border-richblack-600 mx-auto box-content w-[90%]  px-2 py-4 md:py-6">
         <h2 className=" text-xl font-edu-sa  md:text-3xl text-pure-greys-100 font-bold ">
           Courses to get you started
         </h2>

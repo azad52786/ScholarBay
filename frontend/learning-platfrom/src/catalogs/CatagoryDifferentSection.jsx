@@ -18,7 +18,7 @@ const CatagoryDifferentSection = ({ diffCatagoryCourses }) => {
   }, [diffCatagoryCourses]);
   return (
     <div className=" w-full h-fit font-inter">
-      <div className=" border-b border-richblack-600 w-[90%] mx-auto box-content max-w-maxContentTab pt-1 md:pt-3 lg:pt-4 py-6 lg:max-w-maxContent">
+      <div className=" border-b border-richblack-600 w-[90%] mx-auto box-content pt-1 md:pt-3 lg:pt-4 py-6 ">
         <h2 className="section_heading pb-3 md:pb-0 text-xl font-edu-sa  md:text-3xl text-pure-greys-100 font-bold">
           Similar to Python
         </h2>

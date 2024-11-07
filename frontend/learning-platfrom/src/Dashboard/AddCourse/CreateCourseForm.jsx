@@ -240,12 +240,12 @@ function resetAllData() {
                 message: "This input is required.",
               },
             })}
-
+            defaultValue={editCourseDetails ? courseDetails.tag._id : ""}
           >
             <option disabled>Choose your Option</option>
             { editCourseDetails && 
             tags.map((tag, index) => (
-              <option value={tag?._id} key={tag.name} selected={courseDetails.tag._id}>
+              <option value={tag?._id} key={tag.name}>
                 {tag.name}
               </option>
             ))}

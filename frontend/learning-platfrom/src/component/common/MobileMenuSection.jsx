@@ -160,7 +160,7 @@ const MobileMenuSection = ({
                 className=" cursor-pointer p-2 rounded-md"
                 onClick={() => {
                   navigate(
-                    `/catagory/${tag?.name
+                    `/category/${tag?.name
                       .split(" ")
                       .join("-")
                       .toLowerCase()}?tagId=${tag?._id}`
