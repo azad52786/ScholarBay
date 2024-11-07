@@ -19,9 +19,21 @@ cloudinaryConnect();
 
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = ['http://localhost:3000', "https://scholar-bay.vercel.app"];
 
 app.use(cors({
-    origin: '*', credentials: true 
+    origin: (origin , callback) => {
+        // Allow If no origin paresent like mobile or postman
+        if(!origin) return callback(null , true);
+        if(origin){
+            if(allowedOrigins.includes(origin)){
+                return callback(null , true);
+            }else {
+                return callback(new Error("Not allowed by CORS"));
+            }
+        }
+    }
+    , credentials: true 
 }))
 
 app.use(fileUpload({
