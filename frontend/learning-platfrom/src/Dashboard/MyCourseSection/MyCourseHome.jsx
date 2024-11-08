@@ -44,12 +44,10 @@ let courses = useUserCourse();
               return (
                 <div className=" w-full flex py-2 border-b" key={course?._id}>
                   <div className=" w-[70%] md:w-[70%] p-1 pl-0 flex flex-col md:flex-row md:gap-3 font-edu-sa">
-                    <div className="w-[30%] md:flex items-center justify-center rounded-md max-h-[170px] ">
+                    <div className="lg:w-[30%] md:flex items-center justify-center rounded-md max-h-[170px] ">
                       <img
                         src={course?.thumbnail}
-                        width={400}
-                        height={200}
-                        className="rounded-md border border-pure-greys-400"
+                        className=" w-[200px] h-[100px] md:h-full  rounded-md border border-pure-greys-400"
                         alt="Thumbnail"
                         loading="lazy"
                       />
