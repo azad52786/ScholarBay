@@ -3,7 +3,7 @@ import Apiconnection from "../Apiconnection";
 import { PAYMENT_API } from "../Api";
 import rzpLogo from "../../assets/Images/rzp_logo.png";
 import { load } from "@cashfreepayments/cashfree-js";
-import { resetCart } from "../../Store/Slices/CartSlice";
+import { deleteItem, resetCart } from "../../Store/Slices/CartSlice";
 const loadScript = async (src) => {
   let script = document.createElement("script");
   script.src = src;
@@ -72,7 +72,7 @@ export const buyCourse = async (
             if(result.paymentDetails){
                 // This will be called whenever the payment is completed irrespective of transaction status
                 console.log("Payment has been completed, Check for Payment Status");
-                await paymentVerificationHandler( { order_id , courses} , token , isBuyOne , navigate , dispatch);
+                let data = await paymentVerificationHandler( { order_id , courses} , token , isBuyOne , navigate , dispatch);
                 
             }
         });
@@ -106,6 +106,7 @@ const sendSuccessfulPaymentEmail = async (orderData, token) => {
 
 const paymentVerificationHandler = async (verificationData, token , isOneBuy , navigate , dispatch) => {
   let toastId = toast.loading("Verifying the payment ...");
+  let { courses } = verificationData;
   try {
     const response = await Apiconnection(
       "post",
@@ -120,9 +121,13 @@ const paymentVerificationHandler = async (verificationData, token , isOneBuy , n
       throw new Error("Failed to verify payment");
     }
     toast.success("Verified payment successfully");
+    
     if(isOneBuy){
+      // if present into cart remove from cart 
+      let courseId = courses[0]
+      dispatch(deleteItem(courseId));
       // navigate in the already having course
-      navigate("/dashboard/default/enrolled-courses")
+      navigate("/dashboard/default/enrolled-courses");
     }else{
       // remove all the cart and navigate in the already having course
       dispatch(resetCart());

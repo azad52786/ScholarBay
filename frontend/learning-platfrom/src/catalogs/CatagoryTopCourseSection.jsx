@@ -5,8 +5,8 @@ import HighlitedText from "../component/core/Homepage/HighlitedText";
 const CatagoryTopCourseSection = ({ topSellingCourses }) => {
   return (
     <div className=" w-full h-fit box-content font-inter">
-      <div className=" w-[90%] mx-auto lg:max-w-maxContent px-2 py-4 md:py-6 flex flex-col">
-        <h2 className="section_heading pb-3 md:pb-0 text-xl font-edu-sa  md:text-3xl text-pure-greys-100 font-bold">
+      <div className=" w-[90%] mx-auto px-2 py-4 md:py-6 flex flex-col">
+        <h2 className="section_heading pb-3 text-xl font-edu-sa  md:text-3xl text-pure-greys-100 font-bold">
           Top Courses
         </h2>
         {topSellingCourses.length <= 0 ? (
@@ -19,7 +19,7 @@ const CatagoryTopCourseSection = ({ topSellingCourses }) => {
             />
           </div>
         ) : (
-          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 gap-y-6 p-6">
+          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 gap-y-6">
             {topSellingCourses.map((course, index) => (
               <CourseCard map={index} courseDetails={course} cardHeight={400} />
             ))}

@@ -25,7 +25,7 @@ const CatalogsHome = () => {
     <div className=' w-full h-full'>
       <TagHeadingSection currentCatagroyDetails = {allCourseDetails?.currentTagCourses}/>
       <CatagoryCourseSection allCourseDetails = {allCourseDetails}/>
-      <CatagoryDifferentSection diffCatagoryCourses = {allCourseDetails.differentTagsCourses}/>
+      <CatagoryDifferentSection diffCatagoryCourses = {allCourseDetails.differentTagsCourses} name={allCourseDetails?.currentTagCourses?.name}/>
       <CatagoryTopCourseSection topSellingCourses = {allCourseDetails.mostSellingCourses} />
     </div>
   )
