@@ -70,7 +70,7 @@ const SectionHome = () => {
       <div className=" h-full mt-6 relative">
         <form
           className=" bg-richblack-800 w-[93%] mr-3 mx-auto h-fit rounded-md border border-pure-greys-600
-            p-6 pr-12 text-pure-greys-25 font-inter flex flex-col gap-y-3 "
+            p-3 md:p-6 text-pure-greys-25 font-inter flex flex-col gap-y-3 "
           onSubmit={handleSubmit(onsubmit)}
         >
           <div className=" text-2xl text-pure-greys-200 font-bold font-inter">

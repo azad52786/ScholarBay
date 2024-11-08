@@ -156,8 +156,8 @@ function resetAllData() {
     <div className=" h-full w-full mt-6 font-edu-sa">
       <form
         onSubmit={handleSubmit(onsubmit)}
-        className=" bg-richblack-800 w-[93%] mr-3 mx-auto h-fit rounded-md border border-pure-greys-600
-            p-6 pr-12 text-pure-greys-25 "
+        className=" bg-richblack-800 mr-3 w-[96%] md:w-[93%] mx-auto h-fit rounded-md border border-pure-greys-600
+           p-3  md:p-10 lg:p-16 text-pure-greys-25 "
       >
         <div className=" w-full h-fit flex gap-y-1 flex-col mb-3 text-pure-greys-100 ">
           <label htmlFor="course" className="text-pure-greys-25 w-fit">

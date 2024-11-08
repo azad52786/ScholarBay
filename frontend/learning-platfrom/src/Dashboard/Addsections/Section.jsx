@@ -71,29 +71,29 @@ const Section = ({
     dispatch(setCourseDetails(response.updatedCourse))
   }
   return (
-    <div key={index} className=" px-2 flex flex-col items-center">
-      <div className="flex w-[90%] items-center justify-between font-inter p-5 border-b border-richblack-500">
-        <div className="flex items-center">
-          <FaSortAmountDown className=" h-4 w-8 text-[#6E727F]" />
-          <div className=" text-[#C5C7D4] text-[16px]">
+    <div key={index} className="px-1 md:px-2 flex flex-col items-center">
+      <div className="flex w-[97%] md:w-[90%] items-center justify-between font-inter p-1 md:p-5 border-b border-richblack-500">
+        <div className="flex items-center py-2">
+          <FaSortAmountDown className=" h-4 w-8 mr-1 text-[#6E727F]" />
+          <div className=" text-[#C5C7D4] text-[12px] md:text-[16px]">
             {section?.sectionName}
           </div>
         </div>
-        <div className=" flex items-center justify-center text[#6E727F]">
+        <div className=" flex items-center justify-center gap-1 text[#6E727F]">
           {!editSectionbtn ? (
             <MdOutlineEdit
-              className=" h-6 w-10 cursor-pointer "
+              className=" w-6 h-6 md:w-10 cursor-pointer text-[#f743f1]"
               onClick={editSectionHandeler}
             />
           ) : (
             <TbPencilCancel
-              className=" h-6 w-10 cursor-pointer text-caribbeangreen-200"
+              className="w-6 h-6 md:w-10 cursor-pointer text-caribbeangreen-200"
               onClick={cancelEditSectionHandeler}
             />
           )}
 
           <MdDeleteSweep
-            className=" h-6 w-10 cursor-pointer"
+            className=" h-6 w-6 md:w-10 cursor-pointer text-[#a9f743]"
             onClick={() => deleteSectionHandeler(section._id , section.sectionName)}
           />
           <div className=" w-[4px] text-pure-greys-400 mr-2">|</div>
@@ -113,18 +113,18 @@ const Section = ({
         showSubSection && 
         
       subSections.map((subSection, index) => (
-        <div className="flex w-[90%] items-center justify-between font-inter px-10 py-2 border-b border-richblack-500">
+        <div className="flex w-[97%] md:w-[90%] items-center justify-between font-inter px-3  md:px-10 py-2 border-b border-richblack-500">
           <div className="flex items-center">
-            <FaSortAmountDown className=" h-4 w-8 text-[#6E727F]" />
-            <div className=" text-[#C5C7D4] text-[16px]">
+            <FaSortAmountDown className=" h-4 w-8 mr-1 text-[#6E727F]" />
+            <div className=" text-[#C5C7D4] text-[12px] md:text-[16px]">
               {subSection?.title}
             </div>
           </div>
           <div className=" flex items-center justify-center text[#6E727F] text-pure-greys-300">
-            <MdOutlineEdit className=" h-6 w-10 cursor-pointer " 
+            <MdOutlineEdit className=" h-5 w-5 md:w-10 cursor-pointer mr-1 " 
                 onClick={() => editSubsection(section._id , subSection)}
             />
-            <MdDeleteSweep className=" h-6 w-10 cursor-pointer" 
+            <MdDeleteSweep className=" h-5 w-5 md:w-10 cursor-pointer" 
               onClick={() => deleteSubsectionHandeler(subSection._id)}
             />
           </div>

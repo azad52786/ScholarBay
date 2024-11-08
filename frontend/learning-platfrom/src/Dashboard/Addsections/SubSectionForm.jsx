@@ -110,11 +110,11 @@ const SubSectionForm = () => {
     <div className=" w-screen min-h-screen z-30 absolute pb-52 pt-2 top-0 left-0 flex font-inter items-center justify-center backdrop-blur-sm">
       <div className=" w-[90%] md:w-[75%] lg:w-[50%] h-fit ">
         <div
-          className=" flex items-center justify-between px-4 py-3 bg-richblack-600  rounded-t-md font-semibold text-lg
+          className=" font-edu-sa flex items-center justify-between px-4 py-3 bg-richblack-600  rounded-t-md font-semibold text-lg
               text-pure-greys-200
             "
         >
-          Edit Lecture{" "}
+          <p className=" text-[#32fee6]">Edit Lecture{" "}</p>
           <ImCross
             onClick={() => {
               dispatch(removeSubsection());
@@ -123,7 +123,7 @@ const SubSectionForm = () => {
           />
         </div>
         <form
-          className=" px-8 py-2 bg-richblack-700 rounded-b-md"
+          className=" md:px-8 px-2 py-2 bg-richblack-700 rounded-b-md"
           onSubmit={handleSubmit(onsubmit)}
         >
           <div className=" w-full h-full">
@@ -175,16 +175,16 @@ const SubSectionForm = () => {
                 </div>{" "}
               </>
             ) : (
-              <div className="w-full h-[19rem] mx-auto px-7 pt-7 bg-richblack-600 rounded-md border-2 border-dashed border-pure-greys-300">
+              <div className="w-full h-fit mx-auto px-1 pt-2 md:px-7 md:pt-7 bg-richblack-600 rounded-md border-2 border-dashed border-pure-greys-300">
                 <video
-                  className="w-[90%] mx-auto h-[85%] rounded-md"
+                  className="w-[96%] md:w-[90%] mx-auto rounded-md"
                   controls
-                  //   width={200}
-                  //   height={200}
+                    width={200}
+                    height={200}
                 >
                   <source src={previewFile} />
                 </video>
-                <div className="w-full h-14 flex items-center justify-center pb-1">
+                <div className="w-full h-7 md:h-14 flex items-center justify-center md:pb-1">
                   <p
                     className="cursor-pointer underline"
                     onClick={cancelVideoHandeler}
@@ -209,8 +209,8 @@ const SubSectionForm = () => {
             />
             <ErrorMessageComponent name={"title"} errors={errors} />
           </div>
-          <div className=" w-full flex  justify-between">
-            <div className=" w-[45%] mt-3 h-fit flex gap-y-1 flex-col text-pure-greys-200 ">
+          <div className=" w-full md:flex  justify-between">
+            <div className=" w-full md:w-[45%] mt-3 h-fit flex gap-y-1 flex-col text-pure-greys-200 ">
               <label htmlFor="hours" className="text-pure-greys-25 w-fit">
                 Video Playback Hours <sup className=" text-red">*</sup>
               </label>
@@ -236,7 +236,7 @@ const SubSectionForm = () => {
               />
               <ErrorMessageComponent name={"hours"} errors={errors} />
             </div>
-            <div className=" w-[45%] mt-3 h-fit flex gap-y-1 flex-col text-pure-greys-200 ">
+            <div className=" w-full md:w-[45%] mt-3 h-fit flex gap-y-1 flex-col text-pure-greys-200 ">
               <label htmlFor="minutes" className="text-pure-greys-25 w-fit">
                 Video Playback Minutes <sup className=" text-red">*</sup>
               </label>
@@ -280,7 +280,7 @@ const SubSectionForm = () => {
             <button
               type="button"
               className={`font-bold text-white  bg-richblack-600  flex gap-x-2 justify-center items-center
-    w-fit py-3 px-6 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
+    w-fit md:py-3 md:px-6 px-3 py-2 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
               onClick={() => {
                 dispatch(removeSubsection());
               }}
@@ -291,7 +291,7 @@ const SubSectionForm = () => {
             <button
               type="submit"
               className={`font-bold  text-black bg-[#FFD60A]  flex gap-x-2 justify-center items-center
-              w-fit py-3 px-6 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
+              w-fit md:py-3 md:px-6 px-3 py-2 rounded-md transition-all duration-250 hover:scale-95 cursor-pointer border-b-2 border-r-2 border-richblack-700 hover:border-black`}
             >
               Next
               <FaChevronCircleRight />

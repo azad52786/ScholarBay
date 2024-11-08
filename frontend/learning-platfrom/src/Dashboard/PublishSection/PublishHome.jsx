@@ -35,10 +35,10 @@ const PublishHome = () => {
   return (
     <div className="h-full mt-6 relative">
       <form
-        className="bg-richblack-800 w-[93%] mr-3 mx-auto h-fit rounded-md border border-pure-greys-600 p-6 pr-12 text-pure-greys-25 font-inter flex flex-col gap-y-5"
+        className="bg-richblack-800 w-[93%] mr-3 mx-auto h-fit rounded-md border border-pure-greys-600 p-3 md:p-6 md:pr-12 text-pure-greys-25 font-inter flex flex-col gap-y-5"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="text-2xl font-semibold text-pure-greys-50">
+        <div className="text-2xl font-semibold font-edu-sa text-[#58f055]">
           Publish Settings
         </div>
         <div className="flex items-center">
@@ -56,7 +56,7 @@ const PublishHome = () => {
           />
           <label
             htmlFor="publish"
-            className="text-pure-greys-400 text-lg cursor-pointer"
+            className="text-pure-greys-400 text-base md:text-lg cursor-pointer"
           >
             Make this Course {courseDetails.status === "Private" ? "Public" : "Private"}
           </label>
@@ -65,7 +65,7 @@ const PublishHome = () => {
           <ErrorMessageComponent errors={errors} name="publish" />
         )}
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center gap-10 justify-center">
           <button
             type="button"
             className="md:py-3 py-1 px-4 gap-x-2 bg-richblack-700 
@@ -79,7 +79,7 @@ const PublishHome = () => {
           </button>
 
           {courseDetails.status === "Private" ? (
-            <div className="flex gap-x-3">
+            <div className="flex  gap-x-3">
               <button
                 type="submit"
                 className="md:py-3 py-1 px-4 gap-x-2 bg-yellow-25
@@ -95,7 +95,7 @@ const PublishHome = () => {
             <div className="flex gap-x-3">
               <button
                 type="submit"
-                className="py-3 px-4 gap-x-2 bg-yellow-25 text-pure-greys-600 border-b-2 border-pure-greys-400 rounded-md hover:translate-y-[-7px] duration-150"
+                className=" py-1 md:py-3 px-4 gap-x-2 bg-yellow-25 text-pure-greys-600 border-b-2 border-pure-greys-400 rounded-md hover:translate-y-[-7px] duration-150"
                 // onClick={() => ChangeModeHandler("Private")}
               >
                 Save
@@ -108,7 +108,7 @@ const PublishHome = () => {
         {courseDetails.status === "Private" ? (
           <button
             type="button"
-            className="py-3 px-4 gap-x-2 bg-richblack-700 border-b-2 border-pure-greys-400 rounded-md hover:translate-y-[-7px] duration-150"
+            className="md:py-3 md:px-4 px-2 py-2 gap-x-2 bg-richblack-700 border-b-2 border-pure-greys-400 rounded-md hover:translate-y-[-7px] duration-150"
             onClick={() => {
               toast.success("Your course is successfully saved in private mode");
               navigate("/dashboard/default/my-courses");
@@ -119,7 +119,7 @@ const PublishHome = () => {
         ) : (
           <button
             type="button"
-            className="py-3 px-4 gap-x-2 bg-richblack-700 border-b-2 border-pure-greys-400 rounded-md hover:translate-y-[-7px] duration-150"
+            className="py-3 px-4 gap-x-2 px-2 py-2 bg-richblack-700 border-b-2 border-pure-greys-400 rounded-md hover:translate-y-[-7px] duration-150"
             onClick={() => {
               toast.success("Your course is successfully saved in public mode");
               navigate("/dashboard/default/my-courses");

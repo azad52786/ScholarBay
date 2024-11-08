@@ -6,7 +6,7 @@ const StepSection = ({CourseCreationData , step}) => {
     <div className=' w-[90%] mx-auto mt-6 flex font-edu-sa '>
       {
         CourseCreationData.map((CreateData , index) => (
-            <div className=' w-[30%] h-full flex flex-col items-center justify-between mr-1 gap-y-3' key={index}>
+            <div className=' w-[30%] h-full flex flex-col items-center justify-between md:mr-1 gap-y-3' key={index}>
                 <div className=' w-full h-full flex items-center justify-between' >
                     {
                         CreateData.step > 1 ? (<div className={`h-1 flex items-center justify-center border-b-2 

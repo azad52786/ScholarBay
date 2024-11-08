@@ -28,8 +28,6 @@ const ThumbnailSection = ({ register, setValue, getValues, name, errors, preview
 
   const handleDrop = (e) => {
     e.preventDefault();
-    // e.stopPropagation();
-
     const droppedFile = e.dataTransfer.files[0];
     if (droppedFile) {
       fileUploadHandler(droppedFile);
@@ -63,20 +61,20 @@ const ThumbnailSection = ({ register, setValue, getValues, name, errors, preview
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
-            <div className="h-fit w-fit p-3 rounded-full text-yellow-25 border-2 border-yellow-25 bg-richblack-800">
+            <div className="h-fit w-fit p-3  rounded-full text-yellow-25 border-2 border-yellow-25 bg-richblack-800">
               <FiUploadCloud className="w-[50px] h-[50px]" />
             </div>
             <div>
               Drag and drop an image, or <span className="text-yellow-25">Browse</span>
             </div>
-            <div>Max 6MB each (12MB for videos)</div>
+            <div>Max 1MB each</div>
           </div>
           <ErrorMessageComponent name={name} errors={errors} />
         </>
       ) : (
-        <div className="w-full h-[22rem] mx-auto px-7 pt-7 bg-richblack-600 rounded-md border-2 border-dashed border-pure-greys-300">
+        <div className="w-full max-h-fit mx-auto md:px-4 lg:px-7 pt-7 bg-richblack-600 rounded-md border-2 border-dashed border-pure-greys-300">
           <img
-            className="w-[90%] mx-auto h-[85%] rounded-md"
+            className="w-[96%] md:w-[90%] mx-auto h-[60%] md:h-[85%] rounded-md"
             src={previewFile}
             width={200}
             height={200}
