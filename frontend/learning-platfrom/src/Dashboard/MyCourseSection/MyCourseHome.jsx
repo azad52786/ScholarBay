@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TopBarSection from "./TopBarSection";
 import CourseHeadingSection from "./CourseHeadingSection";
 import useUserCourse from "../../Hook/useUserCourse";
@@ -8,6 +8,7 @@ import { FaRupeeSign } from "react-icons/fa";
 import { MdOutlineEdit } from "react-icons/md";
 import { MdDeleteSweep } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../Instructor DashBoard/SpinnerInstructor";
 import {
   setCourseDetails,
   setEditCourseDetails,
@@ -15,7 +16,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const MyCourseHome = () => {
-  const courses = useUserCourse();
+let courses = useUserCourse();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const editCourseHandeler = (course) => {
@@ -36,14 +37,19 @@ const MyCourseHome = () => {
             className=" w-full h-fit border rounded-b-md border-pure-greys-600 
             text-[14px] text-pure-greys-200 font-edu-sa px-4 "
           >
-            {courses.map((course, index) => {
+            {
+            !courses ? (<div className=" w-full min-h-56 flex items-center justify-center"><Spinner /></div>) : courses.lenght <= 0 ? (<div>hii </div>) :  
+            
+            courses.map((course, index) => {
               return (
                 <div className=" w-full flex py-2 border-b" key={course?._id}>
                   <div className=" w-[70%] md:w-[70%] p-1 pl-0 flex flex-col md:flex-row md:gap-3 font-edu-sa">
-                    <div className="w-[30%] rounded-md max-h-[170px] ">
+                    <div className="w-[30%] md:flex items-center justify-center rounded-md max-h-[170px] ">
                       <img
                         src={course?.thumbnail}
-                        className=" w-full h-[80px] md:h-full rounded-md border border-pure-greys-400"
+                        width={400}
+                        height={200}
+                        className="rounded-md border border-pure-greys-400"
                         alt="Thumbnail"
                         loading="lazy"
                       />
