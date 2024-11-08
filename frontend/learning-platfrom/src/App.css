@@ -8,10 +8,36 @@ body {
   background-image: url(../src/assets/Images/bghome.svg);
 }
 
-.swiper-button-prev,
-.swiper-button-next {
-  color: yellow;
+.swiper-slide {
+  width: 100%;
+  height: 100%;
 }
+
+.swiper-button-next , 
+.swiper-button-prev{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background-color: transparent;
+  top: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:rgba(215, 235, 32, 0.941);
+  backdrop-filter: blur(10px);
+  z-index: 30;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.swiper-button-next {
+  right: 0;
+}
+
+.swiper-button-prev{
+  left: 0;
+}
+
 
 .sweerAnimation {
   animation: sweept 0.5s forwards linear;
@@ -110,7 +136,6 @@ body {
     transform: translateX(-300px);
   }
 }
-
 
 .inputStyle {
   width: 45px !important;
