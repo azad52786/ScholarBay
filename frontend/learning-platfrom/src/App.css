@@ -75,12 +75,13 @@ body {
 }
 
 .progress::after {
-  /* content: ""; */
+  content: attr(after-ele-width);
   position: absolute;
   font-size: 10px;
   top: -25px;
   right: -15px;
   background-color: blueviolet;
+  transform: rotate(0) !important;
   padding: 2px 8px;
   border-radius: 10%;
   animation: 0.5s linear 0.5s forwards opct;
@@ -90,21 +91,23 @@ body {
 .progress::before {
   content: "";
   position: absolute;
-  top: -12px;
+  top: -13px;
   right: -4px;
   width: 8px;
   height: 8px;
   background: blueviolet;
-  transform: rotate(45deg);
+  transform: rotate(45deg) scale(0);
   animation: 0.5s linear 0.5s forwards opct;
   transform-origin: left;
 }
 @keyframes opct {
   from {
     opacity: 0;
+    transform: rotate(45deg) scale(0);
   }
   to {
     opacity: 1;
+    transform: rotate(45deg) scale(1);
   }
 }
 @keyframes mve {

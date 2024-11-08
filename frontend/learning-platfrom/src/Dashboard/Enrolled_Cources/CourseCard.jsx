@@ -8,7 +8,7 @@ const CourseCard = ({courseDetails}) => {
       <div className=' flex justify-center items-center gap-x-4 font-edu-sa lg:font-semibold
           
       '>
-        <img src={thumbnail} alt='course Thumbnail' className=' w-20 h-16 rounded-md'/>
+        <img src={thumbnail} alt='course Thumbnail' className=' w-20 h-16 md:w-40 md:h-24 rounded-md'/>
         <p>{courseName}</p>
       </div>
       <ProgressBar/>

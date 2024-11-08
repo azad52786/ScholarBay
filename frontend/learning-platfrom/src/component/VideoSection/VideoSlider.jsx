@@ -8,7 +8,7 @@ const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}
   
   const {completedLecture , courseSectionData } = useSelector((store) => store.CourseVideo);
 
-  return courseSectionData.length === 0 ? (<></>) : (
+  return courseSectionData && courseSectionData.length === 0 ? (<div>No Item Found</div>) : (
     <div className={`absolute z-10 lg:relative videoSlider  duration-300 top-0  min-h-screen w-[300px] lg:w-[30%] bg-richblack-800
         backdrop:blur-sm border-r border-b border-opacity-50 border-pure-greys-300
           ${!showVideoSlider ? "sliderOff" : "videoSlider left-[-300px]"} lg:left-0
@@ -33,6 +33,7 @@ const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}
         
         <div className=' p-2'>
           {
+            courseSectionData && 
             courseSectionData.map(section => (
                 <SectionSlideCard 
                 section={section}

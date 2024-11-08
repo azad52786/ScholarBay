@@ -115,27 +115,27 @@ const VideoSection = ({ setShowVideoSlider }) => {
   return (
     <div className='h-full w-full font-edu-sa'>
       <div className='h-[80px] w-full bg-richblack-800 bg-opacity-50 px-2 flex items-center justify-between border-b border-richblack-500 border-opacity-60'>
-        <div className='flex gap-3'>
+        <div className='flex md:gap-3'>
           <HiMenuAlt1
-            className='w-10 h-10 text-pure-greys-300 lg:hidden cursor-pointer'
+            className='md:w-10 md:h-10 w-6 h-6 text-pure-greys-300 lg:hidden cursor-pointer'
             onClick={() => setShowVideoSlider((prev) => !prev)}
           />
-          <p className='pl-2 md:pl-5 font-bold text-2xl text-richblack-300'>{courseName}</p>
+          <p className='pl-2 md:pl-5 font-semibold md:font-bold text-base md:text-2xl text-richblack-300'>{courseName}</p>
         </div>
         <div className=' pr-4'>
         {
          courseSectionData  && courseSectionData.length > 0 && 
-         <div>
+         <div className=' '>
          
            {
              !isFirstVideo() && <button
-               className=' py-1 px-2   md:py-2 md:px-3 mr-2 bg-blue-100 border-b-2 border-l text-richblack-800 border-white rounded-md md:text-lg md:font-semibold'
+               className=' py-1 px-2 mb-1 md:mb-0  md:py-2 md:px-3 mr-2 bg-blue-100 border-b-2 border-l text-richblack-800 border-white rounded-md md:text-lg md:font-semibold'
                onClick={goToPreViousHandeler}
              >Previous</button>
            }
            { 
              !isLastVideo() && <button
-               className='  py-1 px-2   md:py-2 md:px-3 mr-2  bg-yellow-100 text-richblue-800 border-b-2 border-r border-white rounded-md md:text-lg md:font-semibold'
+               className='  py-1 px-2 md:py-2 md:px-3 mr-2  bg-yellow-100 text-richblue-800 border-b-2 border-r border-white rounded-md md:text-lg md:font-semibold'
                
                onClick={goToNextHandeler}
              >{videoData?.watched || completedLecture.includes(videoData?._id) ? "Next" : "Mark And Next"}</button>

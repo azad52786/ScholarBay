@@ -51,7 +51,7 @@ const Enrolled_Main = () => {
         {
           enrolledCourses && 
           enrolledCourses.map((course) => (
-            <div key={course._id} className=" w-full h-20 border border-richblack-400 border-opacity-60">
+            <div key={course._id} className=" w-full h-fit py-2 border border-richblack-400 border-opacity-60">
             <Link 
             to={`/view-course/${course?._id}/section/${course.courseContent?.[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`}
             >

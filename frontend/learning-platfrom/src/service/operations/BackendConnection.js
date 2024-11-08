@@ -3,6 +3,7 @@ import { setLoader, setToken } from "../../Store/Slices/AuthSlice";
 import { AUTH_API, COURSE_API, INSTRUCTOR_DASHBOARD_API, PROFILE_API, SEND_MAIL } from "../Api";
 import Apiconnection from "../Apiconnection";
 import { setUser } from "../../Store/Slices/ProfileSlice";
+import { deleteCookie } from "../../utils/helperfunction";
 
 export const getResetPasswordToken = (email, setSendEmail) => {
   return async (dispatch) => {
@@ -146,6 +147,7 @@ export const logout = (navigate, setUserPresent) => {
     localStorage.removeItem("user");
     dispatch(setUser(null));
     dispatch(setToken(null));
+    deleteCookie("token");
     toast.success("Logout successfully done");
     navigate("/login");
   };
