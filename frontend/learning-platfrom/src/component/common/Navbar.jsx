@@ -198,6 +198,8 @@ const Navbar = () => {
         )}
 
         <div className=" flex gap-3 justify-center items-center lg:hidden ">
+        {
+        token && 
           <div
             className=" lg:hidden relative ml-20 lg:ml-0 cursor-pointer"
             onClick={() => navigate("/cart")}
@@ -207,6 +209,7 @@ const Navbar = () => {
             </div>
             <TiShoppingCart className=" h-10 w-8" />
           </div>
+        }
           <CgMenuRightAlt
             className=" w-8 h-8 cursor-pointer"
             onClick={() => setShowMenuSlider((pre) => !pre)}

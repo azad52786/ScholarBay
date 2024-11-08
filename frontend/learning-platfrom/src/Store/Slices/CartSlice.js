@@ -5,7 +5,7 @@ const cartSlice = createSlice({
     initialState : {
         totalItems : localStorage.getItem("totalItems") ? JSON.parse(localStorage.getItem("totalItems")) : 0,
         cartItems : localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [] , 
-        totalPrice : localStorage.getItem("totalPrice") ? JSON.parse(localStorage.getItem("totalPrice")) : [] ,
+        totalPrice : localStorage.getItem("totalPrice") ? JSON.parse(localStorage.getItem("totalPrice")) : 0 ,
     } , 
     reducers : {
         setTotalItems : (state , action) => {

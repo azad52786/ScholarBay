@@ -4,14 +4,14 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { deleteItem } from '../../Store/Slices/CartSlice';
 import { useDispatch } from 'react-redux';
 
-const CartItemCard = ({item}) => {
+const CartItemCard = ({item , index}) => {
     const { ratingAndReviews , thumbnail , 
         price , courseName } = item;
         const tagName = item.tag?.name;
         const dispatch = useDispatch();
   return (
     <>
-    <div key={item._id} className=' w-full h-fit flex items-center justify-between'>
+    <div key={index} className=' w-full h-fit flex items-center justify-between'>
       <div className=' flex md:flex-row flex-col gap-4'>
         <img src={thumbnail} alt='CourseThumbnail' className=' w-[180px] h-[100px] md:h-[160px] md:w-[220px] rounded-md'/>
         <div className=' flex flex-col items-start justify-start gap-y-1 md:gap-y-2'>

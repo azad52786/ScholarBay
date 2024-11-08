@@ -12,15 +12,18 @@ export const getResetPasswordToken = (email, setSendEmail) => {
         email,
       });
       if (!responce.data.success) {
-        throw new Error("You are not a Registered User");
+        throw new Error(responce.data.message);
       }
-      dispatch(setSendEmail(true));
+      toast.success("A reset password link has been sent to your mailbox.");
+      setSendEmail(true);
     } catch (error) {
       if(!error.response){
-        toast.error("Network Error");
+        toast.error("Network error");
+        dispatch(setLoader(false));
         return;
       }
-      toast.error(error.message);
+      dispatch(setLoader(false));
+      toast.error(error.response?.data?.message);
       console.log(error);
     }
     dispatch(setLoader(false));

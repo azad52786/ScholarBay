@@ -15,10 +15,10 @@ const CartSectionHome = () => {
   const { token } = useSelector((store) => store.Auth);
   const dispatch = useDispatch();
   const style = {
-    "background-image":
+    "backgroundImage":
       "linear-gradient(90deg, rgba(135,132,186,1) 0%, rgba(189,204,204,1) 6%, rgba(71,209,35,1) 35%, rgba(37,210,140,1) 66%, rgba(0,212,255,1) 100%)",
     color: "transparent",
-    "background-clip": "text",
+    "backgroundClip": "text",
   };
   const buyAllCourseHandeler = async () => {
     if (user.accountType != "Student") {
@@ -57,7 +57,7 @@ const CartSectionHome = () => {
             <p className=" font-semibold text-xl  lg:text-2xl">
               Total Price :{" "}
               <span className=" text-yellow-100 text-2xl lg:text-3xl">
-                ₹{totalPrice}
+                ₹ {totalPrice ? totalPrice : 0}
               </span>
             </p>
             <button
@@ -77,7 +77,7 @@ const CartSectionHome = () => {
         )}
         {cartItems &&
           cartItems.length > 0 &&
-          cartItems.map((item) => <CartItemCard item={item} />)}
+          cartItems.map((item , index) => <CartItemCard item={item} index={index}/>)}
       </div>
     </div>
   );

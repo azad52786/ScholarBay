@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const useUserCourse = () => {
     const { token } = useSelector((store) => store.Auth)
-    const [data , setData] = useState([]);
+    const [data , setData] = useState(null);
     
     const fetchData = async() => {
         try{

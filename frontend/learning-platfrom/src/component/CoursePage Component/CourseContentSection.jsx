@@ -3,7 +3,7 @@ import Section from './Section'
 
 const CourseContentSection = ({courseContent}) => {
   return (
-    <div className=' lg:w-[50%] w-full h-full font-inter flex flex-col gap-3 mt-10 md:mt-0 lg:mt-[-100px]'>
+    <div className=' lg:w-[50%] w-full h-full font-inter flex flex-col gap-3 mt-10 lg:mt-[-240px] md:mt-[-120px]'>
       <p className=' text-richblack-50 lg:text-3xl  md:text-3xl font-bold sm:text-2xl font-mono'>Course Content</p>
       <div className=' w-full flex  items-center justify-between text-lg'>
             <p className=' w-fit h-fit text-richblack-25'>{courseContent?.length} Section(s) </p>

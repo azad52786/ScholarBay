@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { resetPassword } from '../service/operations/BackendConnection';
 import BackToLogin from '../component/common/BackToLogin';
+import Spinner from '../Dashboard/Instructor DashBoard/SpinnerInstructor';
 
 const UpdatePassword = () => {
     const navigate = useNavigate();
@@ -30,8 +31,8 @@ const UpdatePassword = () => {
         dispatch(resetPassword(fromData, navigate));
     };
 
-    return loader ? <div className="bg-richblack-90 h-screen w-screen flex justify-center items-center">Loading ....</div> : (
-        <div className=' w-[30%] min-h-screen mx-auto flex flex-col justify-center gap-4'>
+    return loader ? <div className="bg-richblack-90 h-screen w-screen flex justify-center items-center"><Spinner/></div> : (
+        <div className=' w-[90%] md:w-[40%] lg:w-[30%] min-h-screen mx-auto flex flex-col justify-center gap-4'>
             <div className=" font-bold text-3xl text-richblack-5">Choose new password</div>
             <div className=" text-richblack-300  leading-5">Almost done. Enter your new password and you're all set.</div>
             <form className=" mt-3 w-full flex flex-col gap-4" onSubmit={setFormDataHandeler}>

@@ -32,15 +32,15 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
     }
   }
   return (
-    <div className=" font-edu-sa w-full h-fit grid grid-cols-1 grid-rows-3 md:grid-cols-2 lg:grid-cols-3 md:grid-rows-2 gap-2 justify-stretch content-start">
-      <div className=" mt-[-50px] md:mt-0 h-fit flex gap-y-5 flex-col py-10 lg:col-span-2">
+    <div className=" font-edu-sa w-full h-fit md:grid md:grid-cols-2 lg:grid-cols-3 md:grid-rows-3  gap-2 justify-stretch content-start">
+      <div className=" mt-[-50px] md:mt-0 h-fit flex gap-y-5 md:row-span-2 flex-col py-10 lg:col-span-2">
         <p className=" text-2xl md:text-4xl font-bold text-[#5692d3] sm:text-[42px]">
           {courseName}
         </p>
         <p class="text-richblack-200 md:text-xl w-full text-justify md:px-0">
           {courseDescription}
         </p>
-        <div className=" flex items-center gap-4 ">
+        <div className=" flex md:flex-col lg:flex-row items-center md:items-start lg:items-center gap-4 md:gap-2 lg:gap-4 ">
           <p className=" font-bold text-yellow-100">4.2</p>
           <RatingStars rating_cnt={4.2} />
           <p className=" md:font-semibold md:text-lg  text-pure-greys-25">
@@ -76,7 +76,7 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
           </div>
         </div>
       </div>
-      <div className="row-span-2 flex items-center justify-center p-4 h-fit">
+      <div className="md:row-span-2 flex items-center justify-center p-4 h-fit">
         <div className="  bg-richblack-700  h-full w-full rounded-md py-4 px-4 flex flex-col items-center gap-4">
           <img
             src={thumbnail}
@@ -145,7 +145,8 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
           </div>
         </div>
       </div>
-      <div className=" sm:mt-[-100px] md:mt-[-250px] lg:mt-16 w-full h-fit flex flex-col gap-2 items-start md:col-span-2 justify-center px-12 py-6 border border-pure-greys-300">
+      <div className=" lg:mt-[-150px] w-full h-fit flex flex-col gap-2 items-start md:col-span-2
+      justify-center px-12 py-6 border border-pure-greys-300">
       <p className="text-3xl font-semibold">What you'll learn</p>
       <div className="mt-5">{benefitOfCourse}</div>
       </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {getResetPasswordToken} from '../service/operations/BackendConnection'
 import BackToLogin from "../component/common/BackToLogin";
+import Spinner  from "../../src/Dashboard/Instructor DashBoard/SpinnerInstructor"
 
 const ForgetPassword = () => {
     const dispatch = useDispatch();
@@ -12,12 +13,13 @@ const ForgetPassword = () => {
   function emailSendHandeler(e){
     e.preventDefault();
     dispatch(getResetPasswordToken(email , setSendEmail));
+    console.log(setSendEmail)
   }
-  return loader === true ? <div className="bg-richblack-90 h-screen w-screen flex justify-center items-center">Loading ....</div> : (
+  return loader === true ? <div className="bg-richblack-90 h-screen w-screen flex justify-center items-center"><Spinner/></div> : (
     <div className=" w-full bg-richblack-900 text-richblack-5 min-h-screen flex items-center justify-center font-inter">
-      <div className=" w-[25%] mx-auto flex flex-col items-start gap-3">
-        <div className=" font-bold text-3xl text-richblack-5">{`${
-          !sendEmail}` ? "Reset your password" : "Check email"
+      <div className=" w-[90%] md:w-[40%] lg:w-[30%] mx-auto flex flex-col items-start gap-3">
+        <div className=" font-semibold font-edu-sa md:font-bold text-3xl text-[#98ec4a]">{
+          !sendEmail ? "Reset your password" : "Check email"
         }</div>
         <div className=" text-richblack-300  leading-5">{`${
           !sendEmail
@@ -33,6 +35,8 @@ const ForgetPassword = () => {
                     <input 
                         type = 'text'
                         onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter email address"
+                        required
                         value={email}
                         className=" mt-4 w-full h-12 rounded-lg bg-richblack-700 p-2 outline-none border-b-richblack-400 border-b-2"
                     />
