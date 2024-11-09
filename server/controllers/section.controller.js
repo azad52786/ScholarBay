@@ -10,13 +10,13 @@ exports.createSection = async function(req , res) {
             message: "All fields are required"
         })
       }
-      const isPresent = await Section.findOne({sectionName : sectionName.trim()});
-      if(isPresent){
-        return res.status(401).json({
-          success : false  ,
-          message : "Section is Already Created 🤔"
-        })
-      }
+      // const isPresent = await Section.findOne({sectionName : sectionName.trim()});
+      // if(isPresent){
+      //   return res.status(401).json({
+      //     success : false  ,
+      //     message : "Section is Already Created 🤔"
+      //   })
+      // }
       const section = await Section.create({
         sectionName : sectionName.trim()
       });

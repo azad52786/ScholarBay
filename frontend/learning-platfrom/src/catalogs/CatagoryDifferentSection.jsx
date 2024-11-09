@@ -52,7 +52,9 @@ const CatagoryDifferentSection = ({ diffCatagoryCourses , name }) => {
                 disableOnInteraction: false,
               }}
               navigation={true}
-              onInit={navigationButtonStyleHandler}
+              onInit={(e) => {
+                navigationButtonStyleHandler(e)
+              }}
               breakpoints={{
                 0: { slidesPerView: 1 },
                 700: { slidesPerView: 2 },

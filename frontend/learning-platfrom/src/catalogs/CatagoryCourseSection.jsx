@@ -65,7 +65,7 @@ const CatagoryCourseSection = ({ allCourseDetails }) => {
               modules={[Pagination, Navigation]}
               pagination={false}
               className="mySwiper"
-              onInit={navigationButtonStyleHandler}
+              // onInit={navigationButtonStyleHandler}
               autoplay={{
                 delay: 1000,
                 disableOnInteraction: false,
