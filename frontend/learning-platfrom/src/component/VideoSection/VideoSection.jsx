@@ -8,7 +8,7 @@ import { updateCompletedLecture } from '../../Store/Slices/CourseVideoSlice';
 import Mainvideo from './Mainvideo';
 import "video-react/dist/video-react.css"
 
-const VideoSection = ({ setShowVideoSlider }) => {
+const VideoSection = ({ setShowVideoSlider , courseProgress , setCourseProgress }) => {
   const { courseEntireData, courseSectionData , completedLecture} = useSelector((store) => store.CourseVideo);
   const { token } = useSelector((store) => store.Auth)
   let { courseId, sectionId, subSectionId } = useParams();
@@ -23,10 +23,8 @@ const VideoSection = ({ setShowVideoSlider }) => {
 
   // fetch the video
   useEffect(() => {
-
     // make undefined -> string i take it from params it took a lot's of time to find this error 
     if(sectionId === "undefined" || subSectionId === "undefined") {
-
       setNoLec(true)
       return;
     }else{
@@ -62,14 +60,18 @@ const VideoSection = ({ setShowVideoSlider }) => {
   };
 
   const goToNextHandeler = async() => {
+  console.log(videoData)
     if(!videoData) return ;
-    if(!videoData?.watched){
+    if(!courseProgress.includes(videoData._id)){
         try{
           const res = await Apiconnection('put' , COURSE_API.MARKED_SUBSECTION + '/' + videoData?._id , null , {
              Authorization : `Bearer ${token}`
+          } , {
+            courseId : courseId , 
           })
           if(res.data.success){
-             dispatch(updateCompletedLecture(videoData._id))
+             setCourseProgress(res.data.data)
+            //  dispatch(updateCompletedLecture(videoData._id))
           }else{
             throw new Error("SomeThing Went Wrong");
           }
@@ -138,7 +140,7 @@ const VideoSection = ({ setShowVideoSlider }) => {
                className='  py-1 px-2 md:py-2 md:px-3 mr-2  bg-yellow-100 text-richblue-800 border-b-2 border-r border-white rounded-md md:text-lg md:font-semibold'
                
                onClick={goToNextHandeler}
-             >{videoData?.watched || completedLecture.includes(videoData?._id) ? "Next" : "Mark And Next"}</button>
+             >{courseProgress.includes(videoData?._id) ? "Next" : "Mark And Next"}</button>
            }
          </div>
         }

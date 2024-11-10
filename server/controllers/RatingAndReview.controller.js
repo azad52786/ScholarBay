@@ -6,8 +6,8 @@ exports.createRatingAndReview = async function (req, res) {
   try {
     let { rating, review, courseId } = req.body;
     let userId = req.user.id;
-    userId = new mongoose.Types.ObjectId(userId);
-    courseId = new mongoose.Types.ObjectId(courseId);
+    userId =  mongoose.Types.ObjectId(userId);
+    courseId = mongoose.Types.ObjectId(courseId);
     const checkStudentEnroll = await Course.findOne({
       _id: courseId,
       studentsEnrolled: { $in: [userId] },

@@ -12,6 +12,8 @@ const userRoutes = require('../server/router/User.router');
 const profileRoutes = require('../server/router/Profile.router');
 const SendMailRouter = require('../server/router/SendMail.router');
 const { cloudinaryConnect } = require("./config/cloudinary");
+const CourseProgress = require("./models/CourseProgress");
+const { default: mongoose } = require("mongoose");
 
 
 connect();
@@ -54,6 +56,23 @@ app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/mail" , SendMailRouter);
+
+// app.get("/defaultStartProgress" , async(req , res) => {
+//     try{
+//         let { userId , courseId } = req.body;
+//         let Progress = new CourseProgress({
+//           userId : new mongoose.Types.ObjectId(userId),
+//           courseId : new mongoose.Types.ObjectId(courseId),
+//         })
+//         await Progress.save();
+//         return res.status(200).json({
+//             success : true,
+//             message : "Progress Created Successfully"
+//         })
+//     }catch(e){
+//         res.status(505).send("server error: " + e.message)
+//     }
+// })
 
 app.get('/' , (req , res) => {
     res.json({

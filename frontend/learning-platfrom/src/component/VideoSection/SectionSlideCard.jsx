@@ -6,7 +6,7 @@ import { FaChevronDown } from "react-icons/fa";
 import SubSectionCard from "./SubSectionCard";
 
 
-const SectionSlideCard = ({ section }) => {
+const SectionSlideCard = ({ index , section , courseProgress }) => {
 
   const [showSection , setShowSection ] = useState(false);
   const { sectionId } = useParams();
@@ -19,7 +19,7 @@ const SectionSlideCard = ({ section }) => {
   } , [sectionId]);
   
   return (
-    <div key={section._id} className=" mb-2"
+    <div key={index} className=" mb-2"
       
     >
       <div
@@ -40,7 +40,7 @@ const SectionSlideCard = ({ section }) => {
       {
         showSection &&
         subSection.map((subSec, index) => (
-            <SubSectionCard subSection={subSec} section_id = {section._id} />)
+            <SubSectionCard index={index} courseProgress={courseProgress} subSection={subSec} section_id = {section._id} />)
         )
       }</div>
     </div>

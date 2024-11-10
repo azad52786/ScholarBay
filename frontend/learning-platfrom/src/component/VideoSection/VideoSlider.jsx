@@ -4,7 +4,7 @@ import { CiEdit } from "react-icons/ci";
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import SectionSlideCard from './SectionSlideCard';
-const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}) => {
+const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider , courseProgress}) => {
   
   const {completedLecture , courseSectionData } = useSelector((store) => store.CourseVideo);
 
@@ -34,8 +34,10 @@ const VideoSlider = ({setShowReviewModal , setShowVideoSlider , showVideoSlider}
         <div className=' p-2'>
           {
             courseSectionData && 
-            courseSectionData.map(section => (
+            courseSectionData.map((section , i) => (
                 <SectionSlideCard 
+                index={i}
+                courseProgress = {courseProgress}
                 section={section}
                 />
             ))

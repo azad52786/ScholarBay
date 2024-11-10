@@ -2,14 +2,14 @@ import React from "react";
 import { TiTick } from "react-icons/ti";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-const SubSectionCard = ({ subSection , section_id }) => {
+const SubSectionCard = ({ index , subSection , section_id , courseProgress }) => {
   const { completedLecture } = useSelector((store) => store.CourseVideo)
   const { courseId , subSectionId } = useParams();
   const navigate = useNavigate();
   const { _id , watched, description } = subSection;
   return (
     <div
-      key={subSection._id}
+      key={index}
       onClick={() => {
         navigate(`/view-course/${courseId}/section/${section_id}/sub-section/${subSection._id}`);
       }}
@@ -18,7 +18,7 @@ const SubSectionCard = ({ subSection , section_id }) => {
       `}
     >
       <div className=" w-[15%]">
-        {(watched || completedLecture.includes(_id)) && <TiTick className=" w-9 h-10 mb-1 text-[#14e822]
+        {(courseProgress.includes(subSection._id)) && <TiTick className=" w-9 h-10 mb-1 text-[#14e822]
         " />}
       </div>
       <div>

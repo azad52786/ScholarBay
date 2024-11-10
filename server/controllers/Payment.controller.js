@@ -8,6 +8,7 @@ const { createHmac } = require("node:crypto");
 const { paymentSuccessEmail } = require("../mails/paymentSuccessEmail");
 const Cashfree = require("../config/cashFree.js");
 const { response } = require("express");
+const CourseProgress = require("../models/CourseProgress.js");
 
 exports.verifySignature = async (req, res) => {
   try {
@@ -122,7 +123,11 @@ const enrollStudents = async (res, courses, userId) => {
             message: "Student Enrollment Failed!!!!",
           });
         }
-
+        let Progress = new CourseProgress({
+          userId : new mongoose.Types.ObjectId(userId),
+          courseId : new mongoose.Types.ObjectId(courseId),
+        })
+        await Progress.save();
         const emailResponce = await mailSender(
           enrollStudent.email,
           `Successfully enrolled ${enrollCourse.courseName}`,

@@ -1,7 +1,7 @@
 import React, { useEffect, useId, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getEnrolledCourse } from "../service/operations/CourseBackendConnection";
+import { getEnrolledCourse, getWatchedSection } from "../service/operations/CourseBackendConnection";
 import {
   setCourseEntireData,
   setCourseSectionData,
@@ -17,9 +17,15 @@ const VideoPage = () => {
   const [reviewModal, setReviewModal] = useState(false);
   const [showVideoSlider, setShowVideoSlider] = useState(true);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [ courseProgress , setCourseProgress] = useState([]);
   useEffect(() => {
     (async () => {
-      const courseData = await getEnrolledCourse(courseId, token);
+      
+      const [courseData, watchedSubSection] = await Promise.all([
+        getEnrolledCourse(courseId, token) , 
+        getWatchedSection(courseId, token)
+      ])
+      setCourseProgress(watchedSubSection);
       dispatch(setCourseEntireData(courseData));
       dispatch(setCourseSectionData(courseData.courseContent));
     })();
@@ -31,8 +37,11 @@ const VideoPage = () => {
           setShowReviewModal={setShowReviewModal}
           setShowVideoSlider={setShowVideoSlider}
           showVideoSlider={showVideoSlider}
+          courseProgress={courseProgress}
         />
         <VideoSection
+          courseProgress ={courseProgress}
+          setCourseProgress={setCourseProgress}
           setShowVideoSlider = {setShowVideoSlider}
         />
       </div>

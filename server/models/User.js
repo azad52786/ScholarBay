@@ -72,12 +72,6 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			// required: true,
 		},
-		courseProgress: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "courseProgress",
-			},
-		],
 
 		// Add timestamps for when the document is created and last modified
 	},

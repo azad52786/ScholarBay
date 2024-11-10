@@ -298,3 +298,17 @@ export const getInstructorCourses = async(token) => {
     //  toast.dismiss(toastId)
     return [];
 }
+
+export const getWatchedSection = async (courseId , token) => {
+    try{
+        let res = await Apiconnection("get" , COURSE_API.GET_PROGRESS , null , {
+            "Authorization" : `Bearer ${token}` 
+        } , {
+            courseId : courseId
+        });
+        console.log(res);
+        return res.data.data;
+    }catch(e){
+        console.log(e);
+    }
+}

@@ -31,7 +31,8 @@ export const COURSE_API = {
     ENROLLED_COURSE_DETAILS : `${BASE_URL + '/course/getErolledCourse'}` , 
     ADD_RATING : `${BASE_URL + '/course/createRating'}` , 
     MARKED_SUBSECTION : `${BASE_URL + '/course/markWatched'}` , 
-    GET_ALL_RATINGS_AND_REVIEW : `${BASE_URL + '/course/getReviews'}` 
+    GET_ALL_RATINGS_AND_REVIEW : `${BASE_URL + '/course/getReviews'}` , 
+    GET_PROGRESS : `${BASE_URL + '/course/getCourseProgress'}`
 }
 
 export const INSTRUCTOR_DASHBOARD_API = {
