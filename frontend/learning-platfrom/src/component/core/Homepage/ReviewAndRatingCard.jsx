@@ -4,7 +4,7 @@ import RatingStars from '../../../catalogs/RatingStars'
 const ReviewAndRatingCard = ({data}) => {
   return (
      <ul className=" flex items-center h-full">
-                  <li className="w-56 pb-10 h-56 flex flex-col gap-4 bg-richblack-700 rounded-md py-3 px-3">
+                  <li className="w-56 pb-10 h-56 flex flex-col border border-richblack-400 gap-4 bg-richblack-700 rounded-md py-3 px-3">
                     <div className=" flex items-center gap-3 justify-start">
                       {data ? (
                         <img
