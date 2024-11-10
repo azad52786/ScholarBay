@@ -3,7 +3,7 @@ import StarRatings from "react-star-ratings";
 import RatingStars from "./RatingStars";
 import { Link, useNavigate } from "react-router-dom";
 const CourseCard = ({ courseDetails , cardHeight = 250 }) => {
-
+  let rating = (Math.random() * 4 + 1).toFixed(1) ;
   const navigate = useNavigate();
   const { thumbnail, courseName, price, instructor , _id } = courseDetails;
   const { firstName, lastName } = instructor;
@@ -25,9 +25,9 @@ const CourseCard = ({ courseDetails , cardHeight = 250 }) => {
           <span className="text-yellow-50">{firstName + " " + lastName}</span>
         </p>
         <div className="w-full flex gap-x-3 item-center">
-        <div className=" text-yellow-50 text-lg font-semibold ">3.5</div>
-          <RatingStars rating_cnt={3.5}/>
-          <div className=" text-lg text-pure-greys-25 ">7 Ratings</div>
+        <div className=" text-yellow-50 text-lg font-semibold flex items-center justify-center ">{rating}</div>
+          <RatingStars rating_cnt={rating}/>
+          <div className=" text-lg text-pure-greys-25 ">{Math.floor(Math.random() * 10) + 1} Ratings</div>
         </div>
         <p className="text-sm md:text-xl text-richblack-5">Rs. {price}</p>
       </div>

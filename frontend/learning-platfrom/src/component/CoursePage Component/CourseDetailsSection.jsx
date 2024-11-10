@@ -60,7 +60,7 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
               fill="currentColor"
               strokeWidth="0"
               viewBox="0 0 1024 1024"
-              class="text-2xl text-richblack-5"
+              className="text-2xl text-richblack-5"
               height="1em"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"

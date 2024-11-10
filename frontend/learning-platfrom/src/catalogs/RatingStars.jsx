@@ -11,10 +11,13 @@ const RatingStars = ({rating_cnt}) => {
         halfStar : 0 , 
         emptyStar : 0 
     })
+    function hasPrecision(num) {
+        return num % 1 !== 0;
+    }
     useEffect(() => {
         let fullStar = Math.floor(rating_cnt) || 0;
-        let halfStar = Number.isInteger(rating_cnt) ? 0 : 1;
-        let emptyStar = Number.isInteger(rating_cnt) ? 5 - fullStar : 4 - fullStar;
+        let halfStar = hasPrecision(rating_cnt) ? 1 : 0;
+        let emptyStar = !hasPrecision(rating_cnt) ? 5 - fullStar : 4 - fullStar;
         
         setAllStarCnt({
             emptyStar , halfStar  , fullStar

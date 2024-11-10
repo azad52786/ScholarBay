@@ -12,7 +12,7 @@ export const PROFILE_API = {
     GET_USER_DATA : `${BASE_URL + '/profile/getUserDetails'}` , 
     UPDATE_USER_PROFILE : `${BASE_URL + '/profile/updateDisplayPicture'}` , 
     UPDATE_USER_PROFILE_ADDITIONAL_DATA : `${BASE_URL + '/profile/updateProfile'}` , 
-    DELETE_USER : `${BASE_URL + '/profile/deleteProfile/'}` , 
+    DELETE_USER : `${BASE_URL + '/profile/deleteProfile'}` , 
 }
 
 export const COURSE_API = {

@@ -13,7 +13,7 @@ const Section = ({ section }) => {
       items-center justify-between px-5 cursor-pointer py-3"
       onClick={() => setShowSubSection(!showSubSection)}  
       >
-        <div className=" flex items-center justify-center gap-3 text-sm z-10"
+        <div className=" flex items-center justify-center gap-1 md:gap-3 text-sm z-10"
           
         >
           {
@@ -22,7 +22,7 @@ const Section = ({ section }) => {
           {
             showSubSection && <IoIosArrowDown className=" w-5 h-5"/>
           }
-          <p className=" text-lg ">{sectionName}</p>
+          <p className=" text-sm md:text-lg ">{sectionName}</p>
         </div>
         <p className=" text-sm text-yellow-25">{subSection.length + " " + "Lecture(s)"}</p>
       </div>
