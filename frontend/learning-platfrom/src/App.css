@@ -156,3 +156,21 @@ body {
 /* @keyframes duration | easing-function | delay |
  * iteration-count | direction | fill-mode | play-state | name */
 /* animation: 3s ease-in 1s 2 reverse both paused slidein; */
+
+
+.animate-scroll{
+  animation: 10s linear 0s infinite scroll;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.scroll-pause:hover .animate-scroll{
+  animation-play-state: paused;
+}

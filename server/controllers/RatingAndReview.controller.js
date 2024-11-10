@@ -104,25 +104,25 @@ exports.getAvarageRating = async (req, res) => {
 exports.getAllRatingAndReviews = async (req, res) => {
   try {
     const allRatingAndReviews = await RatingAndReview.find({})
-      .sort({ rating: "desc" })
+      .sort({ rating: "desc" }).limit(10)
       .populate({
-        path: "User",
+        path: "user",
         select: "image email lastName firstName",
       })
       .populate({
-        path: "Course",
+        path: "course",
         select: "courseName",
       })
-      .exce();
+      .exec();
     return res.status(200).json({
       success: true,
       message: "All Rating and Reviews Fetched Successfully",
       allRatingAndReviews: allRatingAndReviews,
     });
   } catch (e) {
-    return res.status(404).json({
+    return res.status(500).json({
       success: false,
-      message: `Something Went Wrong while fetching all Rating and Reviews`,
+      message: `Server error . Please try again!!`,
       error: e.message,
     });
   }

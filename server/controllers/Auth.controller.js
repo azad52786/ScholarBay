@@ -11,7 +11,7 @@ exports.sendOtp = async(req , res) => {
         const {email} = req.body;
         const userExists = await User.findOne({email: email});
         if(userExists){
-            return res.json({
+            return res.status(401).json({
                 success: false,
                 message: "User Already Exists"
             })
@@ -40,15 +40,14 @@ exports.sendOtp = async(req , res) => {
         res.status(200).json({
             success: true,
             message: "OTP Sent Successfully",
-            otp: newotp.otp
+            otp: newotp
         })
 
     }catch(e){
         console.error(e);
         res.status(500).json({
             success: false,
-            message : "Something went wrong Please try again",
-            error: e.message
+            message : e.message || "Internal Server Error",
         })
     }
 }
@@ -66,14 +65,14 @@ exports.signUp = async (req , res) => {
 
         const userExists = await User.findOne({email: email});
         if(userExists){
-            return res.json({
+            return res.status(200).json({
                 success: false,
                 message: "User Already Exists"
             })
         }
 
         if(password != confirmPassword){
-            return res.json({
+            return res.status(401).json({
                 success: false,
                 message: "Password and Confirm Password Does not Match"
             })
@@ -86,8 +85,9 @@ exports.signUp = async (req , res) => {
                 message: "OTP Not Found"
             })
         }
+
         if(otp !== currOtp.otp){
-            return res.status(400).json({
+            return res.status(200).json({
                 success: false,
                 message: "The OTP is not matching"
             })
@@ -118,13 +118,12 @@ exports.signUp = async (req , res) => {
         res.status(200).json({
             success: true,
             message: "User Created Successfully"
-
         })
        
     }catch(e){
         res.status(500).json({
             success: false,
-            message: e.message, 
+            message : e.message || "Internal Server Error"
         })
     }
 }
@@ -133,14 +132,14 @@ exports.login = async (req , res) => {
     try{    
         const {email , password} = req.body;
         if(!email || !password){
-            return res.status(400).json({
+            return res.status(401).json({
                 success: false,
                 message: `Please Fill up All the Required Fields`
             })
         }
         const user = await User.findOne({email: email}).populate("additionalDetails");
         if(!user){
-            return res.status(400).json({
+            return res.status(401).json({
                 success: false,
                 message: "User Not Found"
             })
@@ -163,7 +162,7 @@ exports.login = async (req , res) => {
                 expires : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                 httpOnly : true ,
                 secure : process.env.NODE_ENV === "production" , 
-                sameSite : "None",
+                SameSite : process.env.NODE_ENV === "production" ? "None" : "Lex",
             }
             res.cookie("token", token , option);
             res.status(200).json({
@@ -176,8 +175,7 @@ exports.login = async (req , res) => {
     }catch(e){
         res.status(500).json({
             success: false,
-            error : e.message,
-            message: "Error occurred while logging in" 
+            message: e.message
         })
     }
 }

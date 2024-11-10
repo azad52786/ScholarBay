@@ -30,3 +30,22 @@ export const addRatingReview = async (data, token) => {
     toast.dismiss(toastId);
   }
 };
+
+
+export const getAllRatingAndReviews = async() => {
+    try{
+    
+      let allRatingAndReviews = await Apiconnection("get" , COURSE_API.GET_ALL_RATINGS_AND_REVIEW);
+      console.log(allRatingAndReviews);
+      if(allRatingAndReviews.data.success){
+        return allRatingAndReviews.data?.allRatingAndReviews;
+      }else{
+        throw new Error(allRatingAndReviews.data?.message || "Failed to fetch reviews and ratings");
+      }
+
+    }catch(e){
+      console.error("Error fetching reviews and ratings:", e);
+      // toast.error(e.response?.data?.message || e.message || "Unknown error Please try again");
+    }
+    return [];
+}

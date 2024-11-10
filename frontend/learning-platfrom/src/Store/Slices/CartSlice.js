@@ -32,8 +32,9 @@ const cartSlice = createSlice({
         deleteItem : (state , action ) => {
             let courseId = action.payload ;
             let index = state.cartItems.findIndex((item) => item._id === courseId);
+            if(index != -1){
             let courseArray = current(state.cartItems);
-            let price = courseArray[index].price;
+            let price = courseArray[index]?.price;
             state.cartItems.splice(index , 1);
             state.totalItems--;
             state.totalPrice -= price;
@@ -43,6 +44,7 @@ const cartSlice = createSlice({
             localStorage.setItem("cartItems" , JSON.stringify(state.cartItems));
             localStorage.setItem("totalPrice" , JSON.stringify(state.totalPrice));
             toast.success("Course Deleted From Cart")
+            }
         } , 
         
         resetCart : (state , action ) => {

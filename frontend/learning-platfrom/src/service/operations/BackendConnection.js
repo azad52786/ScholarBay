@@ -92,18 +92,18 @@ export const signUp = (otp, signUpData, navigate) => {
         otp,
       });
       if (!responce.data.success) {
-        toast.error("SignUp Faied");
-        throw new Error("signup failed try again");
+        // toast.error("SignUp Faied");
+        throw new Error(responce?.data?.message);
       }
       toast.success("SignUp successfully done!!");
       navigate("/login");
     } catch (e) {
       console.log(e);
-      if(!e.response){
-        toast.error("Network Error");
-        return;
-      }
-      toast.error(e.response?.data?.message);
+      // if(!e.response){
+      //   toast.error("Network Error");
+      //   return;
+      // }
+      toast.error(e.response?.data?.message || e.message || "Unknown error");
     }
     dispatch(setLoader(false));
   };
@@ -239,8 +239,9 @@ export const updateUserAdditionalData = (formData, token) => {
 export const deleteUser = (navigate) => {
   return async function (dispatch) {
     try {
-      dispatch(logout(navigate));
+      console.log(document.cookie)
       const response = await Apiconnection("delete", PROFILE_API.DELETE_USER);
+      dispatch(logout(navigate));
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
