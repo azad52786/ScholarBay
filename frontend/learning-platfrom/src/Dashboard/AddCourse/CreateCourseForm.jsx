@@ -119,7 +119,7 @@ function resetAllData() {
         data.benefitOfCourse === courseDetails.benefitOfCourse &&
         data.thumbnailImage === courseDetails.thumbnail
       ){
-        toast.error("Your Can not even change your data . Then what you are trying to update");
+        toast.error("Please make some changes before trying to update. ❌❌");
         return;
       }
       

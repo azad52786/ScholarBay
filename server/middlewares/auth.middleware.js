@@ -35,7 +35,7 @@ exports.isDemo = (req , res , next) => {
     try{
         const { isDemoUser } = req.user;
         if(isDemoUser){
-            throw new Error("Nope!!😉😉 You are a Demo User Please Login into Actual Account'")
+            throw new Error("Nope!!😉😉 You are a Demo User❌❌ Please Login from a Real Account")
         }
         
         next();

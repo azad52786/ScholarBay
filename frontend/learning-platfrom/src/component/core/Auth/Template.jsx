@@ -1,9 +1,18 @@
+import { useDispatch } from "react-redux";
 import frameImg from "../../../assets/Images/frame.png"
 import LoginForm from "./LoginForm"
 import SignupForm from "./SignupForm"
+import { GoPin } from "react-icons/go";
+import { login } from "../../../service/operations/BackendConnection";
+import { useNavigate } from "react-router-dom";
 
 function Template({ title, description1, description2, image, formType }) {
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const demoUserLogin = async (email) => {
+    dispatch(login({email  , password : "1"} , navigate));
+    
+  }
   return (
     <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
       
@@ -36,6 +45,21 @@ function Template({ title, description1, description2, image, formType }) {
               loading="lazy"
               className="absolute -top-4 right-4 z-10"
             />
+            <div className=" z-30 left-8 lg:left-[-100px] absolute top-[10rem] md:top-24 min-h-24 bg-richblack-500 bg-opacity-90
+             rotate-[20deg] p-4 pb-12 rounded-md">
+             <div className=" w-full mb-3 ml-[-10px]">
+                <GoPin className=" w-10 h-10 text-[#8585ff] "/>
+             </div>
+              <div className=" font-bold md:text-3xl text-2xl font-edu-sa">Demo View</div>
+              <button className=" block w-full bg-yellow-25 px-2 py-3 mt-2
+               rounded-md font-mono text-richblack-600"
+                onClick={() => demoUserLogin("student@gmail.com")}
+               >Log In Demo Student Account</button>
+              <button className=" w-full bg-yellow-25 px-2 py-3
+               rounded-md font-mono text-richblack-600 mt-3"
+                onClick={() => demoUserLogin("teacher@gmail.com")}
+               >Log In Demo Teacher Account</button>
+            </div>
           </div>
         </div>
     </div>
