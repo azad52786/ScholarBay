@@ -67,8 +67,7 @@ exports.paymentSuccessEmail = (name, amount, orderId, paymentId) => {
       
       <body>
           <div class="container">
-              <a href="https://studynotion-edtech-project.vercel.app"><img class="logo" src="https://i.ibb.co/7Xyj3PC/logo.png"
-                      alt="SholarBay Logo"></a>
+              <a href="https://scholar-bay.vercel.app"><img src="https://i.ibb.co/cyCSrPQ/Screenshot-2024-11-11-094719.png" alt="email-Logo"></a>
               <div class="message">Course Payment Confirmation</div>
               <div class="body">
                   <p>Dear ${name},</p>
@@ -77,7 +76,7 @@ exports.paymentSuccessEmail = (name, amount, orderId, paymentId) => {
                   <p>Your Order ID is <b>${orderId}</b></p>
               </div>
               <div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-                      href="mailto:info@studynotion.com">info@studynotion.com</a>. We are here to help!</div>
+                      href="mailto:info@sholarBay.com">info@sholarBay.com</a>. We are here to help!</div>
           </div>
       </body>
       
