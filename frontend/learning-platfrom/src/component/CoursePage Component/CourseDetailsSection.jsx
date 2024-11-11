@@ -40,10 +40,10 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
         <p class="text-richblack-200 md:text-xl w-full text-justify md:px-0">
           {courseDescription}
         </p>
-        <div className=" flex md:flex-col lg:flex-row items-center md:items-start lg:items-center gap-4 md:gap-2 lg:gap-4 ">
+        <div className=" flex md:flex-col lg:flex-row items-center md:items-start lg:items-center gap-2 md:gap-2 lg:gap-4 ">
           <p className=" font-bold text-yellow-100">4.2</p>
-          <RatingStars rating_cnt={4.2} />
-          <p className=" md:font-semibold md:text-lg  text-pure-greys-25">
+          <RatingStars className="ml-[-4px]" rating_cnt={4.2} />
+          <p className=" md:font-semibold text-sm md:text-lg  text-pure-greys-25">
             (3 Reviews)
           </p>
           <p className=" md:font-semibold md:text-lg text-richblack-200">

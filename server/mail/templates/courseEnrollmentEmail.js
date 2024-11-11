@@ -78,7 +78,7 @@ exports.courseEnrollmentEmail = (courseName, name) => {
                 <a class="cta" href="https://scholar-bay.vercel.app/">Go to Dashboard</a>
             </div>
             <div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-                    href="mailto:info@sholarBay.com">info@sholarBay.com</a>. We are here to help!</div>
+                    href="mailto:info@scholarBay.com">info@scholarBay.com</a>. We are here to help!</div>
         </div>
     </body>
     

@@ -172,7 +172,7 @@ const Footer = () => {
             })}
           </div>
 
-          <div className="text-center">Made with ❤️ © 2023 SholarBay</div>
+          <div className="text-center">Made with ❤️ © 2023 ScholarBay</div>
         </div>
       </div>
     </div>

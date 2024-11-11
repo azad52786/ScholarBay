@@ -10,7 +10,7 @@ const LearningGrid = () => {
           heading: "World-Class Learning for",
           highlightText: "Anyone, Anywhere",
           description:
-            "SholarBay partners with more than 275+ leading universities and companies to bring flexible, affordable, job-relevant online learning to individuals and organizations worldwide.",
+            "ScholarBay partners with more than 275+ leading universities and companies to bring flexible, affordable, job-relevant online learning to individuals and organizations worldwide.",
           BtnText: "Learn More",
           BtnLink: "/",
         },
@@ -24,25 +24,25 @@ const LearningGrid = () => {
           order: 2,
           heading: "Our Learning Methods",
           description:
-            "SholarBay partners with more than 275+ leading universities and companies to bring",
+            "ScholarBay partners with more than 275+ leading universities and companies to bring",
         },
         {
           order: 3,
           heading: "Certification",
           description:
-            "SholarBay partners with more than 275+ leading universities and companies to bring",
+            "ScholarBay partners with more than 275+ leading universities and companies to bring",
         },
         {
           order: 4,
           heading: `Rating "Auto-grading"`,
           description:
-            "SholarBay partners with more than 275+ leading universities and companies to bring",
+            "ScholarBay partners with more than 275+ leading universities and companies to bring",
         },
         {
           order: 5,
           heading: "Ready to Work",
           description:
-            "SholarBay partners with more than 275+ leading universities and companies to bring",
+            "ScholarBay partners with more than 275+ leading universities and companies to bring",
         },
       ];
   return (

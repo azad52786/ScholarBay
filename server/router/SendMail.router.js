@@ -14,7 +14,7 @@ router.post("/sendMailForContactUs" , auth ,  async (req, res) => {
         }
         
         const SendMailToOwner = await mailSender("kajiazadali76@gmail.com", `Suggestions from ${firstName} ${lastName}` , `${message}`);
-        const SendMailToStudent = await mailSender(email, "Successfully sent your contact us message to sholarBay" , "Your mail is successfully sent");
+        const SendMailToStudent = await mailSender(email, "Successfully sent your contact us message to scholarBay" , "Your mail is successfully sent");
         
         return res.status(200).json({
             success: true,

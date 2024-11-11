@@ -73,7 +73,7 @@ const Navbar = () => {
               textShadow: "0px 0px 20px blue",
             }}
           >
-            SholarBay
+            ScholarBay
           </h1>
         </div>
 

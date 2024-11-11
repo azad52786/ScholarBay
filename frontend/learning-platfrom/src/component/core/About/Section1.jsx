@@ -14,7 +14,7 @@ const Section1 = () => {
             </div>
             <div
                 className=' text-[#838894] text-balance md:text-[18px] mt-6 '
-            >SholarBay is at the forefront of driving innovation in online education. We're passionate about creating a <br/> brighter future by offering cutting-edge courses, leveraging emerging technologies, and nurturing <br/> a vibrant learning community.</div>
+            >ScholarBay is at the forefront of driving innovation in online education. We're passionate about creating a <br/> brighter future by offering cutting-edge courses, leveraging emerging technologies, and nurturing <br/> a vibrant learning community.</div>
             <div className='w-full mt-12 relative  flex justify-center items-start'>
             <div class=" relative bg-gradient-to-br from-yellow-300 to-yellow-500 h-[300px] md:h-24
             w-64 blur-[50px] rounded-full mt-4"></div>
