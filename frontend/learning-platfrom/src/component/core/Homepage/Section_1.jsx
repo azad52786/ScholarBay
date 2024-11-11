@@ -2,7 +2,8 @@ import React from 'react'
 import HighlitedText from './HighlitedText'
 import { FaArrowRight } from "react-icons/fa";
 import CTAButton from './CTAButton';
-import banner from '../../../assets/Images/banner.mp4'
+// import banner from '../../../assets/Images/banner.mp4'
+import Banner from "../../../assets/updated Images/Banner.mp4"
 import CodeBlocks from './CodeBlocks';
 
 
@@ -41,7 +42,7 @@ const Section_1 = () => {
                 loop
                 className="shadow-[15px_15px_rgba(255,255,255)] w-fit h-fit bg-gradient-to-r from-teal-400 via-blue-400 to-cyan-500"
             >
-                <source src={banner} type='video/mp4'></source>
+                <source src={Banner} type='video/mp4'></source>
             </video>
         </div>
    
