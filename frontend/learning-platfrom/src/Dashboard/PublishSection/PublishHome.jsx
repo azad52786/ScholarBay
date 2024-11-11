@@ -51,7 +51,7 @@ const PublishHome = () => {
                 message: "Please press the CheckBox",
               },
             })}
-            onChange={() => console.log(getValues("publish"))}
+            
             className="bg-black h-[20px] w-[20px] mr-3 border-2 border-pure-greys-400 cursor-pointer"
           />
           <label

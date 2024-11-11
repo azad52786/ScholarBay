@@ -54,7 +54,6 @@ export const buyCourse = async (
             redirectTarget: "_modal",
       };
       
-    console.log("CashFree is : " , cashfree);
       
       
       cashfree.checkout(checkoutOptions).then(async(result) => {

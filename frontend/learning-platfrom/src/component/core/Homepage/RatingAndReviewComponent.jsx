@@ -6,13 +6,11 @@ import ReviewAndRatingCard from "./ReviewAndRatingCard";
 
 const RatingAndReviewComponent = () => {
   let shimmerCard = Array.from({ length: 4 });
-  console.log(shimmerCard);
   let [allRatingAndReview, setAllRatingAndReview] = useState(shimmerCard);
   useEffect(() => {
     (async () => {
       let data = await getAllRatingAndReviews();
       setAllRatingAndReview(data)
-      console.log(data);
     })();
   }, []);
 
@@ -33,8 +31,6 @@ const RatingAndReviewComponent = () => {
         >
           {allRatingAndReview &&
             allRatingAndReview.map((data) => {
-              console.log(data);
-                // data = null;
               return (
                <ReviewAndRatingCard data = {data} />
               );
@@ -44,8 +40,7 @@ const RatingAndReviewComponent = () => {
         >
           {allRatingAndReview &&
             allRatingAndReview.map((data) => {
-              console.log(data);
-                // data = null;
+
               return (
                <ReviewAndRatingCard data = {data} />
               );

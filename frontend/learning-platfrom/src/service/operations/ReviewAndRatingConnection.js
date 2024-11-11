@@ -36,7 +36,7 @@ export const getAllRatingAndReviews = async() => {
     try{
     
       let allRatingAndReviews = await Apiconnection("get" , COURSE_API.GET_ALL_RATINGS_AND_REVIEW);
-      console.log(allRatingAndReviews);
+
       if(allRatingAndReviews.data.success){
         return allRatingAndReviews.data?.allRatingAndReviews;
       }else{

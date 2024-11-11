@@ -36,7 +36,6 @@ const Navbar = () => {
     try {
       const result = await Apiconnection("get", COURSE_API.GET_ALL_TAGS);
       setTags(result.data.tags);
-      console.log(tags)
     } catch (error) {
       console.error(error);
     }

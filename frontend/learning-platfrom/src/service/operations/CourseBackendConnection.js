@@ -310,9 +310,9 @@ export const getWatchedSection = async (courseId , token) => {
         } , {
             courseId : courseId
         });
-        console.log(res);
         return res.data.data;
     }catch(e){
         console.log(e);
     }
+    return [];
 }

@@ -13,7 +13,7 @@ const ForgetPassword = () => {
   function emailSendHandeler(e){
     e.preventDefault();
     dispatch(getResetPasswordToken(email , setSendEmail));
-    console.log(setSendEmail)
+
   }
   return loader === true ? <div className="bg-richblack-90 h-screen w-screen flex justify-center items-center"><Spinner/></div> : (
     <div className=" w-full bg-richblack-900 text-richblack-5 min-h-screen flex items-center justify-center font-inter">

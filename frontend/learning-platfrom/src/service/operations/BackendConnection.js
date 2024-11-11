@@ -239,7 +239,6 @@ export const updateUserAdditionalData = (formData, token) => {
 export const deleteUser = (navigate) => {
   return async function (dispatch) {
     try {
-      console.log(document.cookie)
       const response = await Apiconnection("delete", PROFILE_API.DELETE_USER);
       dispatch(logout(navigate));
       if (!response.data.success) {

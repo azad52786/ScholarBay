@@ -174,7 +174,6 @@ exports.markedSubSection = async function (req, res) {
     let userId = req.user.id;
     const { subSectionId } = req.params;
     const { courseId } = req.query;
-    console.log(userId, courseId, subSectionId);
     if (!subSectionId || !userId || !courseId)
       return res.status(501).json({
         success: false,
@@ -207,7 +206,6 @@ exports.markedSubSection = async function (req, res) {
           new: true,
         }
       );
-      console.log(updatedProgress)
       if (updatedProgress) {
     res.status(200).json({
       success: true,
