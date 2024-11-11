@@ -67,8 +67,8 @@ const Section = ({
     formData.append("courseId" , courseDetails._id);
 
     const response = await deleteSubSectionApi(formData , token , sectionId);
-
-    dispatch(setCourseDetails(response.updatedCourse))
+    if(response.length > 0) dispatch(setCourseDetails(response))
+    
   }
   return (
     <div key={index} className="px-1 md:px-2 flex flex-col items-center">

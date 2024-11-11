@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+const User = require("../models/User")
+
+
 exports.auth = (req, res, next) => {
     try{
         // const token = req.headers.token || req.cookies.token;
@@ -25,6 +28,23 @@ exports.auth = (req, res, next) => {
             error: e.message, 
             message: "Error occurred while verifying token"
         })
+    }
+}
+
+exports.isDemo = (req , res , next) => {
+    try{
+        const { isDemoUser } = req.user;
+        if(isDemoUser){
+            throw new Error("Nope!!😉😉 You are a Demo User Please Login into Actual Account'")
+        }
+        
+        next();
+    }catch(e){
+        return res.status(420).json({
+            success: false,
+            message : e.message, 
+            error : e.message
+        });
     }
 }
 

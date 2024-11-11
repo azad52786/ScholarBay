@@ -208,12 +208,16 @@ export const deleteSubSectionApi = async ( formData , token , subSectionId) => {
         }
         toast.dismiss(toastId)
         toast.success("SubSection is Successfully Deleted 😍");
-        return response.data;
+        return response.data?.updatedCourse;
     }catch(e){
         toast.dismiss(toastId)
         // toast.error(e.response.data.message);
         console.log(e);
+        if(e.response && e.response.status === 420){
+            toast.error(e.response?.data?.message);
+        }
     }
+    return [];
 }
 export const modechange = async ( formData , token , navigate) => {
     let toastId = toast.loading("Updateing Status of Course...");

@@ -195,13 +195,13 @@ export const updateUserProfile = (formData, token) => {
       toast.success("Profile picture is updated successfully");
     } catch (e) {
       toast.dismiss(toastId);
-      console.error("error occur");
-      console.log("error messase is", e.message);
+      // console.error("error occur");
+      console.log("error messase is", e);
       if(!e.response){
         toast.error("Network Error");
         return;
       }
-      toast.error(e.message);
+      toast.error(e.response.data.message);
     }
   };
 };
@@ -248,7 +248,11 @@ export const deleteUser = (navigate) => {
       toast.success("User is successfully deleted");
     } catch (e) {
       console.error(e);
-      
+      if(!e.response){
+        toast.error("Network Error");
+        return;
+      }
+      if(e.response.status === 420) toast.error(e.response?.data?.message);
     }
   };
 };

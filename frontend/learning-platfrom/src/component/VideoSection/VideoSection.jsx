@@ -7,6 +7,7 @@ import { COURSE_API } from '../../service/Api';
 import { updateCompletedLecture } from '../../Store/Slices/CourseVideoSlice';
 import Mainvideo from './Mainvideo';
 import "video-react/dist/video-react.css"
+import toast from 'react-hot-toast';
 
 const VideoSection = ({ setShowVideoSlider , courseProgress , setCourseProgress }) => {
   const { courseEntireData, courseSectionData , completedLecture} = useSelector((store) => store.CourseVideo);
@@ -77,6 +78,9 @@ const VideoSection = ({ setShowVideoSlider , courseProgress , setCourseProgress 
           }
         }catch(e){
            console.error(e);
+           if(e.response && e.response.status === 420){
+              toast.error(e.response.data.message);
+           }
             return ;
         }
     }

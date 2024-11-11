@@ -1,6 +1,6 @@
 const express = require('express');
 const { login, signUp, sendOtp, changePassword } = require('../controllers/Auth.controller');
-const { auth } = require('../middlewares/auth.middleware');
+const { auth, isDemo } = require('../middlewares/auth.middleware');
 const { sendResetPasswordLink, resetPassword } = require('../controllers/reSetPassowrd.controller');
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.post("/sendotp", sendOtp)
 // http://localhost:4000/api/v1/auth/sendotp
 
 // Route for Changing the password
-router.post("/changepassword", auth, changePassword)
+router.post("/changepassword", auth , isDemo  , changePassword)
 // http://localhost:4000/api/v1/auth/changepassword
 // ********************************************************************************************************
 //                                      Reset Password

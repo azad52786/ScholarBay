@@ -4,6 +4,17 @@ const bcrypt = require('bcryptjs');
 exports.sendResetPasswordLink = async(req , res) => {
     try{
         const {email} = req.body;
+        
+        if(!email) return res.status(403).json({
+            success: false,
+            message: "Email is required"
+        })
+        if(email === "student@gmail.com" || email === "teacher@gmail.com"){
+            return res.status(403).json({
+                success: false,
+                message: "Nope!!😉😉 You're trying to change Demo Account Password"
+            })
+        }
         const user = await User.findOne({email});
         if(!user){
             return res.status(400).json({

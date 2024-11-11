@@ -150,7 +150,11 @@ exports.login = async (req , res) => {
             const payload = {
                 accountType: user.accountType, 
                 email : user.email,
-                id : user._id
+                id : user._id , 
+                isDemoUser : false , 
+            }
+            if(email === "teacher@gmail.com" || email === "student@gmail.com"){
+                payload.isDemoUser = true;
             }
 
             const token = jwt.sign(payload, process.env.JWT_SECRET, {
