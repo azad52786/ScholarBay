@@ -14,33 +14,35 @@ import StudentRoute from "./component/core/Auth/StudentRoute";
 import Loading from "./catalogs/Loading";
 import ErrorPage from "./component/core/Auth/ErrorPage";
 
+// Simple imports for specific components
+import ForgetPassword from "./pages/ForgetPassword";
+import UpdatePassword from "./pages/UpdatePassword";
+import VerifyEmail from "./pages/VerifyEmail";
+import CatalogsHome from "./catalogs/CatalogsHome";
+import DashBoard from "./pages/DashBoard";
+import MyProfile from "./Dashboard/MyProfile";
+import Main from "./Dashboard/settings/Main";
+import Enrolled_Main from "./Dashboard/Enrolled_Cources/Enrolled_Main";
+import AddCourse from "./Dashboard/AddCourse/index";
+import MyCourseHome from "./Dashboard/MyCourseSection/MyCourseHome";
+import CoursePage from "./pages/CoursePage";
+import Cart from "./pages/Cart";
+import VideoPage from "./pages/VideoPage";
+import InstructorDashBoard from "./pages/InstructorDashBoard";
+import PurchaseHistory from "./pages/PurchaseHistory";
 
+// Lazy imports for other components
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
-const ForgetPassword = lazy(() => import("./pages/ForgetPassword"));
-const UpdatePassword = lazy(() => import("./pages/UpdatePassword"));
-const VerifyEmail = lazy(() => import("./pages/VerifyEmail"));
-const CatalogsHome = lazy(() => import("./catalogs/CatalogsHome"));
-const DashBoard = lazy(() => import("./pages/DashBoard"));
-const MyProfile = lazy(() => import("./Dashboard/MyProfile"));
-const Main = lazy(() => import("./Dashboard/settings/Main"));
-const Enrolled_Main = lazy(() => import("./Dashboard/Enrolled_Cources/Enrolled_Main"));
-const AddCourse = lazy(() => import("./Dashboard/AddCourse/index"));
-const MyCourseHome = lazy(() => import("./Dashboard/MyCourseSection/MyCourseHome"));
-const CoursePage = lazy(() => import("./pages/CoursePage"));
-  const Cart = lazy(() => import("./pages/Cart"));
-const VideoPage = lazy(() => import("./pages/VideoPage"));
-const InstructorDashBoard = lazy(() => import("./pages/InstructorDashBoard"));
-const PurchaseHistory = lazy(() => import("./pages/PurchaseHistory"));
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage /> , 
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -90,9 +92,7 @@ const router = createBrowserRouter([
         path: "/forget-password",
         element: (
           <OpenRoute>
-            <Suspense fallback={<Loading />}>
-              <ForgetPassword />
-            </Suspense>
+            <ForgetPassword />
           </OpenRoute>
         ),
       },
@@ -100,9 +100,7 @@ const router = createBrowserRouter([
         path: "/UpdatePassword/:tokenId",
         element: (
           <OpenRoute>
-            <Suspense fallback={<Loading />}>
-              <UpdatePassword />
-            </Suspense>
+            <UpdatePassword />
           </OpenRoute>
         ),
       },
@@ -110,9 +108,7 @@ const router = createBrowserRouter([
         path: "/verify-email",
         element: (
           <OpenRoute>
-            <Suspense fallback={<Loading />}>
-              <VerifyEmail />
-            </Suspense>
+            <VerifyEmail />
           </OpenRoute>
         ),
       },
@@ -120,9 +116,7 @@ const router = createBrowserRouter([
         path: "/category/:tagName",
         element: (
           <ProtectedRoute>
-            <Suspense fallback={<Loading />}>
-              <CatalogsHome />
-            </Suspense>
+            <CatalogsHome />
           </ProtectedRoute>
         ),
       },
@@ -130,9 +124,7 @@ const router = createBrowserRouter([
         path: "/dashboard/default",
         element: (
           <ProtectedRoute>
-            <Suspense fallback={<Loading />}>
-              <DashBoard />
-            </Suspense>
+            <DashBoard />
           </ProtectedRoute>
         ),
         children: [
@@ -140,9 +132,7 @@ const router = createBrowserRouter([
             path: "/dashboard/default",
             element: (
               <ProtectedRoute>
-                <Suspense fallback={<Loading />}>
-                  <MyProfile />
-                </Suspense>
+                <MyProfile />
               </ProtectedRoute>
             ),
           },
@@ -150,9 +140,7 @@ const router = createBrowserRouter([
             path: "/dashboard/default/setting",
             element: (
               <ProtectedRoute>
-                <Suspense fallback={<Loading />}>
-                  <Main />
-                </Suspense>
+                <Main />
               </ProtectedRoute>
             ),
           },
@@ -161,9 +149,7 @@ const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <StudentRoute>
-                  <Suspense fallback={<Loading />}>
-                    <Enrolled_Main />
-                  </Suspense>
+                  <Enrolled_Main />
                 </StudentRoute>
               </ProtectedRoute>
             ),
@@ -173,9 +159,7 @@ const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <InstructorRoute>
-                  <Suspense fallback={<Loading />}>
-                    <AddCourse />
-                  </Suspense>
+                  <AddCourse />
                 </InstructorRoute>
               </ProtectedRoute>
             ),
@@ -185,9 +169,7 @@ const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <InstructorRoute>
-                  <Suspense fallback={<Loading />}>
-                    <MyCourseHome />
-                  </Suspense>
+                  <MyCourseHome />
                 </InstructorRoute>
               </ProtectedRoute>
             ),
@@ -197,9 +179,7 @@ const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <InstructorRoute>
-                  <Suspense fallback={<Loading />}>
-                    <InstructorDashBoard />
-                  </Suspense>
+                  <InstructorDashBoard />
                 </InstructorRoute>
               </ProtectedRoute>
             ),
@@ -209,9 +189,7 @@ const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <StudentRoute>
-                  <Suspense fallback={<Loading />}>
-                    <PurchaseHistory />
-                  </Suspense>
+                  <PurchaseHistory />
                 </StudentRoute>
               </ProtectedRoute>
             ),
@@ -222,9 +200,7 @@ const router = createBrowserRouter([
         path: "/course/:courseId",
         element: (
           <ProtectedRoute>
-            <Suspense fallback={<Loading />}>
-              <CoursePage />
-            </Suspense>
+            <CoursePage />
           </ProtectedRoute>
         ),
       },
@@ -232,9 +208,7 @@ const router = createBrowserRouter([
         path: "/cart",
         element: (
           <ProtectedRoute>
-            <Suspense fallback={<Loading />}>
-              <Cart />
-            </Suspense>
+            <Cart />
           </ProtectedRoute>
         ),
       },
@@ -243,13 +217,11 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <StudentRoute>
-              <Suspense fallback={<Loading />}>
-                <VideoPage />
-              </Suspense>
+              <VideoPage />
             </StudentRoute>
           </ProtectedRoute>
         ),
-      }
+      },
     ],
   },
 ]);
