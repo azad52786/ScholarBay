@@ -167,7 +167,7 @@ exports.login = async (req , res) => {
                 httpOnly : true ,
                 secure : process.env.NODE_ENV === "production" , 
                 SameSite : "None"
-            }s
+            }
             res.cookie("token", token , option);
             res.status(200).json({
                 success: true,
