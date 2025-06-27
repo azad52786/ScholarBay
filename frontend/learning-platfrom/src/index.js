@@ -30,13 +30,11 @@ import Cart from "./pages/Cart";
 import VideoPage from "./pages/VideoPage";
 import InstructorDashBoard from "./pages/InstructorDashBoard";
 import PurchaseHistory from "./pages/PurchaseHistory";
-
-// Lazy imports for other components
-const Home = lazy(() => import("./pages/Home"));
-const Login = lazy(() => import("./pages/Login"));
-const Signup = lazy(() => import("./pages/Signup"));
-const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
+import Home from "./pages/Home"
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 const router = createBrowserRouter([
   {
