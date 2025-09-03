@@ -23,7 +23,7 @@ exports.sendResetPasswordLink = async(req , res) => {
             })
         }
         const token = crypto.randomUUID().toString();
-        const url = `http://localhost:3000/UpdatePassword/${token}`
+        const url = `https://scholar-bay.vercel.app/UpdatePassword/${token}`
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 5 * 60 * 1000;
         await user.save();
