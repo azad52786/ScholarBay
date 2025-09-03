@@ -1,4 +1,4 @@
-# 🚀 LearnCode Website
+# 🚀 ScholarBay Website
 
 <div align="center">
 
