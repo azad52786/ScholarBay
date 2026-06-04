@@ -1,6 +1,6 @@
 const express = require('express');
 const { auth, isInstructor, isAdmin, isStudent, isDemo } = require('../middlewares/auth.middleware');
-const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails, buy, getEnrolledCourse, getAllInstructorCourse} = require('../controllers/Course.controller');
+const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails, buy, getEnrolledCourse, getAllInstructorCourse, getSimilarCourses} = require('../controllers/Course.controller');
 const { createSection, updateSection, deleteSection } = require('../controllers/section.controller');
 const { updateSubsection, deleteSubsection, createSubSection, markedSubSection, getwatchedSubSection } = require('../controllers/Subsection.controller');
 const { createTag, showAllTags, tagsPageDetails } = require('../controllers/tags.controller');
@@ -40,6 +40,8 @@ router.get("/getAllCourses", showAllCourse)
 // Get Details for a Specific Courses
 router.post("/getCourseDetails", getEntireCourseDetails);
 // http://localhost:4000/api/v1/course/getCourseDetails
+router.get("/similar/:courseId", getSimilarCourses);
+// http://localhost:4000/api/v1/course/similar/:courseId
 // router.post("")
 router.get('/getErolledCourse' , auth , isStudent , getEnrolledCourse);
 router.put('/markWatched/:subSectionId' , auth , isDemo , isStudent , markedSubSection)

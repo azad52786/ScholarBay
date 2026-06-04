@@ -260,6 +260,20 @@ export const getEntireCourseDetails = async (courseId , userId) => {
     }
 }
 
+export const getSimilarCourses = async (courseId) => {
+    try {
+        const response = await Apiconnection('get', `${COURSE_API.SIMILAR_COURSES}/${courseId}`);
+        if (!response.data.success) {
+            throw new Error(response.data.message);
+        }
+        return response.data.data;
+    } catch (error) {
+        console.log(error);
+        toast.error("Failed to get similar courses");
+        return { baseCourse: null, similarCourses: [] };
+    }
+}
+
 export const getEnrolledCourse = async(courseId , token) => {
     try{
         const responce = await Apiconnection(

@@ -66,5 +66,9 @@ const coursesSchema = new mongoose.Schema({
 	},
 } , {timestamps : true});
 
+coursesSchema.index({ tag: 1, status: 1 });
+coursesSchema.index({ category: 1, status: 1 });
+coursesSchema.index({ instructor: 1, status: 1 });
+
 // Export the Courses model
 module.exports = mongoose.model("Course", coursesSchema);

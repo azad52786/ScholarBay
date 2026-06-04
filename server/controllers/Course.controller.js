@@ -334,6 +334,103 @@ exports.getEntireCourseDetails = async (req, res) => {
     });
   }
 };
+
+exports.getSimilarCourses = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    if (!courseId) {
+      return res.status(400).json({
+        success: false,
+        message: "Course Id is Required",
+      });
+    }
+
+    const baseCourse = await Course.findById(courseId)
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "additionalDetails",
+        },
+      })
+      .populate("tag")
+      .exec();
+
+    if (!baseCourse) {
+      return res.status(404).json({
+        success: false,
+        message: "Course Not Found",
+      });
+    }
+
+    const topicCategories = Array.isArray(baseCourse.category)
+      ? baseCourse.category.filter(Boolean)
+      : [];
+
+    const similarCourses = await Course.find({
+      _id: { $ne: baseCourse._id },
+      status: "Public",
+      $or: [
+        baseCourse.tag ? { tag: baseCourse.tag._id } : null,
+        topicCategories.length > 0 ? { category: { $in: topicCategories } } : null,
+        { instructor: baseCourse.instructor._id },
+      ].filter(Boolean),
+    })
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "additionalDetails",
+        },
+      })
+      .populate("tag")
+      .exec();
+
+    const normalizedSimilarCourses = similarCourses
+      .map((course) => {
+        const courseCategories = Array.isArray(course.category)
+          ? course.category.filter(Boolean)
+          : [];
+        const sharedCategories = courseCategories.filter((category) =>
+          topicCategories.includes(category)
+        );
+        const sameInstructor = String(course.instructor?._id) === String(baseCourse.instructor?._id);
+        const sameTag = String(course.tag?._id) === String(baseCourse.tag?._id);
+        const matchScore = [sameTag, sharedCategories.length > 0, sameInstructor].filter(Boolean).length;
+
+        return {
+          ...course.toObject(),
+          isSameInstructor: sameInstructor,
+          isSameTag: sameTag,
+          sharedCategories,
+          matchScore,
+          priceDelta: Number(course.price || 0) - Number(baseCourse.price || 0),
+        };
+      })
+      .filter((course) => course.matchScore > 0)
+      .sort((left, right) => {
+        if (right.matchScore !== left.matchScore) {
+          return right.matchScore - left.matchScore;
+        }
+        return Number(left.price || 0) - Number(right.price || 0);
+      })
+      .slice(0, 6);
+
+    return res.status(200).json({
+      success: true,
+      message: "Similar courses fetched successfully",
+      data: {
+        baseCourse,
+        similarCourses: normalizedSimilarCourses,
+      },
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching similar courses",
+      error: e.message,
+    });
+  }
+};
 exports.changeMode = async (req, res) => {
   try {
     const { courseId , mode } = req.body;
