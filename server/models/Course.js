@@ -38,13 +38,13 @@ const coursesSchema = new mongoose.Schema({
 	},
 	tag: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref : "Tag" , 
+		ref: "Tag",
 	},
 	category: {
 		type: [String]
 	},
 	studentsEnrolled: {
-		type : [
+		type: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
 				// required: true,
@@ -55,16 +55,20 @@ const coursesSchema = new mongoose.Schema({
 	instructions: {
 		type: [String],
 	},
-	benefitOfCourse : {
-		type : String , 
-		required : true , 
-	}, 
+	benefitOfCourse: {
+		type: String,
+		required: true,
+	},
 	status: {
 		type: String,
-		default : "Private" , 
+		default: "Private",
 		enum: ["Private", "Public"],
 	},
-} , {timestamps : true});
+}, { timestamps: true });
+
+coursesSchema.index({ tag: 1, status: 1 });
+coursesSchema.index({ category: 1, status: 1 });
+coursesSchema.index({ instructor: 1, status: 1 });
 
 // Export the Courses model
 module.exports = mongoose.model("Course", coursesSchema);
