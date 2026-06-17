@@ -3,6 +3,7 @@ const { auth, isInstructor, isAdmin, isStudent, isDemo } = require('../middlewar
 const { createCourse, getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails, buy, getEnrolledCourse, getAllInstructorCourse, getSimilarCourses } = require('../controllers/Course.controller');
 const { createSection, updateSection, deleteSection } = require('../controllers/section.controller');
 const { updateSubsection, deleteSubsection, createSubSection, markedSubSection, getwatchedSubSection } = require('../controllers/Subsection.controller');
+const certificateRouter = require('./Certificate.router');
 const { createTag, showAllTags, tagsPageDetails } = require('../controllers/tags.controller');
 const { createRatingAndReview, getAvarageRating, getAllRatingAndReviews } = require('../controllers/RatingAndReview.controller');
 const router = express.Router();
@@ -48,6 +49,9 @@ router.put('/markWatched/:subSectionId', auth, isStudent, markedSubSection)
 router.get('/getCourseProgress', auth, isStudent, getwatchedSubSection);
 // http://localhost:4000/api/v1/course/getCourseProgress
 router.get('/getInstructorCourses', auth, isInstructor, getAllInstructorCourse);
+
+// Certificate routes
+router.use('/certificates', certificateRouter);
 
 // http://localhost:4000/api/v1/course/getInstructorCourses
 

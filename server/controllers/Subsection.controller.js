@@ -3,6 +3,8 @@ const Course = require("../models/Course");
 const CourseProgress = require("../models/CourseProgress");
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
+const Certificate = require("../models/Certificate");
+const User = require("../models/User");
 const { cloudinaryImageUploader } = require("../utils/imageUploader");
 
 const CONTENT_TYPES = ["VIDEO", "TEXT_NOTE", "QUIZ_ASSESSMENT"];
@@ -319,10 +321,47 @@ exports.markedSubSection = async function (req, res) {
         }
       );
       if (updatedProgress) {
+        // Check if course is 100% complete
+        const allSections = await Section.find({ _id: { $in: course.courseContent } });
+        const allSubSectionIds = [];
+
+        for (const section of allSections) {
+          allSubSectionIds.push(...section.subSection);
+        }
+
+        const completedCount = updatedProgress.completedVideos.length;
+        const totalCount = allSubSectionIds.length;
+        const isComplete = completedCount === totalCount && totalCount > 0;
+
+        // Auto-generate certificate if course is complete
+        if (isComplete) {
+          const existingCert = await Certificate.findOne({
+            studentId: userObjectId,
+            courseId: courseObjectId,
+          });
+
+          if (!existingCert) {
+            const student = await User.findById(userId);
+            const instructor = await User.findById(course.instructor);
+
+            const certificate = new Certificate({
+              studentId: userObjectId,
+              courseId: courseObjectId,
+              studentName: `${student.firstName} ${student.lastName}`,
+              courseName: course.courseName,
+              instructorName: `${instructor.firstName} ${instructor.lastName}`,
+              platformName: "ScholarBay",
+            });
+
+            await certificate.save();
+          }
+        }
+
         res.status(200).json({
           success: true,
           message: "Lesson marked as completed successfully.",
           data: updatedProgress.completedVideos,
+          isComplete,
         });
       } else {
         res.status(404).json({

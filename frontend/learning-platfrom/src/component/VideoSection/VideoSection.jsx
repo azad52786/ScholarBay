@@ -8,6 +8,7 @@ import Mainvideo from './Mainvideo';
 import "video-react/dist/video-react.css"
 import toast from 'react-hot-toast';
 import Markdown from 'react-markdown';
+import CourseCompletedModal from './CourseCompletedModal';
 
 const ReadingPane = ({ lesson }) => {
   const markdownContent = lesson?.markdownContent || lesson?.description || "";
@@ -233,6 +234,8 @@ const VideoSection = ({ setShowVideoSlider, courseProgress, setCourseProgress })
   const [videoEnd, setVideoEnd] = useState(false);
   const { courseName, thumbnail } = courseEntireData || {};
   const [noLec, setNoLec] = useState(false);
+  const [showCompleteModal, setShowCompleteModal] = useState(false);
+  const [certificateData, setCertificateData] = useState(null);
 
   // fetch the video
   useEffect(() => {
@@ -284,6 +287,18 @@ const VideoSection = ({ setShowVideoSlider, courseProgress, setCourseProgress })
         if (res.data.success) {
           setCourseProgress(res.data.data)
           //  dispatch(updateCompletedLecture(videoData._id))
+          if (res.data.isComplete) {
+            // fetch or create certificate
+            try {
+              const certRes = await Apiconnection('post', `${COURSE_API.COURSE_DETAILS}/certificates/create`, null, { Authorization: `Bearer ${token}` }, { courseId });
+              if (certRes.data?.success) {
+                setCertificateData(certRes.data.certificate);
+                setShowCompleteModal(true);
+              }
+            } catch (e) {
+              console.error('Certificate create/fetch failed', e);
+            }
+          }
         } else {
           throw new Error("SomeThing Went Wrong");
         }
