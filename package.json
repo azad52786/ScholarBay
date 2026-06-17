@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "markdown-to-jsx": "^9.8.1",
-    "react-markdown": "^9.1.0",
-    "remark-gfm": "^4.0.1"
-  }
-}

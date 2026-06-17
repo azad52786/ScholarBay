@@ -3,98 +3,20 @@ const Course = require("../models/Course");
 const CourseProgress = require("../models/CourseProgress");
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
-const Certificate = require("../models/Certificate");
-const User = require("../models/User");
 const { cloudinaryImageUploader } = require("../utils/imageUploader");
-
-const CONTENT_TYPES = ["VIDEO", "TEXT_NOTE", "QUIZ_ASSESSMENT"];
-
-const normalizeContentType = (contentType) => {
-  if (CONTENT_TYPES.includes(contentType)) {
-    return contentType;
-  }
-
-  return "VIDEO";
-};
-
-const parseQuizData = (quizData) => {
-  if (!quizData) {
-    return [];
-  }
-
-  if (Array.isArray(quizData)) {
-    return quizData;
-  }
-
-  if (typeof quizData === "string") {
-    try {
-      const parsedQuiz = JSON.parse(quizData);
-      return Array.isArray(parsedQuiz) ? parsedQuiz : [];
-    } catch (error) {
-      return [];
-    }
-  }
-
-  return [];
-};
-
-const buildSubSectionPayload = (body, videoUpload, existingSubSection = null) => {
-  const contentType = normalizeContentType(body.contentType || existingSubSection?.contentType);
-  const quizData = parseQuizData(body.quizData);
-  const payload = {
-    title: body.title,
-    hours: body.hours,
-    minutes: body.minutes,
-    description: body.description,
-    contentType,
-    markdownContent: body.markdownContent,
-    quizData,
-    videoMeta: body.videoMeta ? body.videoMeta : existingSubSection?.videoMeta,
-  };
-
-  if (contentType === "VIDEO") {
-    payload.videoUrl = videoUpload || body.video || existingSubSection?.videoUrl;
-    payload.videoMeta = videoUpload
-      ? {
-        provider: "cloudinary",
-        publicId: videoUpload.public_id,
-        secureUrl: videoUpload.secure_url,
-      }
-      : existingSubSection?.videoMeta;
-    payload.markdownContent = undefined;
-    payload.quizData = [];
-  }
-
-  if (contentType === "TEXT_NOTE") {
-    payload.videoUrl = undefined;
-    payload.quizData = [];
-    payload.hours = undefined;
-    payload.minutes = undefined;
-  }
-
-  if (contentType === "QUIZ_ASSESSMENT") {
-    payload.videoUrl = undefined;
-    payload.markdownContent = undefined;
-    payload.hours = undefined;
-    payload.minutes = undefined;
-  }
-
-  return payload;
-};
 
 exports.createSubSection = async (req, res) => {
   try {
     const { sectionId, title, hours, minutes, description, courseId } =
       req.body;
-    const video = req.files?.video;
-    const contentType = normalizeContentType(req.body.contentType);
-    const quizData = parseQuizData(req.body.quizData);
+    const video = req.files.video;
     if (
       !sectionId ||
       !title ||
-      (contentType === "VIDEO" && (!hours || !minutes || !description || !video)) ||
-      (contentType === "TEXT_NOTE" && !req.body.markdownContent) ||
-      (contentType === "QUIZ_ASSESSMENT" && quizData.length === 0) ||
+      !hours ||
+      !minutes ||
+      !description ||
+      !video ||
       !courseId
     ) {
       return res.status(400).json({
@@ -102,32 +24,16 @@ exports.createSubSection = async (req, res) => {
         message: "All fields are required",
       });
     }
-    let uplodedvideo;
-    if (contentType === "VIDEO") {
-      uplodedvideo = await cloudinaryImageUploader(
-        video,
-        process.env.FOLDER_NAME
-      );
-    }
-
+    const uplodedvideo = await cloudinaryImageUploader(
+      video,
+      process.env.FOLDER_NAME
+    );
     const newSubsection = await SubSection.create({
       title: title,
-      hours: contentType === "VIDEO" ? hours : undefined,
-      minutes: contentType === "VIDEO" ? minutes : undefined,
+      hours: hours,
+      minutes: minutes,
       description: description,
-      contentType,
-      videoUrl: contentType === "VIDEO" ? uplodedvideo.url : undefined,
-      videoMeta:
-        contentType === "VIDEO"
-          ? {
-            provider: "cloudinary",
-            publicId: uplodedvideo.public_id,
-            secureUrl: uplodedvideo.secure_url,
-          }
-          : undefined,
-      markdownContent:
-        contentType === "TEXT_NOTE" ? req.body.markdownContent : undefined,
-      quizData: contentType === "QUIZ_ASSESSMENT" ? quizData : [],
+      videoUrl: uplodedvideo.url,
     });
     const updatedSection = await Section.findByIdAndUpdate(
       { _id: sectionId },
@@ -168,14 +74,12 @@ exports.updateSubsection = async function (req, res) {
     const { courseId, title, hours, minutes, description, subSectionId } =
       req.body;
     const video = req.files?.video;
-    const contentType = normalizeContentType(req.body.contentType);
-    const quizData = parseQuizData(req.body.quizData);
     if (
       !courseId ||
       !title ||
-      (contentType === "VIDEO" && (!hours || !minutes || !description)) ||
-      (contentType === "TEXT_NOTE" && !req.body.markdownContent) ||
-      (contentType === "QUIZ_ASSESSMENT" && quizData.length === 0) ||
+      !hours ||
+      !minutes ||
+      !description ||
       !subSectionId
     ) {
       return res.status(400).json({
@@ -184,49 +88,31 @@ exports.updateSubsection = async function (req, res) {
       });
     }
     let uplodedvideo;
-    if (contentType === "VIDEO") {
-      if (video !== undefined) {
-        uplodedvideo = await cloudinaryImageUploader(
-          video,
-          process.env.FOLDER_NAME
-        );
-        uplodedvideo = uplodedvideo.url;
-      } else if (req.body.video) {
+    if (video !== undefined) {
+      uplodedvideo = await cloudinaryImageUploader(
+        video,
+        process.env.FOLDER_NAME
+      );
+      uplodedvideo = uplodedvideo.url;
+    } else {
+      if (!req.body.video) {
+        return res.status(401).json({
+          success: false,
+          message: "Video is required",
+        });
+      } else {
         uplodedvideo = req.body.video;
       }
     }
 
-    const existingSubSection = await SubSection.findById(subSectionId);
-    if (!existingSubSection) {
-      return res.status(404).json({
-        success: false,
-        message: "SubSection not found",
-      });
-    }
-
-    const payload = buildSubSectionPayload(
-      req.body,
-      uplodedvideo,
-      existingSubSection
-    );
-
-    const UNSET_BY_TYPE = {
-      VIDEO: ["markdownContent", "quizData"],
-      TEXT_NOTE: ["videoUrl", "videoMeta", "quizData", "hours", "minutes"],
-      QUIZ_ASSESSMENT: ["videoUrl", "videoMeta", "markdownContent", "hours", "minutes"],
-    };
-
-    // Filter out any field already present in $set (payload)
-    // MongoDB throws a conflict error if the same path appears in both $set and $unset
-    const fieldsToUnset = (UNSET_BY_TYPE[payload.contentType] || [])
-      .filter((field) => !(field in payload))
-      .reduce((acc, field) => ({ ...acc, [field]: "" }), {});
-
     const updatedSubSection = await SubSection.findByIdAndUpdate(
       { _id: subSectionId },
       {
-        $set: payload,
-        ...(Object.keys(fieldsToUnset).length > 0 ? { $unset: fieldsToUnset } : {}),
+        title: title,
+        minutes: minutes,
+        hours: hours,
+        description: description,
+        videoUrl: uplodedvideo,
       },
       { new: true }
     );
@@ -310,7 +196,7 @@ exports.markedSubSection = async function (req, res) {
 
     if (course.studentsEnrolled.includes(userObjectId)) {
       let updatedProgress = await CourseProgress.findOneAndUpdate(
-        { userId: userObjectId, courseId: courseObjectId },
+        { userId : userObjectId , courseId : courseObjectId},
         {
           $push: {
             completedVideos: new mongoose.Types.ObjectId(subSectionId),
@@ -321,54 +207,17 @@ exports.markedSubSection = async function (req, res) {
         }
       );
       if (updatedProgress) {
-        // Check if course is 100% complete
-        const allSections = await Section.find({ _id: { $in: course.courseContent } });
-        const allSubSectionIds = [];
-
-        for (const section of allSections) {
-          allSubSectionIds.push(...section.subSection);
-        }
-
-        const completedCount = updatedProgress.completedVideos.length;
-        const totalCount = allSubSectionIds.length;
-        const isComplete = completedCount === totalCount && totalCount > 0;
-
-        // Auto-generate certificate if course is complete
-        if (isComplete) {
-          const existingCert = await Certificate.findOne({
-            studentId: userObjectId,
-            courseId: courseObjectId,
-          });
-
-          if (!existingCert) {
-            const student = await User.findById(userId);
-            const instructor = await User.findById(course.instructor);
-
-            const certificate = new Certificate({
-              studentId: userObjectId,
-              courseId: courseObjectId,
-              studentName: `${student.firstName} ${student.lastName}`,
-              courseName: course.courseName,
-              instructorName: `${instructor.firstName} ${instructor.lastName}`,
-              platformName: "ScholarBay",
-            });
-
-            await certificate.save();
-          }
-        }
-
-        res.status(200).json({
-          success: true,
-          message: "Lesson marked as completed successfully.",
-          data: updatedProgress.completedVideos,
-          isComplete,
-        });
-      } else {
-        res.status(404).json({
-          success: false,
-          message: "Progress record not found for the given user and course.",
-        });
-      }
+    res.status(200).json({
+      success: true,
+      message: "Video marked as completed successfully.",
+      data: updatedProgress.completedVideos,
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: "Progress record not found for the given user and course.",
+    });
+  }
     } else {
       return res.status(401).json({
         success: false,
@@ -385,12 +234,12 @@ exports.markedSubSection = async function (req, res) {
 };
 
 
-exports.getwatchedSubSection = async (req, res) => {
-  try {
+exports.getwatchedSubSection = async (req , res) => {
+  try{
     let userId = req.user.id;
     let { courseId } = req.query;
-    console.log(userId, courseId);
-    if (!userId || !courseId) {
+    console.log(userId , courseId);
+    if(!userId || !courseId){
       return res.status(501).json({
         success: false,
         message: "Please Give All The Fields!!",
@@ -398,26 +247,26 @@ exports.getwatchedSubSection = async (req, res) => {
     }
     let courseObjectId = new mongoose.Types.ObjectId(courseId);
     let userObjectId = new mongoose.Types.ObjectId(userId);
-
-    let progress = await CourseProgress.findOne({ courseId: courseObjectId, userId: userObjectId });
-    if (!progress) {
+    
+    let progress = await CourseProgress.findOne({ courseId: courseObjectId , userId: userObjectId });
+    if(!progress){
       return res.status(404).json({
         success: false,
         message: "Progress record not found for the given user and course.",
       });
-    }
-    res.status(200).json({
-      success: true,
-      message: "This is your progress record",
-      data: progress.completedVideos,
-    });
-
-  } catch (e) {
+    }  
+      res.status(200).json({
+        success: true,
+        message: "This is your progress record",
+        data: progress.completedVideos,
+      });
+    
+  }catch(e){
     console.log(e);
     return res.status(501).json({
-      success: false,
-      error: e.message,
-      message: "Internal Server Error "
+      success : false , 
+      error : e.message , 
+      message : "Internal Server Error "
     })
   }
 }
