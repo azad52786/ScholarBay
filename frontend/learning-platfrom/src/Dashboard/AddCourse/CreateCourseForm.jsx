@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorMessageComponent from "./ErrorMessageComponent";
@@ -11,7 +11,7 @@ import { RxCross2 } from "react-icons/rx";
 import ThumbnailSection from "./ThumbnailSection";
 import { createCourse, updateCourseDetails } from "../../service/operations/CourseBackendConnection";
 import { FaArrowAltCircleRight } from "react-icons/fa";
-import { setCourseDetails, setEditCourseDetails, setStep } from "../../Store/Slices/CreateCourseSlice";
+import { setStep } from "../../Store/Slices/CreateCourseSlice";
 
 const CreateCourseForm = () => {
   const { editCourseDetails, courseDetails } = useSelector(
@@ -24,7 +24,6 @@ const CreateCourseForm = () => {
   const [instruction, setInstruction] = useState("");
   const [currCategory, setCurrCategory] = useState("");
   const [previewFile, setPreviewFile] = useState(null);
-  const tagRef = useRef("");
   const dispatch = useDispatch()
   const {
     register,
@@ -46,14 +45,12 @@ const CreateCourseForm = () => {
       thumbnailImage: ""
     }
   });
-  let isMounted = false;
-
-  async function fetchAllTags() {
+  async function fetchAllTags(isMounted) {
     try {
       const result = await Apiconnection("get", COURSE_API.GET_ALL_TAGS);
-     if(isMounted) setTags(result.data.tags);
+     if(isMounted()) setTags(result.data.tags);
     } catch (e) {
-      if(isMounted) toast.error("Error occur while fetching tags");
+      if(isMounted()) toast.error("Error occur while fetching tags");
     }
   }
 
@@ -130,7 +127,7 @@ function resetAllData() {
   };
 
   useEffect(() => {
-    isMounted = true;
+    let isMounted = true;
     register("category", { required: "This Field is Required" });
     register("instructions", { required: "This Field is Required" });
 
@@ -147,11 +144,11 @@ function resetAllData() {
       setCatagoryArray(courseDetails.category);
       setInstructionsArray(courseDetails.instructions);
     }
-    fetchAllTags();
+    fetchAllTags(() => isMounted);
     return () => {
       isMounted = false;
     }
-  }, []);
+  }, [courseDetails, editCourseDetails, register, setValue]);
   return (
     <div className=" h-full w-full mt-6 font-edu-sa">
       <form

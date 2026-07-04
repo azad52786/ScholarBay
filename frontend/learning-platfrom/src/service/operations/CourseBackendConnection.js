@@ -1,5 +1,4 @@
 import toast from "react-hot-toast";
-import { setLoader } from "../../Store/Slices/AuthSlice";
 import { COURSE_API, INSTRUCTOR_DASHBOARD_API } from "../Api";
 import Apiconnection from "../Apiconnection";
 import { setCourseDetails, setStep } from "../../Store/Slices/CreateCourseSlice";

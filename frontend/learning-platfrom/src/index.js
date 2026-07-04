@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
@@ -22,7 +22,7 @@ import CatalogsHome from "./catalogs/CatalogsHome";
 import DashBoard from "./pages/DashBoard";
 import MyProfile from "./Dashboard/MyProfile";
 import Main from "./Dashboard/settings/Main";
-import Enrolled_Main from "./Dashboard/Enrolled_Cources/Enrolled_Main";
+import EnrolledMain from "./Dashboard/Enrolled_Cources/Enrolled_Main";
 import AddCourse from "./Dashboard/AddCourse/index";
 import MyCourseHome from "./Dashboard/MyCourseSection/MyCourseHome";
 import CoursePage from "./pages/CoursePage";
@@ -147,7 +147,7 @@ const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <StudentRoute>
-                  <Enrolled_Main />
+                  <EnrolledMain />
                 </StudentRoute>
               </ProtectedRoute>
             ),

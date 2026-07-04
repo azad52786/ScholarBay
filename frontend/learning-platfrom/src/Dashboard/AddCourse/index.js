@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { CourseCreationData } from "../../utils/constants";
 import { courseUploadTips } from "../../utils/constants";
 import CreateCourseForm from "./CreateCourseForm";
@@ -10,7 +10,6 @@ import PublishHome from "../PublishSection/PublishHome";
 export default function AddCourse(){
     const { step , editCourseDetails } = useSelector((store) => store.CourseData);
     const dispatch = useDispatch();
-    let formRef = useRef(null);
     
     useEffect(() => {
 
@@ -23,7 +22,7 @@ export default function AddCourse(){
             dispatch(setEditCourseDetails(false))
             dispatch(setStep(1));
         }
-    }, [])
+    }, [dispatch])
     
     return (
         <div className="w-full  h-full flex md:flex-row flex-col-reverse  gap-5 mt-6 ">

@@ -2,17 +2,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getUserAllCources } from "../../service/operations/BackendConnection";
 import CourseCard from "./CourseCard";
-import MainUi from "./MainUi";
-import { Link, useLocation } from "react-router-dom";
-import { getPathArray } from "../../utils/constants";
-import FileDetails from "../FileDetails";
+import { Link } from "react-router-dom";
 import Loading from "../../catalogs/Loading";
 import HighlitedText from "../../component/core/Homepage/HighlitedText";
 
 const Enrolled_Main = () => {
   const [enrolledCourses, setEnrolledCourses] = useState(null);
   const { token } = useSelector((store) => store.Auth);
-  const { pathname } = useLocation();
 
   const getAllenrollcourses = useCallback(async () => {
     const data = await getUserAllCources(token);

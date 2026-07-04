@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import logo from "../../assets/Logo/Logo-Full-Light.png";
 import logo1 from "../../assets/Images/logo1.jpg";
 import { NavbarLinks } from "../../data/navbar-links.js";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MdOutlineSearch } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
 import { TiShoppingCart } from "react-icons/ti";
 import { FaChevronDown } from "react-icons/fa";
 import Apiconnection from "../../service/Apiconnection.js";
-import { COURSE_API, PROFILE_API } from "../../service/Api.js";
+import { COURSE_API } from "../../service/Api.js";
 import { logout } from "../../service/operations/BackendConnection.js";
 import { CgMenuRightAlt } from "react-icons/cg";
 import MobileMenuSection from "./MobileMenuSection.jsx";
@@ -25,13 +23,6 @@ const Navbar = () => {
 
   const [tags, setTags] = useState(null);
   const [showMenuSlider, setShowMenuSlider] = useState(true);
-  const getUserDetails = async () => {
-    try {
-      const res = await Apiconnection("GET", PROFILE_API.GET_USER_DATA);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   const fetchTagsLink = async () => {
     try {
       const result = await Apiconnection("get", COURSE_API.GET_ALL_TAGS);
@@ -77,8 +68,14 @@ const Navbar = () => {
         </div>
 
         <nav className=" gap-10  text-richblack-300 hidden lg:flex">
-          {NavbarLinks.map((element, index) =>
-            element.title === "Catalog" ? (
+          {NavbarLinks.map((element, index) => {
+            if (
+              element.title === "Catalog" &&
+              user?.accountType === "Instructor"
+            ) {
+              return null;
+            }
+            return element.title === "Catalog" ? (
               <div
                 className="relative flex flex-row gap-2 items-center cursor-pointer hover:text-richblack-50 group"
                 key={index}
@@ -133,7 +130,7 @@ const Navbar = () => {
                 {element.title}
               </NavLink>
             )
-          )}
+          })}
         </nav>
         {!token && (
           <div className=" hidden  lg:flex flex-row md:gap-2 gap-2 lg:gap-3 font-inter text-richblack-100">
@@ -152,7 +149,7 @@ const Navbar = () => {
         {token && (
           <div className="flex flex-row gap-4 items-center text-richblack-5 relative">
             <MdOutlineSearch className=" hidden lg:block h-10 w-8  cursor-pointer" />
-            {
+            {user?.accountType !== "Instructor" &&
               <div
                 className=" hidden lg:block relative ml-20 lg:ml-0 cursor-pointer"
                 onClick={() => navigate("/cart")}
@@ -197,18 +194,18 @@ const Navbar = () => {
         )}
 
         <div className=" flex gap-3 justify-center items-center lg:hidden ">
-        {
-        token && 
-          <div
-            className=" lg:hidden relative ml-20 lg:ml-0 cursor-pointer"
-            onClick={() => navigate("/cart")}
-          >
-            <div className="  text-sm absolute right-[-6px] text-richblack-700 font-edu-sa font-bold rounded-full w-5 h-5 top-[-6px] text-center bg-[#4be667]">
-              {totalItems}
+          {
+            token &&
+            <div
+              className=" lg:hidden relative ml-20 lg:ml-0 cursor-pointer"
+              onClick={() => navigate("/cart")}
+            >
+              <div className="  text-sm absolute right-[-6px] text-richblack-700 font-edu-sa font-bold rounded-full w-5 h-5 top-[-6px] text-center bg-[#4be667]">
+                {totalItems}
+              </div>
+              <TiShoppingCart className=" h-10 w-8" />
             </div>
-            <TiShoppingCart className=" h-10 w-8" />
-          </div>
-        }
+          }
           <CgMenuRightAlt
             className=" w-8 h-8 cursor-pointer"
             onClick={() => setShowMenuSlider((pre) => !pre)}

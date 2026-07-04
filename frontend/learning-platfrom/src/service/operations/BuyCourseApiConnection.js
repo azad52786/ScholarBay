@@ -1,23 +1,8 @@
 import { toast } from "react-hot-toast";
 import Apiconnection from "../Apiconnection";
 import { PAYMENT_API } from "../Api";
-import rzpLogo from "../../assets/Images/rzp_logo.png";
 import { load } from "@cashfreepayments/cashfree-js";
 import { deleteItem, resetCart } from "../../Store/Slices/CartSlice";
-const loadScript = async (src) => {
-  let script = document.createElement("script");
-  script.src = src;
-  return new Promise((resolve) => {
-    script.onload = () => {
-      resolve(true);
-    };
-
-    script.onerror = () => {
-      resolve(true);
-    };
-    document.body.appendChild(script);
-  });
-};
 
 export const buyCourse = async (
   token,
@@ -71,7 +56,7 @@ export const buyCourse = async (
             if(result.paymentDetails){
                 // This will be called whenever the payment is completed irrespective of transaction status
                 console.log("Payment has been completed, Check for Payment Status");
-                let data = await paymentVerificationHandler( { order_id , courses} , token , isBuyOne , navigate , dispatch);
+                await paymentVerificationHandler( { order_id , courses} , token , isBuyOne , navigate , dispatch);
                 
             }
         });
@@ -79,27 +64,6 @@ export const buyCourse = async (
   } catch (e) {
     console.log("error : ", e);
     toast.error(e.response?.data?.message);
-  }
-};
-
-const sendSuccessfulPaymentEmail = async (orderData, token) => {
-  try {
-    const response = await Apiconnection(
-      "post",
-      PAYMENT_API.SUCCESSFUL_PAYMENT_MAIL,
-      orderData,
-      {
-        Authorization: `Bearer ${token}`,
-      }
-    );
-    if (!response.data.success) {
-      toast.error("Failed to send payment confirmation email");
-      throw new Error("Failed to send payment confirmation email");
-    }
-    
-  } catch (e) {
-    console.log(e);
-    toast.error("Failed to send payment confirmation email");
   }
 };
 

@@ -32,7 +32,7 @@ const cartSlice = createSlice({
         deleteItem : (state , action ) => {
             let courseId = action.payload ;
             let index = state.cartItems.findIndex((item) => item._id === courseId);
-            if(index != -1){
+            if(index !== -1){
             let courseArray = current(state.cartItems);
             let price = courseArray[index]?.price;
             state.cartItems.splice(index , 1);
