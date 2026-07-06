@@ -18,7 +18,7 @@ const SubSectionCard = ({ index , subSection , section_id , courseProgress }) =>
       `}
     >
       <div className=" w-[15%]">
-        {(courseProgress.includes(subSection._id)) && <TiTick className=" w-9 h-10 mb-1 text-[#14e822]
+        {(courseProgress?.completedLessons?.some((lesson) => lesson.subSectionId === subSection._id)) && <TiTick className=" w-9 h-10 mb-1 text-[#14e822]
         " />}
       </div>
       <div>

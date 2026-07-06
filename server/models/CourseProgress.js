@@ -1,20 +1,39 @@
 const mongoose = require("mongoose");
 
-const courseProgress = new mongoose.Schema({
-	userId : {
-		type : mongoose.Schema.Types.ObjectId , 
-		ref : "User"
-	} , 
-	courseId: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Course",
-	},
-	completedVideos: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "SubSection",
-		},
-	],
-});
+const lessonCompletionSchema = new mongoose.Schema(
+  {
+    subSectionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "SubSection",
+      required: true,
+    },
+    completed: {
+      type: Boolean,
+      default: true,
+    },
+    completedAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { _id: false }
+);
 
-module.exports = mongoose.model("CourseProgress", courseProgress);
+const courseProgressSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
+      required: true,
+    },
+    completedLessons: [lessonCompletionSchema],
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("CourseProgress", courseProgressSchema);

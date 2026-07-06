@@ -2,7 +2,12 @@ const { default: mongoose } = require("mongoose");
 const Course = require("../models/Course");
 const User = require("../models/User");
 const Tag = require("../models/Tags");
+const CourseProgress = require("../models/CourseProgress");
+const Certificate = require("../models/Certificate");
 const { cloudinaryImageUploader } = require("../utils/imageUploader");
+const { createCertificatePDF } = require("../utils/certificateGenerator");
+const mailSender = require("../utils/mailSend");
+const path = require("path");
 
 exports.createCourse = async (req, res) => {
   try {
@@ -461,6 +466,144 @@ exports.getEnrolledCourse = async(req , res) => {
 }
 
 
+
+exports.toggleCertificatePublishing = async (req, res) => {
+  try {
+    const { courseId, publish } = req.body;
+    const instructorId = req.user.id;
+
+    if (!courseId) {
+      return res.status(400).json({ success: false, message: "Course ID is required" });
+    }
+
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ success: false, message: "Course not found" });
+    }
+
+    if (course.instructor.toString() !== instructorId) {
+      return res.status(403).json({ success: false, message: "Only the instructor can publish or unpublish this certificate" });
+    }
+
+    course.certificatePublished = publish === true;
+    course.publishedAt = publish === true ? new Date() : null;
+    await course.save();
+
+    return res.status(200).json({
+      success: true,
+      message: publish ? "Certificate published successfully" : "Certificate unpublished successfully",
+      data: course,
+    });
+  } catch (e) {
+    return res.status(500).json({ success: false, message: "Failed to update certificate publishing", error: e.message });
+  }
+};
+
+exports.getCertificateEligibility = async (req, res) => {
+  try {
+    const { courseId } = req.query;
+    const userId = req.user.id;
+
+    if (!courseId) {
+      return res.status(400).json({ success: false, message: "Course ID is required" });
+    }
+
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ success: false, message: "Course not found" });
+    }
+
+    const progress = await CourseProgress.findOne({ userId, courseId });
+    const completedCount = progress?.completedLessons?.filter((lesson) => lesson.completed).length || 0;
+    const totalLessons = course.totalLessons || 0;
+    const percentage = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+    const isEligible = percentage === 100 && course.certificatePublished;
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        completedCount,
+        totalLessons,
+        percentage,
+        certificatePublished: course.certificatePublished,
+        isEligible,
+        message: isEligible ? "Certificate is ready to download" : course.certificatePublished ? "Complete all lessons to unlock the certificate" : "The instructor has not published the certificate yet",
+      },
+    });
+  } catch (e) {
+    return res.status(500).json({ success: false, message: "Failed to fetch eligibility", error: e.message });
+  }
+};
+
+exports.generateCertificate = async (req, res) => {
+  try {
+    const { courseId } = req.body;
+    const userId = req.user.id;
+
+    if (!courseId) {
+      return res.status(400).json({ success: false, message: "Course ID is required" });
+    }
+
+    const course = await Course.findById(courseId).populate("instructor");
+    if (!course) {
+      return res.status(404).json({ success: false, message: "Course not found" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    const progress = await CourseProgress.findOne({ userId, courseId });
+    const completedCount = progress?.completedLessons?.filter((lesson) => lesson.completed).length || 0;
+    const totalLessons = course.totalLessons || 0;
+    const percentage = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+
+    if (percentage !== 100 || !course.certificatePublished) {
+      return res.status(403).json({ success: false, message: "Certificate is not available yet" });
+    }
+
+    const existingCertificate = await Certificate.findOne({ studentId: userId, courseId });
+    if (existingCertificate) {
+      const fs = require("fs");
+      const pdfPath = path.join(__dirname, "..", "uploads", existingCertificate.fileName || "");
+      if (fs.existsSync(pdfPath)) {
+        return res.download(pdfPath, existingCertificate.fileName);
+      }
+    }
+
+    const certificateId = `CERT-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+    const completionDate = new Date().toLocaleDateString();
+    const logoPath = path.join(__dirname, "..", "..", "frontend", "learning-platfrom", "public", "Screenshot 2024-11-11 094719.png");
+    const { filePath, fileName } = await createCertificatePDF({
+      studentName: `${user.firstName || "Student"} ${user.lastName || ""}`.trim(),
+      courseName: course.courseName,
+      instructorName: `${course.instructor?.firstName || "Instructor"} ${course.instructor?.lastName || ""}`.trim(),
+      completionDate,
+      certificateId,
+      companyName: "ScholarBay",
+      logoPath,
+    });
+
+    await Certificate.create({
+      certificateId,
+      studentId: userId,
+      courseId,
+      fileName,
+    });
+
+    await mailSender(
+      user.email,
+      "Congratulations! Your Course Completion Certificate",
+      `<p>Congratulations!</p><p>You have successfully completed the course. Your completion certificate is attached to this email.</p><p>Thank you for learning with us.</p>`,
+      [{ filename: fileName, path: filePath }]
+    );
+
+    return res.download(filePath, fileName);
+  } catch (e) {
+    return res.status(500).json({ success: false, message: "Failed to generate certificate", error: e.message });
+  }
+};
 
 exports.getAllInstructorCourse = async(req , res) => {
   try{

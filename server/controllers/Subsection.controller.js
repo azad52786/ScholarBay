@@ -5,6 +5,17 @@ const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
 const { cloudinaryImageUploader } = require("../utils/imageUploader");
 
+const getOrCreateProgress = async (userId, courseId) => {
+  let userObjectId = new mongoose.Types.ObjectId(userId);
+  let courseObjectId = new mongoose.Types.ObjectId(courseId);
+
+  let progress = await CourseProgress.findOne({ userId: userObjectId, courseId: courseObjectId });
+  if (!progress) {
+    progress = await CourseProgress.create({ userId: userObjectId, courseId: courseObjectId, completedLessons: [] });
+  }
+  return progress;
+};
+
 exports.createSubSection = async (req, res) => {
   try {
     const { sectionId, title, hours, minutes, description, courseId } =
@@ -46,6 +57,11 @@ exports.createSubSection = async (req, res) => {
     )
       .populate("subSection")
       .exec();
+    const courseToUpdate = await Course.findById(courseId);
+    if (courseToUpdate) {
+      courseToUpdate.totalLessons = (courseToUpdate.totalLessons || 0) + 1;
+      await courseToUpdate.save();
+    }
     const updatedCourse = await Course.findById(courseId).populate({
       path: "courseContent",
       populate: {

@@ -316,3 +316,56 @@ export const getWatchedSection = async (courseId , token) => {
     }
     return [];
 }
+
+export const publishCertificate = async (courseId, token) => {
+    try {
+        const res = await Apiconnection("post", COURSE_API.PUBLISH_CERTIFICATE, { courseId, publish: true }, { Authorization: `Bearer ${token}` });
+        return res.data;
+    } catch (e) {
+        console.log(e);
+        toast.error(e?.response?.data?.message || "Failed to publish certificate");
+        return null;
+    }
+};
+
+export const unpublishCertificate = async (courseId, token) => {
+    try {
+        const res = await Apiconnection("post", COURSE_API.PUBLISH_CERTIFICATE, { courseId, publish: false }, { Authorization: `Bearer ${token}` });
+        return res.data;
+    } catch (e) {
+        console.log(e);
+        toast.error(e?.response?.data?.message || "Failed to unpublish certificate");
+        return null;
+    }
+};
+
+export const getCertificateEligibility = async (courseId, token) => {
+    try {
+        const res = await Apiconnection("get", COURSE_API.GET_CERTIFICATE_ELIGIBILITY, null, { Authorization: `Bearer ${token}` }, { courseId });
+        return res.data.data;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+};
+
+export const downloadCertificate = async (courseId, token) => {
+    try {
+        const res = await Apiconnection("post", COURSE_API.GENERATE_CERTIFICATE, { courseId }, { Authorization: `Bearer ${token}` });
+        const blob = new Blob([res.data], { type: "application/pdf" });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `certificate-${courseId}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+        toast.success("Certificate downloaded and emailed successfully");
+        return true;
+    } catch (e) {
+        console.log(e);
+        toast.error(e?.response?.data?.message || "Unable to download certificate");
+        return false;
+    }
+};

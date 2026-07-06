@@ -17,7 +17,7 @@ const VideoPage = () => {
   const [reviewModal, setReviewModal] = useState(false);
   const [showVideoSlider, setShowVideoSlider] = useState(true);
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const [ courseProgress , setCourseProgress] = useState([]);
+  const [courseProgress, setCourseProgress] = useState({ completedLessons: [], completedCount: 0, totalLessons: 0, percentage: 0 });
   useEffect(() => {
     (async () => {
       
@@ -25,7 +25,7 @@ const VideoPage = () => {
         getEnrolledCourse(courseId, token) , 
         getWatchedSection(courseId, token)
       ])
-      setCourseProgress(watchedSubSection);
+      setCourseProgress(watchedSubSection || { completedLessons: [], completedCount: 0, totalLessons: 0, percentage: 0 });
       dispatch(setCourseEntireData(courseData));
       dispatch(setCourseSectionData(courseData.courseContent));
     })();

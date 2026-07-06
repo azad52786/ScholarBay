@@ -63,7 +63,8 @@ const VideoSection = ({ setShowVideoSlider , courseProgress , setCourseProgress 
   const goToNextHandeler = async() => {
   console.log(videoData)
     if(!videoData) return ;
-    if(!courseProgress.includes(videoData._id)){
+    const isCompleted = courseProgress?.completedLessons?.some((lesson) => lesson.subSectionId === videoData._id);
+    if(!isCompleted){
         try{
           const res = await Apiconnection('put' , COURSE_API.MARKED_SUBSECTION + '/' + videoData?._id , null , {
              Authorization : `Bearer ${token}`
@@ -72,7 +73,6 @@ const VideoSection = ({ setShowVideoSlider , courseProgress , setCourseProgress 
           })
           if(res.data.success){
              setCourseProgress(res.data.data)
-            //  dispatch(updateCompletedLecture(videoData._id))
           }else{
             throw new Error("SomeThing Went Wrong");
           }
@@ -144,7 +144,7 @@ const VideoSection = ({ setShowVideoSlider , courseProgress , setCourseProgress 
                className='  py-1 px-2 md:py-2 md:px-3 mr-2  bg-yellow-100 text-richblue-800 border-b-2 border-r border-white rounded-md md:text-lg md:font-semibold'
                
                onClick={goToNextHandeler}
-             >{courseProgress.includes(videoData?._id) ? "Next" : "Mark And Next"}</button>
+             >{courseProgress?.completedLessons?.some((lesson) => lesson.subSectionId === videoData?._id) ? "Next" : "Mark And Next"}</button>
            }
          </div>
         }

@@ -32,7 +32,10 @@ export const COURSE_API = {
     ADD_RATING : `${BASE_URL + '/course/createRating'}` , 
     MARKED_SUBSECTION : `${BASE_URL + '/course/markWatched'}` , 
     GET_ALL_RATINGS_AND_REVIEW : `${BASE_URL + '/course/getReviews'}` , 
-    GET_PROGRESS : `${BASE_URL + '/course/getCourseProgress'}`
+    GET_PROGRESS : `${BASE_URL + '/course/getCourseProgress'}`,
+    PUBLISH_CERTIFICATE : `${BASE_URL + '/course/publishCertificate'}`,
+    GET_CERTIFICATE_ELIGIBILITY : `${BASE_URL + '/course/certificateEligibility'}`,
+    GENERATE_CERTIFICATE : `${BASE_URL + '/course/generateCertificate'}`
 }
 
 export const INSTRUCTOR_DASHBOARD_API = {

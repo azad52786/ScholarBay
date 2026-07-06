@@ -47,7 +47,6 @@ const coursesSchema = new mongoose.Schema({
 		type : [
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				// required: true,
 				ref: "User",
 			},
 		]
@@ -59,6 +58,18 @@ const coursesSchema = new mongoose.Schema({
 		type : String , 
 		required : true , 
 	}, 
+	totalLessons: {
+		type: Number,
+		default: 0,
+	},
+	certificatePublished: {
+		type: Boolean,
+		default: false,
+	},
+	publishedAt: {
+		type: Date,
+		default: null,
+	},
 	status: {
 		type: String,
 		default : "Private" , 

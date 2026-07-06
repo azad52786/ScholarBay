@@ -1,6 +1,6 @@
 const express = require('express');
 const { auth, isInstructor, isAdmin, isStudent, isDemo } = require('../middlewares/auth.middleware');
-const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails, buy, getEnrolledCourse, getAllInstructorCourse} = require('../controllers/Course.controller');
+const { createCourse , getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails, buy, getEnrolledCourse, getAllInstructorCourse, toggleCertificatePublishing, getCertificateEligibility, generateCertificate} = require('../controllers/Course.controller');
 const { createSection, updateSection, deleteSection } = require('../controllers/section.controller');
 const { updateSubsection, deleteSubsection, createSubSection, markedSubSection, getwatchedSubSection } = require('../controllers/Subsection.controller');
 const { createTag, showAllTags, tagsPageDetails } = require('../controllers/tags.controller');
@@ -45,6 +45,9 @@ router.get('/getErolledCourse' , auth , isStudent , getEnrolledCourse);
 router.put('/markWatched/:subSectionId' , auth , isDemo , isStudent , markedSubSection)
 router.get('/getCourseProgress' , auth , isStudent , getwatchedSubSection);
 // http://localhost:4000/api/v1/course/getCourseProgress
+router.post('/publishCertificate' , auth , isDemo , isInstructor , toggleCertificatePublishing);
+router.get('/certificateEligibility' , auth , isStudent , getCertificateEligibility);
+router.post('/generateCertificate' , auth , isDemo , isStudent , generateCertificate);
 router.get('/getInstructorCourses' , auth , isInstructor , getAllInstructorCourse);
 
 // http://localhost:4000/api/v1/course/getInstructorCourses
