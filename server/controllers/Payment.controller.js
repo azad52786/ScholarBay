@@ -9,6 +9,8 @@ const { paymentSuccessEmail } = require("../mails/paymentSuccessEmail");
 const Cashfree = require("../config/cashFree.js");
 const { response } = require("express");
 const CourseProgress = require("../models/CourseProgress.js");
+const InstructorEarning = require("../models/InstructorEarning");
+const EarningTransaction = require("../models/EarningTransaction");
 
 exports.verifySignature = async (req, res) => {
   try {
@@ -38,7 +40,7 @@ exports.verifySignature = async (req, res) => {
         );
         if (successfulOrder.length > 0) {
           // payment successful lets give him/her course
-          await enrollStudents(res, courses, userId);
+          await enrollStudents(res, courses, userId, order_id);
           // save the payment information in DB . But For now i'm just ignoring it
           let { payment_amount, order_id, cf_payment_id } = successfulOrder[0];
           await sendPaymentSuccessEmail(
@@ -87,7 +89,7 @@ exports.verifySignature = async (req, res) => {
   }
 };
 
-const enrollStudents = async (res, courses, userId) => {
+const enrollStudents = async (res, courses, userId, orderId) => {
   try {
     if (!courses || courses.length <= 0 || !userId) {
       return res.status(401).json({
@@ -128,14 +130,50 @@ const enrollStudents = async (res, courses, userId) => {
           courseId : new mongoose.Types.ObjectId(courseId),
         })
         await Progress.save();
-        const emailResponce = await mailSender(
-          enrollStudent.email,
-          `Successfully enrolled ${enrollCourse.courseName}`,
-          courseEnrollmentEmail(
-            enrollCourse.courseName,
-            enrollStudent.firstName
-          )
-        );
+
+        // 80/20 earnings split for instructor and platform
+        try {
+          const totalAmount = enrollCourse.price || 0;
+          const instructorShare = totalAmount * 0.80;
+          const platformShare = totalAmount * 0.20;
+
+          await InstructorEarning.findOneAndUpdate(
+            { instructorId: enrollCourse.instructor },
+            {
+              $inc: {
+                totalEarnings: instructorShare,
+                currentBalance: instructorShare
+              }
+            },
+            { upsert: true, new: true }
+          );
+
+          const transaction = new EarningTransaction({
+            courseId: enrollCourse._id,
+            studentId: userId,
+            instructorId: enrollCourse.instructor,
+            orderId: orderId || `ORDER-${Date.now()}`,
+            totalAmount,
+            instructorShare,
+            platformShare
+          });
+          await transaction.save();
+        } catch (earningsError) {
+          console.error("Error processing instructor earnings split:", earningsError);
+        }
+
+        try {
+          await mailSender(
+            enrollStudent.email,
+            `Successfully enrolled ${enrollCourse.courseName}`,
+            courseEnrollmentEmail(
+              enrollCourse.courseName,
+              enrollStudent.firstName
+            )
+          );
+        } catch (emailError) {
+          console.error("Error sending course enrollment email:", emailError);
+        }
       } catch (e) {
         return res.status(401).json({
           success: false,

@@ -35,6 +35,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import FinanceDashboard from "./Dashboard/Finance/FinanceDashboard";
 
 const router = createBrowserRouter([
   {
@@ -178,6 +179,16 @@ const router = createBrowserRouter([
               <ProtectedRoute>
                 <InstructorRoute>
                   <InstructorDashBoard />
+                </InstructorRoute>
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "/dashboard/default/finance",
+            element: (
+              <ProtectedRoute>
+                <InstructorRoute>
+                  <FinanceDashboard />
                 </InstructorRoute>
               </ProtectedRoute>
             ),

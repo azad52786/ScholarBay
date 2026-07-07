@@ -29,6 +29,13 @@ export const sidebarLinks = [
     icon: VscAdd,
   },
   {
+    id: 7,
+    name: "Earnings & Payouts",
+    path: "/dashboard/default/finance",
+    type: ACCOUNT_TYPE.INSTRUCTOR,
+    icon: VscHistory,
+  },
+  {
     id: 5,
     name: "Enrolled Courses",
     path: "/dashboard/default/enrolled-courses",

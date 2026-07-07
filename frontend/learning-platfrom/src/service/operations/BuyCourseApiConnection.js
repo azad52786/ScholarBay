@@ -3,6 +3,7 @@ import Apiconnection from "../Apiconnection";
 import { PAYMENT_API } from "../Api";
 import { load } from "@cashfreepayments/cashfree-js";
 import { removeFromCartDB, resetCartDB } from "./CartBackendConnection";
+import { setPaymentLoading } from "../../Store/Slices/AuthSlice";
 
 export const buyCourse = async (
   token,
@@ -60,8 +61,8 @@ export const buyCourse = async (
 };
 
 const paymentVerificationHandler = async (verificationData, token , isOneBuy , navigate , dispatch) => {
-  let toastId = toast.loading("Verifying the payment ...");
   let { courses } = verificationData;
+  dispatch(setPaymentLoading(true));
   try {
     const response = await Apiconnection(
       "post",
@@ -71,11 +72,9 @@ const paymentVerificationHandler = async (verificationData, token , isOneBuy , n
         Authorization: `Bearer ${token}`,
       }
     );
-    toast.dismiss(toastId);
     if (!response.data.success) {
       throw new Error("Failed to verify payment");
     }
-    toast.success("Verified payment successfully");
     
     if(isOneBuy){
       // if present into cart remove from cart 
@@ -90,8 +89,9 @@ const paymentVerificationHandler = async (verificationData, token , isOneBuy , n
       navigate("/dashboard/default/enrolled-courses")
     }
   } catch (e) {
-    toast.dismiss(toastId);
     console.log(e);
     toast.error("Failed to verify payment");
+  } finally {
+    dispatch(setPaymentLoading(false));
   }
 };

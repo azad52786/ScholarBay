@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     signUpdata : null , 
     loader : false , 
-    token : localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null 
+    token : localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null,
+    paymentLoading : false
 }
 const AuthSlice = createSlice({
     name : "auth" , 
@@ -16,10 +17,13 @@ const AuthSlice = createSlice({
         },
         setToken : (state , action) => {
             state.token = action.payload;
-        } 
+        },
+        setPaymentLoading : (state , action) => {
+            state.paymentLoading = action.payload;
+        }
     }
 })
 
-export const {setToken , setSignUpdata , setLoader} = AuthSlice.actions;
+export const {setToken , setSignUpdata , setLoader, setPaymentLoading} = AuthSlice.actions;
 
 export default AuthSlice.reducer;

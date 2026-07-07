@@ -61,6 +61,13 @@ export const CART_API = {
     RESET_CART: `${BASE_URL + '/cart/reset-cart'}`,
 }
 
+export const PAYOUT_API = {
+    GET_SUMMARY: `${BASE_URL + '/payout/summary'}`,
+    UPDATE_DETAILS: `${BASE_URL + '/payout/update-details'}`,
+    REQUEST_WITHDRAWAL: `${BASE_URL + '/payout/withdraw'}`,
+    GET_HISTORY: `${BASE_URL + '/payout/history'}`,
+}
+
 
 export const INSTRUCTOR_DASHBOARD_API = {
     GET_INSTRUCTOR_COURSES: `${BASE_URL + "/course/getInstructorCourses"}`,

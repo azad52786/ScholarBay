@@ -12,6 +12,7 @@ const userRoutes = require('../server/router/User.router');
 const profileRoutes = require('../server/router/Profile.router');
 const SendMailRouter = require('../server/router/SendMail.router');
 const cartRoutes = require('../server/router/Cart.router');
+const payoutRoutes = require('../server/router/Payout.router');
 const { cloudinaryConnect } = require("./config/cloudinary");
 const CourseProgress = require("./models/CourseProgress");
 const { default: mongoose } = require("mongoose");
@@ -58,6 +59,7 @@ app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/payment", paymentRoutes);
 app.use("/api/v1/mail" , SendMailRouter);
 app.use("/api/v1/cart", cartRoutes);
+app.use("/api/v1/payout", payoutRoutes);
 
 // app.get("/defaultStartProgress" , async(req , res) => {
 //     try{
