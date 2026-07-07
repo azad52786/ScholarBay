@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CartItemCard from "./CartItemCard";
-import { resetCart } from "../../Store/Slices/CartSlice";
+import { resetCartDB } from "../../service/operations/CartBackendConnection";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { buyCourse } from "../../service/operations/BuyCourseApiConnection";
@@ -47,7 +47,7 @@ const CartSectionHome = () => {
             <button
               className=" font-edu-sa w-fit flex items-center justify-center px-3 md:px-6 py-3 rounded-md bg-blue-100 text-pure-greys-800
              font-semibold md:text-lg border-b-[3px] border-l-[3px] border-richblack-600 hover:scale-105 transition-all duration-500"
-              onClick={() => dispatch(resetCart())}
+              onClick={() => resetCartDB(token, dispatch)}
             >
               Remove All
             </button>

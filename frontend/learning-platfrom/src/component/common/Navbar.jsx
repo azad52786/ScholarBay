@@ -9,6 +9,7 @@ import { FaChevronDown } from "react-icons/fa";
 import Apiconnection from "../../service/Apiconnection.js";
 import { COURSE_API } from "../../service/Api.js";
 import { logout } from "../../service/operations/BackendConnection.js";
+import { fetchCart } from "../../service/operations/CartBackendConnection.js";
 import { CgMenuRightAlt } from "react-icons/cg";
 import MobileMenuSection from "./MobileMenuSection.jsx";
 import { IoLogOutOutline } from "react-icons/io5";
@@ -31,13 +32,21 @@ const Navbar = () => {
       console.error(error);
     }
   };
+
   useEffect(() => {
     fetchTagsLink();
   }, []);
 
+  useEffect(() => {
+    if (token && user?.accountType === "Student") {
+      fetchCart(token, dispatch);
+    }
+  }, [token, user, dispatch]);
+
   const logoutHandeler = () => {
     dispatch(logout(navigate));
   };
+
   return (
     <div className="w-screen h-14 relative bg-richblack-900 border-b border-richblack-600">
       <div className="w-10/12 relative min-h-full mx-auto flex flex-row items-center justify-between">
@@ -77,7 +86,7 @@ const Navbar = () => {
             }
             return element.title === "Catalog" ? (
               <div
-                className="relative flex flex-row gap-2 items-center cursor-pointer hover:text-richblack-50 group"
+                className="relative flex flex-row gap-2 items-center cursor-pointer hover:text-richblack-5 group"
                 key={index}
               >
                 <div>{element.title}</div>

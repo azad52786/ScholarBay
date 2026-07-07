@@ -54,6 +54,13 @@ export const PROGRESS_API = {
     GET_COMPLETED_LESSONS: `${BASE_URL + '/course/progress/get-completed-lessons'}`,
 }
 
+export const CART_API = {
+    GET_CART: `${BASE_URL + '/cart/get-cart'}`,
+    ADD_TO_CART: `${BASE_URL + '/cart/add-to-cart'}`,
+    REMOVE_FROM_CART: `${BASE_URL + '/cart/remove-from-cart'}`,
+    RESET_CART: `${BASE_URL + '/cart/reset-cart'}`,
+}
+
 
 export const INSTRUCTOR_DASHBOARD_API = {
     GET_INSTRUCTOR_COURSES: `${BASE_URL + "/course/getInstructorCourses"}`,

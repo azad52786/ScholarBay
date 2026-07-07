@@ -2,7 +2,7 @@ import { toast } from "react-hot-toast";
 import Apiconnection from "../Apiconnection";
 import { PAYMENT_API } from "../Api";
 import { load } from "@cashfreepayments/cashfree-js";
-import { deleteItem, resetCart } from "../../Store/Slices/CartSlice";
+import { removeFromCartDB, resetCartDB } from "./CartBackendConnection";
 
 export const buyCourse = async (
   token,
@@ -39,25 +39,17 @@ export const buyCourse = async (
             redirectTarget: "_modal",
       };
       
-      
-      
       cashfree.checkout(checkoutOptions).then(async(result) => {
             if(result.error){
-                // This will be true whenever user clicks on close icon inside the modal or any error happens during the payment
                 console.log("User has closed the popup or there is some payment error, Check for Payment Status");
                 console.log(result.error);
             }
             if(result.redirect){
-                // This will be true when the payment redirection page couldnt be opened in the same window
-                // This is an exceptional case only when the page is opened inside an inAppBrowser
-                // In this case the customer will be redirected to return url once payment is completed
                 console.log("Payment will be redirected");
             }
             if(result.paymentDetails){
-                // This will be called whenever the payment is completed irrespective of transaction status
                 console.log("Payment has been completed, Check for Payment Status");
                 await paymentVerificationHandler( { order_id , courses} , token , isBuyOne , navigate , dispatch);
-                
             }
         });
    
@@ -88,12 +80,12 @@ const paymentVerificationHandler = async (verificationData, token , isOneBuy , n
     if(isOneBuy){
       // if present into cart remove from cart 
       let courseId = courses[0]
-      dispatch(deleteItem(courseId));
+      removeFromCartDB(courseId, token, dispatch);
       // navigate in the already having course
       navigate("/dashboard/default/enrolled-courses");
     }else{
       // remove all the cart and navigate in the already having course
-      dispatch(resetCart());
+      resetCartDB(token, dispatch);
       console.log("cart Cleared successfully done");
       navigate("/dashboard/default/enrolled-courses")
     }

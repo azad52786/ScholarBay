@@ -1,14 +1,15 @@
 import React from 'react'
 import RatingStars from '../../catalogs/RatingStars';
 import { RiDeleteBinLine } from "react-icons/ri";
-import { deleteItem } from '../../Store/Slices/CartSlice';
-import { useDispatch } from 'react-redux';
+import { removeFromCartDB } from '../../service/operations/CartBackendConnection';
+import { useDispatch, useSelector } from 'react-redux';
 
 const CartItemCard = ({item , index}) => {
     const { ratingAndReviews , thumbnail , 
         price , courseName } = item;
         const tagName = item.tag?.name;
         const dispatch = useDispatch();
+        const { token } = useSelector((store) => store.Auth);
   return (
     <>
     <div key={index} className=' w-full h-fit flex items-center justify-between'>
@@ -25,8 +26,7 @@ const CartItemCard = ({item , index}) => {
             <p className=' text-yellow-50 font-edu-sa text-xl md:text-2xl lg:text-3xl mb-5'> ₹{price}</p>
             <div className=' md:p-4 p-2 bg-richblack-600 text-pink-200 w-fit h-fit rounded-md cursor-pointer'
                 onClick={ () => {
-
-                    dispatch(deleteItem(item._id));
+                    removeFromCartDB(item._id, token, dispatch);
                 }}
             >
                 <RiDeleteBinLine className=' w-6 h-6' />

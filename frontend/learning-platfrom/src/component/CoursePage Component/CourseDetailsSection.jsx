@@ -4,8 +4,8 @@ import { MdLanguage } from "react-icons/md";
 import { LiaHandPointRight } from "react-icons/lia";
 import { FaShareFromSquare } from "react-icons/fa6";
 import { toast } from "react-hot-toast"
-import { useDispatch } from 'react-redux';
-import { addToCart } from "../../Store/Slices/CartSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCartDB } from "../../service/operations/CartBackendConnection";
 import { useNavigate } from "react-router-dom";
 
 
@@ -23,6 +23,22 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
   } = course;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { token } = useSelector((store) => store.Auth);
+  const { user } = useSelector((store) => store.User);
+
+  const handleAddToCart = () => {
+    if (!token) {
+      toast.error("Please login to add courses to your cart");
+      navigate("/login");
+      return;
+    }
+    if (user?.accountType !== "Student") {
+      toast.error("Only student accounts can add courses to cart");
+      return;
+    }
+    addToCartDB(course, token, dispatch);
+  };
+
   const copyUrl = async() => {
     try{
         await navigator.clipboard.writeText(window.location.href);
@@ -98,9 +114,7 @@ const CourseDetailsSection = ({ course, alreadyEnrolled , buyNowHandeler }) => {
               <button
                 className=" font-edu-sa flex items-center justify-center w-full py-3 rounded-md bg-blue-200 text-pure-greys-800
              font-semibold text-lg  border-b-[3px] border-l-[3px] border-black hover:scale-105 transition-all duration-500"
-                onClick={() =>{
-                   dispatch(addToCart(course))
-                }}
+                onClick={handleAddToCart}
               >
                 Add to Cart
               </button>
