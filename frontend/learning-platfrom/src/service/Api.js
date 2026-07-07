@@ -36,6 +36,25 @@ export const COURSE_API = {
     GET_PROGRESS: `${BASE_URL + '/course/getCourseProgress'}`
 }
 
+export const CERTIFICATE_API = {
+    CHECK_ELIGIBILITY: `${BASE_URL + '/course/certificates/check-eligibility'}`,
+    GET_CERTIFICATE: `${BASE_URL + '/course/certificates/get-certificate'}`,
+    GENERATE: `${BASE_URL + '/course/certificates/generate'}`,
+    DOWNLOAD: `${BASE_URL + '/course/certificates/download'}`,
+    SEND_EMAIL: `${BASE_URL + '/course/certificates/send-email'}`,
+    PUBLISH: `${BASE_URL + '/course/publishCertificate'}`,
+    UNPUBLISH: `${BASE_URL + '/course/unpublishCertificate'}`,
+    GET_STATUS: `${BASE_URL + '/course/getCertificateStatus'}`,
+}
+
+export const PROGRESS_API = {
+    MARK_COMPLETE: `${BASE_URL + '/course/progress/mark-complete'}`,
+    MARK_INCOMPLETE: `${BASE_URL + '/course/progress/mark-incomplete'}`,
+    GET_PROGRESS: `${BASE_URL + '/course/progress/get-progress'}`,
+    GET_COMPLETED_LESSONS: `${BASE_URL + '/course/progress/get-completed-lessons'}`,
+}
+
+
 export const INSTRUCTOR_DASHBOARD_API = {
     GET_INSTRUCTOR_COURSES: `${BASE_URL + "/course/getInstructorCourses"}`,
     GET_INSTRUCTOR_DASHBOARD_DETAILS: `${BASE_URL + '/profile/instructorDashBoardDetails'}`

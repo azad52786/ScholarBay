@@ -64,6 +64,14 @@ const coursesSchema = new mongoose.Schema({
 		default: "Private",
 		enum: ["Private", "Public"],
 	},
+	certificatePublished: {
+		type: Boolean,
+		default: false,
+	},
+	publishedAt: {
+		type: Date,
+		default: null,
+	},
 }, { timestamps: true });
 
 coursesSchema.index({ tag: 1, status: 1 });

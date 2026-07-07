@@ -14,6 +14,7 @@ import {
   setEditCourseDetails,
 } from "../../Store/Slices/CreateCourseSlice";
 import { useNavigate } from "react-router-dom";
+import PublishCertificateControl from "./PublishCertificateControl";
 
 const MyCourseHome = () => {
 let courses = useUserCourse();
@@ -86,23 +87,26 @@ let courses = useUserCourse();
                           </p>
                         </div>
                       </div>
-                      <div
-                        className={`bg-richblack-700 rounded-3xl flex 
-                      items-center py-1 md:px-6 px-3  justify-around w-fit text-xs md:text-base
-                       gap-x-2 ${
-                         course?.status === "Private"
-                           ? " text-[#63e765]"
-                           : " text-yellow-50"
-                       }`}
-                      >
-                        <div>
-                          {course?.status === "Private" ? (
-                            <FaClock />
-                          ) : (
-                            <IoCheckmarkCircleSharp />
-                          )}
+                      <div className="flex flex-wrap items-center gap-2">
+                        <div
+                          className={`bg-richblack-700 rounded-3xl flex 
+                        items-center py-1 md:px-6 px-3  justify-around w-fit text-xs md:text-base
+                         gap-x-2 ${
+                           course?.status === "Private"
+                             ? " text-[#63e765]"
+                             : " text-yellow-50"
+                         }`}
+                        >
+                          <div>
+                            {course?.status === "Private" ? (
+                              <FaClock />
+                            ) : (
+                              <IoCheckmarkCircleSharp />
+                            )}
+                          </div>
+                          <div>{course?.status}</div>
                         </div>
-                        <div>{course?.status}</div>
+                        <PublishCertificateControl courseId={course?._id} />
                       </div>
                     </div>
                   </div>

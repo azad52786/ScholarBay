@@ -11,7 +11,7 @@ const CourseCard = ({courseDetails}) => {
         <img src={thumbnail} alt='course Thumbnail' className=' w-20 h-16 md:w-40 md:h-24 rounded-md'/>
         <p>{courseName}</p>
       </div>
-      <ProgressBar/>
+      <ProgressBar courseId={_id}/>
     </div>
   )
 }

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const { v4: uuidv4 } = require("uuid");
+const crypto = require("crypto");
 
 const certificateSchema = new mongoose.Schema(
   {
-    uniqueCertificateId: {
+    certificateId: {
       type: String,
-      default: () => uuidv4(),
+      default: () => crypto.randomUUID(),
       unique: true,
       required: true,
     },
@@ -36,13 +36,21 @@ const certificateSchema = new mongoose.Schema(
       default: "ScholarBay",
       required: true,
     },
-    issuedAt: {
+    generatedAt: {
       type: Date,
       default: Date.now,
       required: true,
     },
+    pdfUrl: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );
+
+// Create indexes for quick lookups
+certificateSchema.index({ studentId: 1, courseId: 1 }, { unique: true });
+certificateSchema.index({ certificateId: 1 });
 
 module.exports = mongoose.model("Certificate", certificateSchema);

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import html2pdf from 'html2pdf.js';
 import { FaDownload } from 'react-icons/fa';
 import Apiconnection from '../../service/Apiconnection';
-import { COURSE_API } from '../../service/Api';
+import { CERTIFICATE_API } from '../../service/Api';
 
 const CourseCompletedModal = ({ certificate, onClose, token }) => {
   const certRef = useRef();
@@ -21,7 +21,12 @@ const CourseCompletedModal = ({ certificate, onClose, token }) => {
 
   const emailCert = async () => {
     try {
-      await Apiconnection('post', `${COURSE_API.COURSE_DETAILS}/certificates/${certificate._id}/email`, null, { Authorization: `Bearer ${token}` });
+      await Apiconnection(
+        'POST',
+        CERTIFICATE_API.SEND_EMAIL,
+        { courseId: certificate.courseId },
+        { Authorization: `Bearer ${token}` }
+      );
       alert('Certificate emailed successfully');
     } catch (e) {
       alert('Failed to send email');

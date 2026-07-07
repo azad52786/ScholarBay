@@ -18,14 +18,24 @@ const VideoPage = () => {
   const [showVideoSlider, setShowVideoSlider] = useState(true);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [ courseProgress , setCourseProgress] = useState([]);
+  const [progressData, setProgressData] = useState(null);
   useEffect(() => {
     (async () => {
       
-      const [courseData, watchedSubSection] = await Promise.all([
+      const [courseData, watchedProgress] = await Promise.all([
         getEnrolledCourse(courseId, token) , 
         getWatchedSection(courseId, token)
       ])
-      setCourseProgress(watchedSubSection);
+      if (watchedProgress) {
+        setCourseProgress(watchedProgress.completedLessonsIds || []);
+        setProgressData({
+          totalLessons: watchedProgress.totalLessons || 0,
+          completedLessons: watchedProgress.completedLessons || 0,
+          progressPercentage: watchedProgress.progressPercentage || 0,
+          isComplete: watchedProgress.isComplete || false,
+          certificatePublished: watchedProgress.certificatePublished || false
+        });
+      }
       dispatch(setCourseEntireData(courseData));
       dispatch(setCourseSectionData(courseData.courseContent));
     })();
@@ -38,10 +48,12 @@ const VideoPage = () => {
           setShowVideoSlider={setShowVideoSlider}
           showVideoSlider={showVideoSlider}
           courseProgress={courseProgress}
+          progressData={progressData}
         />
         <VideoSection
           courseProgress ={courseProgress}
           setCourseProgress={setCourseProgress}
+          setProgressData={setProgressData}
           setShowVideoSlider = {setShowVideoSlider}
         />
       </div>

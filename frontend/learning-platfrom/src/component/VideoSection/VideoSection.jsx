@@ -3,12 +3,14 @@ import { HiMenuAlt1 } from "react-icons/hi";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Apiconnection from '../../service/Apiconnection';
-import { COURSE_API } from '../../service/Api';
+import { COURSE_API, CERTIFICATE_API, PROGRESS_API } from '../../service/Api';
 import Mainvideo from './Mainvideo';
 import "video-react/dist/video-react.css"
 import toast from 'react-hot-toast';
 import Markdown from 'react-markdown';
 import CourseCompletedModal from './CourseCompletedModal';
+import CertificateSection from './CertificateSection';
+
 
 const ReadingPane = ({ lesson }) => {
   const markdownContent = lesson?.markdownContent || lesson?.description || "";
@@ -222,7 +224,35 @@ const QuizAssessmentCard = ({ lesson }) => {
   );
 };
 
-const VideoSection = ({ setShowVideoSlider, courseProgress, setCourseProgress }) => {
+const SkeletonLoader = () => {
+  return (
+    <div className="mx-auto w-[97%] py-5 animate-pulse">
+      <div className="rounded-3xl border border-richblack-700 bg-richblack-800/50 p-6 md:p-8 space-y-6">
+        <div className="flex justify-between items-center border-b border-richblack-700 pb-4">
+          <div className="space-y-3 w-1/3">
+            <div className="h-3 bg-richblack-700 rounded-full w-1/2"></div>
+            <div className="h-6 bg-richblack-600 rounded-full w-full"></div>
+          </div>
+          <div className="h-8 bg-richblack-700 rounded-full w-24"></div>
+        </div>
+        <div className="space-y-4">
+          <div className="h-4 bg-richblack-700 rounded-full w-[90%]"></div>
+          <div className="h-4 bg-richblack-700 rounded-full w-full"></div>
+          <div className="h-4 bg-richblack-700 rounded-full w-[80%]"></div>
+          <div className="h-4 bg-richblack-700 rounded-full w-[95%]"></div>
+        </div>
+        <div className="h-64 bg-richblack-700/50 rounded-2xl w-full flex items-center justify-center">
+          <div className="flex flex-col items-center gap-3">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-caribbeangreen-100"></div>
+            <span className="text-sm font-edu-sa text-richblack-300">Fetching lesson content...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const VideoSection = ({ setShowVideoSlider, courseProgress, setCourseProgress, setProgressData }) => {
   const { courseEntireData, courseSectionData, completedLecture } = useSelector((store) => store.CourseVideo);
   const { token } = useSelector((store) => store.Auth)
   let { courseId, sectionId, subSectionId } = useParams();
@@ -236,6 +266,7 @@ const VideoSection = ({ setShowVideoSlider, courseProgress, setCourseProgress })
   const [noLec, setNoLec] = useState(false);
   const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [certificateData, setCertificateData] = useState(null);
+  const [contentLoading, setContentLoading] = useState(false);
 
   // fetch the video
   useEffect(() => {
@@ -252,45 +283,97 @@ const VideoSection = ({ setShowVideoSlider, courseProgress, setCourseProgress })
       navigate('/dashboard/default/enrolled-courses');
       return;
     }
+    setContentLoading(true);
     let sectionData = courseSectionData?.filter((section) => section?._id === sectionId);
     let subSectionData = sectionData?.[0]?.subSection?.filter((subSec) => subSec?._id === subSectionId);
     setVideoData(subSectionData?.[0]);
     setPreViewPicture(thumbnail);
 
     setVideoEnd(false);
+
+    const timer = setTimeout(() => {
+      setContentLoading(false);
+    }, 600);
+
+    return () => clearTimeout(timer);
   }, [courseEntireData, courseSectionData, location.pathname]);
 
+  // Robust helpers to flatten all sections/subsections and traverse them sequentially
+  const getNextSubsectionInfo = () => {
+    if (!courseSectionData || courseSectionData.length === 0) return null;
+    const allSubsections = [];
+    courseSectionData.forEach((section) => {
+      if (section?.subSection) {
+        section.subSection.forEach((subSec) => {
+          allSubsections.push({
+            subSectionId: subSec._id,
+            sectionId: section._id
+          });
+        });
+      }
+    });
+    const currentIndex = allSubsections.findIndex((item) => item.subSectionId === subSectionId);
+    if (currentIndex === -1 || currentIndex === allSubsections.length - 1) return null;
+    return allSubsections[currentIndex + 1];
+  };
+
+  const getPreviousSubsectionInfo = () => {
+    if (!courseSectionData || courseSectionData.length === 0) return null;
+    const allSubsections = [];
+    courseSectionData.forEach((section) => {
+      if (section?.subSection) {
+        section.subSection.forEach((subSec) => {
+          allSubsections.push({
+            subSectionId: subSec._id,
+            sectionId: section._id
+          });
+        });
+      }
+    });
+    const currentIndex = allSubsections.findIndex((item) => item.subSectionId === subSectionId);
+    if (currentIndex <= 0) return null;
+    return allSubsections[currentIndex - 1];
+  };
+
   const isFirstVideo = () => {
-    const indexOfSection = courseSectionData?.findIndex((section) => section?._id === sectionId);
-    const indexOfSubSection = courseSectionData?.[indexOfSection]?.subSection?.findIndex((subSec) => subSec?._id === subSectionId);
-    return indexOfSection === 0 && indexOfSubSection === 0;
+    return getPreviousSubsectionInfo() === null;
   };
 
   const isLastVideo = () => {
-    const indexOfSection = courseSectionData?.findIndex((section) => section?._id === sectionId);
-
-    const noOfSection = courseSectionData?.length;
-    const noOfSubSection = courseSectionData?.[indexOfSection]?.subSection?.length;
-    const indexOfSubSection = courseSectionData?.[indexOfSection]?.subSection?.findIndex((subSec) => subSec?._id === subSectionId);
-    return indexOfSection === noOfSection - 1 && indexOfSubSection === noOfSubSection - 1;
+    return getNextSubsectionInfo() === null;
   };
 
   const goToNextHandeler = async () => {
     if (!videoData) return;
+    
+    // If current subsection is not completed, mark it complete using new API
     if (!courseProgress.includes(videoData._id)) {
       try {
-        const res = await Apiconnection('put', COURSE_API.MARKED_SUBSECTION + '/' + videoData?._id, null, {
-          Authorization: `Bearer ${token}`
-        }, {
-          courseId: courseId,
-        })
-        if (res.data.success) {
-          setCourseProgress(res.data.data)
-          //  dispatch(updateCompletedLecture(videoData._id))
-          if (res.data.isComplete) {
-            // fetch or create certificate
+        const res = await Apiconnection(
+          'POST',
+          PROGRESS_API.MARK_COMPLETE,
+          {
+            courseId: courseId,
+            subSectionId: videoData._id
+          },
+          {
+            Authorization: `Bearer ${token}`
+          }
+        );
+        
+        if (res.data?.success) {
+          // Update completed subSection IDs list
+          setCourseProgress((prev) => [...prev, videoData._id]);
+          
+          // Update progress metrics (total, completed, percentage, isComplete)
+          if (res.data.progress) {
+            setProgressData(res.data.progress);
+          }
+          
+          // If this completion finishes the course, generate the certificate
+          if (res.data.progress?.isComplete) {
             try {
-              const certRes = await Apiconnection('post', `${COURSE_API.COURSE_DETAILS}/certificates/create`, null, { Authorization: `Bearer ${token}` }, { courseId });
+              const certRes = await Apiconnection('POST', CERTIFICATE_API.GENERATE, { courseId }, { Authorization: `Bearer ${token}` });
               if (certRes.data?.success) {
                 setCertificateData(certRes.data.certificate);
                 setShowCompleteModal(true);
@@ -300,48 +383,31 @@ const VideoSection = ({ setShowVideoSlider, courseProgress, setCourseProgress })
             }
           }
         } else {
-          throw new Error("SomeThing Went Wrong");
+          throw new Error("Something Went Wrong");
         }
       } catch (e) {
         console.error(e);
         if (e.response && e.response.status === 420) {
           toast.error(e.response.data.message);
+        } else {
+          toast.error(e.response?.data?.message || "Failed to mark lesson complete");
         }
         return;
       }
     }
-    const indexOfSection = courseSectionData?.findIndex((section) => section?._id === sectionId);
-    const noOfSubSection = courseSectionData?.[indexOfSection]?.subSection?.length;
-
-    const indexOfSubSection = courseSectionData?.[indexOfSection]?.subSection?.findIndex((subSec) => subSec?._id === subSectionId);
-    let nextSectionId, nextSubSectionId;
-    if (indexOfSubSection < noOfSubSection - 1) {
-      nextSectionId = sectionId;
-      nextSubSectionId = courseSectionData?.[indexOfSection]?.subSection?.[indexOfSubSection + 1]?._id;
-    } else {
-      nextSectionId = courseSectionData?.[indexOfSection + 1]?._id;
-      nextSubSectionId = courseSectionData?.[indexOfSection + 1]?.subSection?.[0]?._id;
+    
+    // Navigate to next subsection if it exists
+    const nextInfo = getNextSubsectionInfo();
+    if (nextInfo) {
+      navigate(`/view-course/${courseId}/section/${nextInfo.sectionId}/sub-section/${nextInfo.subSectionId}`);
     }
-    navigate(`/view-course/${courseId}/section/${nextSectionId}/sub-section/${nextSubSectionId}`);
   };
 
   const goToPreViousHandeler = () => {
-    const indexOfSection = courseSectionData?.findIndex((section) => section?._id === sectionId);
-
-    let preSectionId, preSubSectionId;
-
-    const indexOfSubSection = courseSectionData?.[indexOfSection]?.subSection?.findIndex((subSec) => subSec?._id === subSectionId);
-
-    if (indexOfSubSection > 0) {
-      preSectionId = sectionId;
-      preSubSectionId = courseSectionData?.[indexOfSection]?.subSection?.[indexOfSubSection - 1]?._id;
-    } else {
-      preSectionId = courseSectionData?.[indexOfSection - 1]?._id;
-      const noOfSubSection = courseSectionData?.[indexOfSection - 1]?.subSection?.length;
-
-      preSubSectionId = courseSectionData?.[indexOfSection - 1]?.subSection?.[noOfSubSection - 1]?._id;
+    const prevInfo = getPreviousSubsectionInfo();
+    if (prevInfo) {
+      navigate(`/view-course/${courseId}/section/${prevInfo.sectionId}/sub-section/${prevInfo.subSectionId}`);
     }
-    navigate(`/view-course/${courseId}/section/${preSectionId}/sub-section/${preSubSectionId}`);
   };
 
   return (
@@ -356,7 +422,7 @@ const VideoSection = ({ setShowVideoSlider, courseProgress, setCourseProgress })
         </div>
         <div className=' pr-4'>
           {
-            courseSectionData && courseSectionData.length > 0 &&
+            !contentLoading && courseSectionData && courseSectionData.length > 0 &&
             <div className=' '>
 
               {
@@ -366,11 +432,30 @@ const VideoSection = ({ setShowVideoSlider, courseProgress, setCourseProgress })
                 >Previous</button>
               }
               {
-                !isLastVideo() && <button
-                  className='  py-1 px-2 md:py-2 md:px-3 mr-2  bg-yellow-100 text-richblue-800 border-b-2 border-r border-white rounded-md md:text-lg md:font-semibold'
-
-                  onClick={goToNextHandeler}
-                >{courseProgress.includes(videoData?._id) ? "Next" : "Mark And Next"}</button>
+                !isLastVideo() ? (
+                  <button
+                    className='  py-1 px-2 md:py-2 md:px-3 mr-2  bg-yellow-100 text-richblue-800 border-b-2 border-r border-white rounded-md md:text-lg md:font-semibold'
+                    onClick={goToNextHandeler}
+                  >
+                    {courseProgress.includes(videoData?._id) ? "Next" : "Mark And Next"}
+                  </button>
+                ) : (
+                  !courseProgress.includes(videoData?._id) ? (
+                    <button
+                      className='  py-1 px-2 md:py-2 md:px-3 mr-2  bg-yellow-100 text-richblue-800 border-b-2 border-r border-white rounded-md md:text-lg md:font-semibold'
+                      onClick={goToNextHandeler}
+                    >
+                      Mark as Completed
+                    </button>
+                  ) : (
+                    <button
+                      disabled
+                      className='  py-1 px-2 md:py-2 md:px-3 mr-2  bg-caribbeangreen-100/20 text-caribbeangreen-100 border border-caribbeangreen-100/30 rounded-md md:text-lg md:font-semibold cursor-not-allowed'
+                    >
+                      Completed ✓
+                    </button>
+                  )
+                )
               }
             </div>
           }
@@ -379,24 +464,37 @@ const VideoSection = ({ setShowVideoSlider, courseProgress, setCourseProgress })
         {/* if subsectionid is undefined Please show a message no lecture found */}
       </div>
       {
-        noLec ? (<div className=' flex items-center justify-center w-full h-[400px] text-2xl font-bold'
-          style={{
-            background: "linear-gradient(90deg, rgba(126,98,237,1) 0%, rgba(68,216,53,1) 36%, rgba(52,216,118,1) 49%, rgba(210,95,224,1) 100%)",
-            backgroundClip: "text",
-            color: 'transparent'
-
-          }}
-        >No Lesson Found !!!</div>) : (
-          (videoData?.contentType || "VIDEO") === "VIDEO" ? (
-            <Mainvideo videoData={videoData} thumbnail={thumbnail} preViewPicture={preViewPicture} videoEnd={videoEnd} />
-          ) : (videoData?.contentType || "VIDEO") === "TEXT_NOTE" ? (
-            <ReadingPane lesson={videoData} />
-          ) : (
-            <QuizAssessmentCard lesson={videoData} />
-          )
+        location.pathname.endsWith('/certificate') ? (
+          <CertificateSection courseId={courseId} />
+        ) : noLec ? (
+          <div className=' flex items-center justify-center w-full h-[400px] text-2xl font-bold'
+            style={{
+              background: "linear-gradient(90deg, rgba(126,98,237,1) 0%, rgba(68,216,53,1) 36%, rgba(52,216,118,1) 49%, rgba(210,95,224,1) 100%)",
+              backgroundClip: "text",
+              color: 'transparent'
+            }}
+          >No Lesson Found !!!</div>
+        ) : contentLoading ? (
+          <SkeletonLoader />
+        ) : (
+          <div className="fade-slide-up">
+            {(videoData?.contentType || "VIDEO") === "VIDEO" ? (
+              <Mainvideo videoData={videoData} thumbnail={thumbnail} preViewPicture={preViewPicture} videoEnd={videoEnd} />
+            ) : (videoData?.contentType || "VIDEO") === "TEXT_NOTE" ? (
+              <ReadingPane lesson={videoData} />
+            ) : (
+              <QuizAssessmentCard lesson={videoData} />
+            )}
+          </div>
         )
       }
-
+      {showCompleteModal && (
+        <CourseCompletedModal
+          certificate={certificateData}
+          onClose={() => setShowCompleteModal(false)}
+          token={token}
+        />
+      )}
     </div>
   );
 };

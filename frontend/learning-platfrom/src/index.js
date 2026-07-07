@@ -220,6 +220,16 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "/view-course/:courseId/certificate",
+        element: (
+          <ProtectedRoute>
+            <StudentRoute>
+              <VideoPage />
+            </StudentRoute>
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);

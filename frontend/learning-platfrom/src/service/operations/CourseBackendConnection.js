@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { COURSE_API, INSTRUCTOR_DASHBOARD_API } from "../Api";
+import { COURSE_API, INSTRUCTOR_DASHBOARD_API, PROGRESS_API } from "../Api";
 import Apiconnection from "../Apiconnection";
 import { setCourseDetails, setStep } from "../../Store/Slices/CreateCourseSlice";
 
@@ -318,7 +318,7 @@ export const getInstructorCourses = async (token) => {
 
 export const getWatchedSection = async (courseId, token) => {
     try {
-        let res = await Apiconnection("get", COURSE_API.GET_PROGRESS, null, {
+        let res = await Apiconnection("get", PROGRESS_API.GET_PROGRESS, null, {
             "Authorization": `Bearer ${token}`
         }, {
             courseId: courseId
@@ -327,5 +327,5 @@ export const getWatchedSection = async (courseId, token) => {
     } catch (e) {
         console.log(e);
     }
-    return [];
+    return null;
 }

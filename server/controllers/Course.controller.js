@@ -597,3 +597,145 @@ exports.getAllInstructorCourse = async (req, res) => {
     })
   }
 }
+
+/**
+ * Publish certificate for a course (Teacher only)
+ */
+exports.publishCertificate = async (req, res) => {
+  try {
+    const instructorId = req.user.id;
+    const { courseId } = req.body;
+
+    if (!courseId) {
+      return res.status(400).json({
+        success: false,
+        message: "courseId is required",
+      });
+    }
+
+    // Verify course exists and instructor is the owner
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    if (String(course.instructor) !== String(instructorId)) {
+      return res.status(403).json({
+        success: false,
+        message: "Only the course instructor can publish certificates",
+      });
+    }
+
+    // Publish the certificate
+    course.certificatePublished = true;
+    course.publishedAt = new Date();
+    await course.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Certificate published successfully",
+      course,
+    });
+  } catch (error) {
+    console.error("Error publishing certificate:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+/**
+ * Unpublish certificate for a course (Teacher only)
+ */
+exports.unpublishCertificate = async (req, res) => {
+  try {
+    const instructorId = req.user.id;
+    const { courseId } = req.body;
+
+    if (!courseId) {
+      return res.status(400).json({
+        success: false,
+        message: "courseId is required",
+      });
+    }
+
+    // Verify course exists and instructor is the owner
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    if (String(course.instructor) !== String(instructorId)) {
+      return res.status(403).json({
+        success: false,
+        message: "Only the course instructor can unpublish certificates",
+      });
+    }
+
+    // Unpublish the certificate
+    course.certificatePublished = false;
+    course.publishedAt = null;
+    await course.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Certificate unpublished successfully",
+      course,
+    });
+  } catch (error) {
+    console.error("Error unpublishing certificate:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+/**
+ * Get certificate publish status for a course
+ */
+exports.getCertificatePublishStatus = async (req, res) => {
+  try {
+    const { courseId } = req.query;
+
+    if (!courseId) {
+      return res.status(400).json({
+        success: false,
+        message: "courseId is required",
+      });
+    }
+
+    const course = await Course.findById(courseId).select(
+      "certificatePublished publishedAt"
+    );
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      certificatePublished: course.certificatePublished,
+      publishedAt: course.publishedAt,
+    });
+  } catch (error) {
+    console.error("Error getting certificate status:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};

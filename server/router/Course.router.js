@@ -1,9 +1,10 @@
 const express = require('express');
 const { auth, isInstructor, isAdmin, isStudent, isDemo } = require('../middlewares/auth.middleware');
-const { createCourse, getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails, buy, getEnrolledCourse, getAllInstructorCourse, getSimilarCourses } = require('../controllers/Course.controller');
+const { createCourse, getAllCourse, showAllCourse, getAllCourseDetails, getCreatedCourseDetails, updateCourseDetails, changeMode, getEntireCourseDetails, buy, getEnrolledCourse, getAllInstructorCourse, getSimilarCourses, publishCertificate, unpublishCertificate, getCertificatePublishStatus } = require('../controllers/Course.controller');
 const { createSection, updateSection, deleteSection } = require('../controllers/section.controller');
 const { updateSubsection, deleteSubsection, createSubSection, markedSubSection, getwatchedSubSection } = require('../controllers/Subsection.controller');
 const certificateRouter = require('./Certificate.router');
+const progressRouter = require('./Progress.router');
 const { createTag, showAllTags, tagsPageDetails } = require('../controllers/tags.controller');
 const { createRatingAndReview, getAvarageRating, getAllRatingAndReviews } = require('../controllers/RatingAndReview.controller');
 const router = express.Router();
@@ -51,7 +52,13 @@ router.get('/getCourseProgress', auth, isStudent, getwatchedSubSection);
 router.get('/getInstructorCourses', auth, isInstructor, getAllInstructorCourse);
 
 // Certificate routes
+router.post('/publishCertificate', auth, isInstructor, publishCertificate);
+router.post('/unpublishCertificate', auth, isInstructor, unpublishCertificate);
+router.get('/getCertificateStatus', getCertificatePublishStatus);
 router.use('/certificates', certificateRouter);
+
+// Progress tracking routes
+router.use('/progress', progressRouter);
 
 // http://localhost:4000/api/v1/course/getInstructorCourses
 

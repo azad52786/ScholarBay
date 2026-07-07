@@ -288,102 +288,92 @@ exports.markedSubSection = async function (req, res) {
     let userId = req.user.id;
     const { subSectionId } = req.params;
     const { courseId } = req.query;
+    
     if (!subSectionId || !userId || !courseId)
-      return res.status(501).json({
+      return res.status(400).json({
         success: false,
-        message: "Please Give All The Fields !!!",
-      });
-    let subsection = await SubSection.findByIdAndUpdate(subSectionId, {
-      watched: true,
-    });
-
-    if (!subSectionId)
-      return res.status(401).json({
-        success: false,
-        message: "SubSection Not Found!!!",
+        message: "Please provide all required fields",
       });
 
     let userObjectId = new mongoose.Types.ObjectId(userId);
     let courseObjectId = new mongoose.Types.ObjectId(courseId);
 
+    // Verify course exists
     let course = await Course.findById(courseId);
-
-    if (course.studentsEnrolled.includes(userObjectId)) {
-      let updatedProgress = await CourseProgress.findOneAndUpdate(
-        { userId: userObjectId, courseId: courseObjectId },
-        {
-          $push: {
-            completedVideos: new mongoose.Types.ObjectId(subSectionId),
-          },
-        },
-        {
-          new: true,
-        }
-      );
-      if (updatedProgress) {
-        // Check if course is 100% complete
-        const allSections = await Section.find({ _id: { $in: course.courseContent } });
-        const allSubSectionIds = [];
-
-        for (const section of allSections) {
-          allSubSectionIds.push(...section.subSection);
-        }
-
-        const completedCount = updatedProgress.completedVideos.length;
-        const totalCount = allSubSectionIds.length;
-        const isComplete = completedCount === totalCount && totalCount > 0;
-
-        // Auto-generate certificate if course is complete
-        if (isComplete) {
-          const existingCert = await Certificate.findOne({
-            studentId: userObjectId,
-            courseId: courseObjectId,
-          });
-
-          if (!existingCert) {
-            const student = await User.findById(userId);
-            const instructor = await User.findById(course.instructor);
-
-            const certificate = new Certificate({
-              studentId: userObjectId,
-              courseId: courseObjectId,
-              studentName: `${student.firstName} ${student.lastName}`,
-              courseName: course.courseName,
-              instructorName: `${instructor.firstName} ${instructor.lastName}`,
-              platformName: "ScholarBay",
-            });
-
-            await certificate.save();
-          }
-        }
-
-        res.status(200).json({
-          success: true,
-          message: "Lesson marked as completed successfully.",
-          data: updatedProgress.completedVideos,
-          isComplete,
-        });
-      } else {
-        res.status(404).json({
-          success: false,
-          message: "Progress record not found for the given user and course.",
-        });
-      }
-    } else {
-      return res.status(401).json({
+    if (!course) {
+      return res.status(404).json({
         success: false,
-        message: "You are not Enrolled in this Course",
+        message: "Course not found",
       });
     }
+
+    // Verify student is enrolled
+    if (!course.studentsEnrolled.includes(userObjectId)) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not enrolled in this course",
+      });
+    }
+
+    // Update SubSection watched status
+    let subsection = await SubSection.findByIdAndUpdate(subSectionId, {
+      watched: true,
+    });
+
+    if (!subsection) {
+      return res.status(404).json({
+        success: false,
+        message: "SubSection not found",
+      });
+    }
+
+    // Use the new LessonCompletion model for tracking
+    const LessonCompletion = require("../models/LessonCompletion");
+    const lessonCompletion = await LessonCompletion.findOneAndUpdate(
+      {
+        studentId: userObjectId,
+        courseId: courseObjectId,
+        subSectionId: new mongoose.Types.ObjectId(subSectionId),
+      },
+      {
+        completed: true,
+        completedAt: new Date(),
+      },
+      {
+        upsert: true,
+        new: true,
+      }
+    );
+
+    // For backward compatibility, also update CourseProgress
+    const CourseProgress = require("../models/CourseProgress");
+    await CourseProgress.findOneAndUpdate(
+      { userId: userObjectId, courseId: courseObjectId },
+      {
+        $addToSet: {
+          completedVideos: new mongoose.Types.ObjectId(subSectionId),
+        },
+      },
+      {
+        upsert: true,
+        new: true,
+      }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Lesson marked as completed successfully.",
+      data: lessonCompletion,
+    });
   } catch (e) {
-    return res.status(501).json({
+    console.error("Error in markedSubSection:", e);
+    return res.status(500).json({
       success: false,
       error: e.message,
-      message: "Internal Server Error ",
+      message: "Internal Server Error",
     });
   }
 };
-
 
 exports.getwatchedSubSection = async (req, res) => {
   try {
