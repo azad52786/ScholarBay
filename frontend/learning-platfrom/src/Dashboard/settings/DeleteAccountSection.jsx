@@ -23,7 +23,7 @@ const DeleteAccountSection = ({setShowDeleteAccountModal}) => {
         </p>
         
         </div>
-         <div className=" flex items-center gap-4 py-3 text-black ">
+         <div className="flex items-center gap-4 py-3 text-black ">
               <button className="px-4 py-2 rounded-lg text-sm font-medium bg-[#00BFFF]"
                 onClick={() => setShowDeleteAccountModal(false)}
               >Cancel</button>
