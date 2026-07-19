@@ -398,9 +398,7 @@ const SubSectionForm = () => {
                       type="file"
                       accept="video/mp4,video/x-m4v,video/*"
                       ref={(element) => {
-                        register("video", {
-                          required: "Video of SubSection is Required",
-                        });
+                        register("video");
                         videoInput.current = element;
                       }}
                       hidden
