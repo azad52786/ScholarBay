@@ -145,7 +145,6 @@ exports.login = async (req , res) => {
             })
         }
 
-        //password matching
         if(await bcrypt.compare(password, user.password)){
             const payload = {
                 accountType: user.accountType, 
@@ -169,11 +168,16 @@ exports.login = async (req , res) => {
                 sameSite: process.env.ENVIRONMENT === 'production' ? 'None' : 'Lax' // 
             }
             res.cookie("token", token , option);
-            res.status(200).json({
+            return res.status(200).json({
                 success: true,
                 message: "User Login Success",
                 user: user , 
                 token : token
+            })
+        } else {
+            return res.status(401).json({
+                success: false,
+                message: "Incorrect Password. Please try again."
             })
         }
     }catch(e){
@@ -210,7 +214,7 @@ exports.changePassword = async function(req, res){
             });
         }
 
-        const isMatch = bcrypt.compare(newPassword, user.password);
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
         if(!isMatch){
             return res.status(400).json({
                 success: false,
@@ -220,15 +224,12 @@ exports.changePassword = async function(req, res){
 
         const hashPassword = await bcrypt.hash(newPassword, 10);
         user.password =  hashPassword;
-        await user.save()
+        await user.save();
+        
         try{
             await mailSender(user.email , "Password Changed", passwordUpdated(user.email , user.firstName))
         }catch(e){
-            res.status(400).json({
-                success: false,
-                error: e.message , 
-                message : "Error occurred while mail sending email"
-            })
+            console.error("Error occurred while sending password changed email:", e);
         }
         
         return res.status(200).json({

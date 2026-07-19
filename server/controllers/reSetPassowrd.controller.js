@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const mailSender = require("../utils/mailSend");
 const bcrypt = require('bcryptjs');
+const crypto = require("crypto");
 exports.sendResetPasswordLink = async(req , res) => {
     try{
         const {email} = req.body;
@@ -69,7 +70,7 @@ exports.resetPassword = async(req , res) => {
             });
         }
         if(user.resetPasswordExpires < Date.now()){
-            res.status(403).json({
+            return res.status(403).json({
                 success: false,
                 message: `Token is Expired, Please Regenerate Your Token`,
             })
